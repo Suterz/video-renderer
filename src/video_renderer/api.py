@@ -60,6 +60,7 @@ class Utterance(Strict):
     caption: str | None = None
     pause_after_ms: int = Field(default=0, ge=0, le=3000)
     critical_spoken: list[list[str]] = Field(default_factory=list)
+    caption_not_before_beat: str | None = None
 
 
 class Beat(Strict):
@@ -96,6 +97,9 @@ class Video(Strict):
             seen.add(b.id)
         if self.beats[0].cue != Milliseconds(ms=0):
             raise ValueError("the first beat starts at ms=0")
+        for u in self.script:
+            if u.caption_not_before_beat is not None and (u.caption is None or u.caption_not_before_beat not in seen):
+                raise ValueError("caption guard requires a caption and an existing beat")
         return self
 
 
@@ -261,6 +265,15 @@ def caption(source, output, text, size):
     image.save(output)
 
 
+def guard_captions(script, bound, beat_frames, fps):
+    for u in script:
+        if not u.caption_not_before_beat:
+            continue
+        _, words = bound[u.id]
+        if not words or start_frame(sample(words[0]["start"]), fps) < beat_frames[u.caption_not_before_beat]:
+            raise Review(f"{u.id}: caption would disclose information before beat {u.caption_not_before_beat}")
+
+
 def run(p):
     req = Video.model_validate(read(p / "request.json"))
     legacy = read(p / "legacy.json") if (p / "legacy.json").is_file() else None
@@ -319,11 +332,13 @@ def run(p):
         raise Review(f"collapsed, reversed or out-of-range required cue: {starts_samples}")
     if not legacy and starts_samples[-1] > n:
         raise Review("cue fires after the spoken recording")
+    if not legacy:
+        guard_captions(req.script,bound,{b.id:f for b,f in zip(req.beats,starts,strict=True)},f)
     manifest = frames(p, req)
     save(p / "panels.json", manifest)
     c = {start_frame(s, f): t for s, t in boundaries if 0 <= start_frame(s, f) < end}
     cuts = sorted({0, end, *starts, *c})
-    paths, segments = [], []
+    paths, segments, caption_trace = [], [], []
     for j, (start, stop) in enumerate(zip(cuts, cuts[1:])):
         idx = max(i for i, s in enumerate(starts) if s <= start)
         subtitle = c[max((k for k in c if k <= start), default=0)] if c else ""
@@ -331,6 +346,7 @@ def run(p):
         caption(p / manifest["panels"][idx]["filename"], out, subtitle, req.subtitle_font_size)
         paths.append(out)
         segments.append((start, stop, j))
+        caption_trace.append({"start_frame":start,"end_frame":stop,"panel":req.beats[idx].id,"text":subtitle})
     size = tuple(req.visual.get("canvas", (1080, 1920)))
     state(p, phase="encoding")
     candidate = p / "video.partial.mp4"
@@ -339,7 +355,8 @@ def run(p):
         raise RuntimeError("encoder disagrees with exact timeline")
     save(p / "manifest.json", {**manifest, "wav_sha256": hash_bytes(wav.read_bytes()),
          "speech_samples": n, "voice_profile": req.voice_profile, "aligned": aligned, "asr": asr,
-         "recording_reused": bool(req.reuse_recording_from),
+          "recording_reused": bool(req.reuse_recording_from),
+          "caption_trace":caption_trace,
          "beats": [{"id": b.id, "cue": b.cue.model_dump(), "sample": a, "frame": c, "validation": e}
                    for b, a, c, e in zip(req.beats, starts_samples, starts, cue_evidence)],
          "verification": verification, "seconds": time.monotonic() - started})
