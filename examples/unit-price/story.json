@@ -1,0 +1,224 @@
+{
+  "schema_version": "1.0",
+  "story_id": "one-bag-three-oranges",
+  "title": "What does one orange cost?",
+  "premise": "A six-dollar bag of three oranges has a unit price of two dollars per orange.",
+  "context": "Mara wonders whether the six-dollar tag is for one orange; then divide the total across three oranges.",
+  "signature": "Pocket Cutouts: bold irregular plum outlines, ivory paper, expressive brows, apricot focal shapes, teal shadows. No baked text.",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "audio": {
+    "part": "audio",
+    "format": "pcm_s16le",
+    "sample_rate": 48000,
+    "channels": 1
+  },
+  "values": {
+    "total": "$6",
+    "count": 3,
+    "each": "$2",
+    "total_minor": 600,
+    "each_minor": 200
+  },
+  "checks": [{"kind": "equal_groups", "total_minor": "total_minor", "count": "count", "each_minor": "each_minor"}],
+  "end_ms": 25849,
+  "cues": [
+    {
+      "id": "q",
+      "ms": 0,
+      "say": "Mara spots a six-dollar tag."
+    },
+    {
+      "id": "ask",
+      "ms": 2523,
+      "say": "Is that for one orange?"
+    },
+    {
+      "id": "tied",
+      "ms": 4524,
+      "say": "The tag is tied to",
+      "caption": "The tag is tied to the whole bag."
+    },
+    {
+      "id": "bag",
+      "ms": 5813,
+      "say": "the whole bag.",
+      "caption": "The tag is tied to the whole bag."
+    },
+    {
+      "id": "total",
+      "ms": 6815,
+      "say": "Six dollars is the total."
+    },
+    {
+      "id": "think",
+      "ms": 8828,
+      "say": "So what would just one orange cost?"
+    },
+    {
+      "id": "three",
+      "ms": 11490,
+      "say": "There are three oranges inside."
+    },
+    {
+      "id": "divide",
+      "ms": 14501,
+      "say": "Share the six dollars equally across all three."
+    },
+    {
+      "id": "each",
+      "ms": 18116,
+      "say": "That's two dollars per orange."
+    },
+    {
+      "id": "name",
+      "ms": 20442,
+      "say": "The price for one? That's the unit price.",
+      "caption": "For one orange: the unit price."
+    }
+  ],
+  "assets": {
+    "orange": {
+      "kind": "generated_cutout",
+      "visual": "One beautiful plump round bright orange with one small green leaf. Thick plum outline, crisp contour, illustration filling the center against completely flat neutral white.",
+      "seed": 119
+    }
+  },
+  "panels": [
+    {
+      "id": "P01",
+      "scene": "stall",
+      "op": "new_scene",
+      "cue": "q",
+      "visual": "A curious shopkeeper Mara in a plum apron stands BEHIND exactly ONE broad ochre kraft paper grocery bag centered on the counter. BOTH her hands rest behind that same bag, not holding any other bags. One relatively small ivory rectangular blank price tag hangs DIRECTLY from this ONE bag's upper right corner by a short teal bow; the tag is less than half the bag's width, clearly a price tag not another bag. Keep the tag's flat front face blank and big enough for two characters added later. The one bag's broad ochre body is visible below the bow. Mara's eyes are wide and inquisitive. NO additional bags, totes, handbags, handles, tags, oranges or lettering. Simple portrait composition.",
+      "change": "Introduce the puzzling price tag.",
+      "keep": "Distinct tag face, open view of knot, stable front camera.",
+      "refs": [],
+      "seed": 31,
+      "anchors": {
+        "tag.face": "the empty front face of the ONE small blank rectangular ivory price tag attached to the ONE ochre paper bag",
+        "tag.exit": {"derive":"edge_toward","of":"tag.face","toward":"bag.body"},
+        "bag.body": "a point well inside the broad ochre lower body of the ONE paper bag, away from its price tag and the bow"
+      },
+      "visual_checks":[
+        {"question":"How many separate paper shopping bags, including any bag-like object held in a hand, are depicted? Give only the count as a single digit.","expected":"1"},
+        {"question":"Is the ONE small blank price tag visibly attached to that same ONE broad ochre bag? Answer yes or no only.","expected":"yes"}
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "{total}",
+          "at": "tag.face"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "scene": "stall",
+      "op": "overlay_only",
+      "cue": "bag",
+      "visual": "Identify that the price tag belongs to the entire paper bag.",
+      "change": "Only add a gold arrow from the price tag to the broad ochre body of the same bag.",
+      "keep": "The bag, tag, six dollar text, character, camera and caption remain still.",
+      "refs": [
+        "P01"
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "{total}",
+          "at": "tag.face"
+        },
+        {
+          "type": "arrow",
+          "from": "tag.exit",
+          "to": "bag.body"
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "scene": "stall",
+      "op": "edit_scene",
+      "cue": "think",
+      "visual": "Exactly the same Mara behind the same SINGLE ochre grocery bag and same small blank tag tied at its upper right corner. She shows gentle curiosity: one eyebrow raised slightly above the other, eyes looking at the tag, a tiny friendly half-smile and an index finger resting lightly on her chin. Not angry, not frowning or glaring.",
+      "change": "Change only Mara's eyes, eyebrows, mouth and one thinking finger into a gentle curious expression; no scowl.",
+      "keep": "Same Mara identity, hair, plum apron, the ONE paper bag, bow, blank tag, tag attachment, counter, camera and palette. NO second bag, no letters, no oranges, no aggressive eyebrows.",
+      "refs": [
+        "P02"
+      ],
+      "seed": 132,
+      "anchors": {
+        "tag.face": "the empty front face of the ONE small blank rectangular ivory price tag attached to the ONE ochre paper bag"
+      },
+      "visual_checks":[
+        {"question":"How many separate paper shopping bags, including any bag-like object held in a hand, are depicted? Give only the count as a single digit.","expected":"1"}
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "{total}",
+          "at": "tag.face"
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "scene": "countertop",
+      "op": "new_scene",
+      "cue": "three",
+      "visual": "Top-down teaching card: exactly three oranges across ivory paper.",
+      "change": "Cut from market portrait to a controlled equal-object comparison.",
+      "keep": "Exactly three individually visible copies; identical fruit shape.",
+      "refs": [],
+      "layout": {
+        "asset": "orange",
+        "count": "count"
+      },
+      "overlays": [
+        {
+          "type": "text",
+          "text": "{count} oranges · {total} total",
+          "at": "safe.top"
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "scene": "countertop",
+      "op": "overlay_only",
+      "cue": "each",
+      "visual": "Price for one orange is two dollars.",
+      "change": "Replace the total with the unit-price equation and three matching two-dollar labels.",
+      "keep": "Three orange positions unchanged.",
+      "refs": [
+        "P04"
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "{total} ÷ {count} = {each} each",
+          "at": "safe.top"
+        },
+        {
+          "type": "text",
+          "text": "{each}",
+          "at": "orange_1.below"
+        },
+        {
+          "type": "text",
+          "text": "{each}",
+          "at": "orange_2.below"
+        },
+        {
+          "type": "text",
+          "text": "{each}",
+          "at": "orange_3.below"
+        }
+      ]
+    }
+  ]
+}

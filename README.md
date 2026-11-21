@@ -1,2 +1,14 @@
 # video-renderer
-generates narration, times each visual reveal to the spoken phrase, requests panels from frame-renderer, and assembles the final MP4.
+
+Local English narration, speech-driven visual timing and checked H.264/AAC exports. Calls `frames-renderer` through HTTP. No image-model imports in this service.
+
+```sh
+./bin/start-video-renderer   # staged port 8789; VIDEO_FRAME_URL defaults to :8788
+python3 examples/offers-v2.py ryan |
+  curl -fsS -H 'Content-Type: application/json' --data-binary @- http://127.0.0.1:8789/v2/renders
+curl -fsS http://127.0.0.1:8789/v2/renders/<job>/video -o lesson.mp4
+```
+
+`ryan`, `heart`, `chatter`, `laura`, `jasper` are separate local voice profiles. A second argument to the fixture is the prior visual job: the accepted PNG hashes stay unchanged. For subtitle-only revisions, also set `reuse_recording_from` to reuse the verified WAV and alignment. `POST /v2/renders/upload` accepts multipart `request` and `audio`. Original `/renders` continues as a migration route for bundled WAVs and authored milliseconds. Old jobs are read only.
+
+`bin/setup-audition` provisions isolated environments and pinned model snapshots outside Git. See its logs on failure; it needs Ubuntu user-space eSpeak support and the existing workstation tools. `bin/package-audition`, `bin/check-audition` and `bin/audition-reel` produce the blind pack, independent transcription, and the short reel. Voice naturalness and perceived sync are not machine-certified. Qwen forced alignment estimates timings; unprompted faster-whisper supplies a separate transcript, not ground truth.

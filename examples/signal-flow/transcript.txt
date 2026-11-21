@@ -1,0 +1,1 @@
+Press a button. The controller receives a signal, and then it switches the lamp on. The button doesn't power the lamp directly. It tells the controller what to do.

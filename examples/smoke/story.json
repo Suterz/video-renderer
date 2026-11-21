@@ -1,0 +1,19 @@
+{
+  "schema_version":"1.0",
+  "story_id":"first-apple-demo",
+  "title":"A visible apple",
+  "premise":"One illustrative still with narration, used to prove the HTTP entry point before difficult scenes.",
+  "signature":"Original cartoon: blunt plum contours around one rounded object, ivory paper, restrained orange and teal accents, no writing or arrows. Leave the lower third quiet.",
+  "output":{"width":1080,"height":1920,"fps":30},
+  "audio":{"part":"audio","format":"pcm_s16le","sample_rate":48000,"channels":1},
+  "end_ms":6000,
+  "cues":[{"id":"start","ms":0,"say":"This apple is the first panel of our cartoon."}],
+  "panels":[
+    {
+      "id":"P01","scene":"still","op":"new_scene","cue":"start",
+      "visual":"One large red apple, green leaf, centered on blank warm ivory paper. No text, no arrows, no extra fruit.",
+      "change":"Establish the sole illustrated apple.",
+      "keep":"Original plum outline, legible silhouette.","refs":[],"seed":169,"overlays":[]
+    }
+  ]
+}

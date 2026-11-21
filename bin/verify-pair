@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+base = Path.home() / "Videos/video-renderer/jobs"
+ff = str(Path.home() / "ai/tools/media/bin/ffmpeg")
+dest = Path(sys.argv[1])
+dest.mkdir(parents=True, exist_ok=True)
+rows, art = [], []
+for id_, letter in zip(sys.argv[2:], ("01", "02"), strict=True):
+    p = base / id_
+    m = json.loads((p / "manifest.json").read_text())
+    frames = m["verification"]["expected_video_frames"]
+    art.append([hashlib.sha256((p / item["filename"]).read_bytes()).hexdigest() for item in m["panels"]])
+    assert art[-1] == [x["sha256"] for x in m["panels"]]
+    assert frames < 900
+    assert frames > m["beats"][-1]["frame"]
+    n = next(b["frame"] for b in m["beats"] if b["id"] == "units")
+    names = []
+    for f, suffix in [(n-1, "before units"), (n, "units appear"), (frames-1, "final hold")]:
+        name = f"{letter} - {suffix} - frame {f}.png"
+        subprocess.run([ff, "-v", "error", "-y", "-i", str(p / "video.mp4"), "-vf",
+                        f"select=eq(n\\,{f}),scale=360:640", "-frames:v", "1", str(dest / name)],
+                       check=True, timeout=90)
+        names.append(name)
+    name = f"{letter} - Same lesson.mp4"
+    process = subprocess.run(["curl", "-fsS", f"http://127.0.0.1:8789/v2/renders/{id_}/video", "-o", str(dest / name)], check=True)
+    sha = hashlib.sha256((dest / name).read_bytes()).hexdigest()
+    assert sha == hashlib.sha256((p / "video.mp4").read_bytes()).hexdigest()
+    rows.append({"id": id_, "voice": m["voice_profile"], "beats": m["beats"], "audio_hash": m["wav_sha256"],
+                 "media_sha256": sha, "frames": frames, "duration": m["verification"]["ffprobe"]["format"]["duration"],
+                 "images": names, "wall_seconds": m["seconds"], "visuals_reused": m["reused"]})
+assert art[0] == art[1] and rows[1]["visuals_reused"] is True
+assert rows[0]["audio_hash"] != rows[1]["audio_hash"]
+assert [b["frame"] for b in rows[0]["beats"]] != [b["frame"] for b in rows[1]["beats"]]
+(dest / "Timing and reuse.json").write_text(json.dumps({"same_panel_hashes": art[0], "jobs": rows}, indent=2))
+print(rows)

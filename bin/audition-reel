@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Blind contrast reel: each excerpt starts at its own spoken checkout cue."""
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+job = Path(sys.argv[2])
+out = root / "blind"
+ff = str(Path.home() / "ai/tools/media/bin/ffmpeg")
+python = Path.home() / "venvs/v2-align/bin/python"
+worker = Path(__file__).resolve().parents[1] / "src/video_renderer/speech_worker.py"
+key = json.loads((out / "Answer key.json").read_text())
+rows, concat = {}, []
+
+
+def command(*args):
+    subprocess.run([ff, "-v", "error", "-y", *map(str, args)], check=True, timeout=150)
+
+
+for letter, profile in key.items():
+    wav = out / "Listen first" / f"{letter}1.wav"
+    aligned = subprocess.run([str(python), str(worker), "align", str(root), str(wav)],
+                             input=json.dumps({"text": profile["passages"][0]}), text=True, capture_output=True,
+                             env={**os.environ, "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1"}, check=True, timeout=120)
+    words = json.loads(aligned.stdout.splitlines()[-1])
+    normalized = [x["word"].lower().strip(".,?!:") for x in words]
+    times = [words[next(i for i in range(len(words)) if normalized[i:i+len(phrase)] == phrase)]["start"] for phrase in
+             (["at", "checkout"], ["but", "per", "orange"], ["the", "second", "wins"])]
+    # Each excerpt uses the same three source PNGs. Trimming happens in the
+    # audio sample time domain, and required image changes use absolute CFR indices.
+    end = words[-1]["end"]
+    cuts = [0] + [round((t-times[0])*30) for t in times[1:]] + [round((end-times[0]+.30)*30)]
+    assert cuts == sorted(set(cuts))
+    tmp = root / f"reel-{letter}"
+    tmp.mkdir(exist_ok=True)
+    images = []
+    from PIL import Image, ImageDraw, ImageFont
+    for idx in range(3):
+        image = Image.open(job / f"frame-{idx+1}.png").convert("RGB").resize((540, 960))
+        draw = ImageDraw.Draw(image)
+        draw.rounded_rectangle((20, 875, 77, 935), radius=10, fill="#302337")
+        draw.text((48, 905), letter, anchor="mm", fill="white",
+                  font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 32))
+        images.append(image.tobytes())
+    clip = tmp / "excerpt.mp4"
+    with subprocess.Popen([ff, "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", "540x960",
+                           "-r", "30", "-i", "pipe:0", "-ss", str(times[0]), "-i", str(wav), "-af", "apad",
+                           "-t", str(cuts[-1]/30), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac",
+                           str(clip)], stdin=subprocess.PIPE) as proc:
+        for i in range(3):
+            for _ in range(cuts[i], cuts[i+1]):
+                proc.stdin.write(images[i])
+        proc.stdin.close()
+        assert proc.wait(timeout=90) == 0
+    concat.append(f"file '{clip}'")
+    rows[letter] = {"checkout_seconds": times[0], "unit_seconds": times[1], "winner_seconds": times[2], "relative_frames": cuts}
+assert sum(x["relative_frames"][-1] for x in rows.values()) < 45*30
+playlist = root / "reel.txt"
+playlist.write_text("\n".join(concat))
+reel = out / "Comparison reel.mp4"
+command("-f", "concat", "-safe", "0", "-i", playlist, "-c", "copy", "-movflags", "+faststart", reel)
+command("-i", reel, "-f", "null", "-")
+rows["sha256"] = hashlib.sha256(reel.read_bytes()).hexdigest()
+(out / "Comparison reel timing.json").write_text(json.dumps(rows, indent=2))

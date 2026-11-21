@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "story_id": "apple-into-basket",
+  "title": "Show where an apple goes",
+  "premise": "An arrow can explain that an apple goes into a basket if it ends inside the opening.",
+  "context": "A short graphic-placement transfer test with an actual basket part and a controlled composition.",
+  "signature": "Pocket Cutouts: original plum outlined apple and ochre open basket on ivory paper; no baked text.",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "audio": {
+    "part": "audio",
+    "format": "pcm_s16le",
+    "sample_rate": 48000,
+    "channels": 1
+  },
+  "end_ms": 9088,
+  "cues": [
+    {
+      "id": "start",
+      "ms": 0,
+      "say": "An apple sits beside a basket."
+    },
+    {
+      "id": "arrow",
+      "ms": 2477,
+      "say": "A precise arrow points into the opening, not at the rim."
+    }
+  ],
+  "assets": {
+    "apple": {
+      "kind": "generated_cutout",
+      "visual": "ONE simple juicy red apple and a green leaf on clean flat white; object fills the center, no floor shadow",
+      "seed": 174
+    },
+    "basket": {
+      "kind": "generated_cutout",
+      "visual": "ONE round OPEN ochre wicker basket with a LARGE dark empty oval interior at the top. No arch handle, no lettering, clean flat white background and no floor shadow.",
+      "seed": 387,
+      "anchors": {
+        "opening": "a point inside the dark empty opening at the top of this one woven basket, away from its light rim"
+      }
+    }
+  },
+  "panels": [
+    {
+      "id": "R01",
+      "scene": "transfer",
+      "op": "new_scene",
+      "cue": "start",
+      "visual": "One apple beside one open wicker basket, separated by clean negative space.",
+      "change": "Establish distinct objects.",
+      "keep": "Use actual reusable illustrated cutouts, not free-form additional fruit.",
+      "refs": [],
+      "layout": {
+        "layers": [
+          {
+            "id": "apple_1",
+            "asset": "apple",
+            "center": [
+              0.24,
+              0.5
+            ],
+            "width": 0.2
+          },
+          {
+            "id": "basket",
+            "asset": "basket",
+            "center": [
+              0.72,
+              0.5
+            ],
+            "width": 0.32
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "type": "text",
+          "text": "APPLE",
+          "at": "safe.top"
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "scene": "transfer",
+      "op": "overlay_only",
+      "cue": "arrow",
+      "visual": "Show the apple's destination inside the basket opening.",
+      "change": "A gold arrow from apple body to the basket opening.",
+      "keep": "Absolutely identical illustrated cutouts and their positions.",
+      "refs": [
+        "R01"
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "APPLE → BASKET",
+          "at": "safe.top"
+        },
+        {
+          "type": "arrow",
+          "from": "apple_1.center",
+          "to": "basket.opening"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export PATH="$HOME/.local/bin:$PATH"
+base="$HOME/ai/storyboard-build/v2"
+repo="$(cd "$(dirname "$0")/.." && pwd)"
+mkdir -p "$base"/{logs,raw,models}
+export HF_HOME="$HOME/ai/hf-cache"
+hf="$HOME/venvs/comfy-storyboard/bin/hf"
+function candidate() {
+  local name="$1" model="$2" rev="$3"
+  shift 3
+  local env="$HOME/venvs/v2-$name"
+  test -x "$env/bin/python" || uv venv "$env" --python /usr/bin/python3
+  "$hf" download "$model" --revision "$rev" --local-dir "$base/models/$name" --exclude '*.wav' --exclude '*.png' --exclude '*.jpg' > "$base/logs/$name-download.log" 2>&1 &
+  local download=$!
+  if [[ "$name" == ryan || "$name" == laura ]]; then
+    uv pip install --python "$env/bin/python" torch torchaudio --index-url https://download.pytorch.org/whl/cu130
+  fi
+  if [[ "$name" == jasper ]]; then
+    # Upstream 0.8 wheel metadata declares 0.1.0 internally.
+    UV_SKIP_WHEEL_FILENAME_CHECK=1 uv pip install --python "$env/bin/python" soundfile "$@"
+  else
+    uv pip install --python "$env/bin/python" soundfile "$@"
+  fi
+  wait "$download"
+  HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 "$env/bin/python" -u "$repo/src/video_renderer/voice_profiles.py" "$name" "$base" "$rev"
+}
+function speech_qa() {
+  local env="$HOME/venvs/v2-asr"
+  test -x "$env/bin/python" || uv venv "$env" --python /usr/bin/python3
+  "$hf" download Systran/faster-whisper-small.en --revision d1d751a5f8271d482d14ca55d9e2deeebbae577f --local-dir "$base/models/asr" &
+  local download=$!
+  uv pip install --python "$env/bin/python" faster-whisper
+  wait "$download"
+}
+function alignment() {
+  local env="$HOME/venvs/v2-align"
+  test -x "$env/bin/python" || uv venv "$env" --python /usr/bin/python3
+  uv pip install --python "$env/bin/python" qwen-asr soundfile
+  "$hf" download Qwen/Qwen3-ForcedAligner-0.6B --revision c7cbfc2048c462b0d63a45797104fc9db3ad62b7 --local-dir "$base/models/align"
+}
+mkdir -p "$base/espeak"
+if ! test -x "$base/espeak/usr/bin/espeak-ng"; then
+  (cd "$base/espeak" && apt download espeak-ng && dpkg-deb -x ./espeak-ng_*.deb .)
+fi
+export PATH="$base/espeak/usr/bin:$PATH"
+export PHONEMIZER_ESPEAK_LIBRARY="/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1"
+candidate ryan Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice 0c0e3051f131929182e2c023b9537f8b1c68adfe qwen-tts > "$base/logs/ryan.log" 2>&1 &
+candidate heart hexgrad/Kokoro-82M f3ff3571791e39611d31c381e3a41a3af07b4987 'kokoro>=0.9.2' 'https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl' > "$base/logs/heart.log" 2>&1 &
+candidate chatter ResembleAI/chatterbox 5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18 chatterbox-tts 'setuptools<81' > "$base/logs/chatter.log" 2>&1 &
+candidate laura parler-tts/parler-tts-mini-v1 0392b9451a601e528fd863bbb0598431fee810d9 'git+https://github.com/huggingface/parler-tts.git' > "$base/logs/laura.log" 2>&1 &
+candidate jasper KittenML/kitten-tts-mini-0.8 c02725660cea441db4c383af69f1f26f5cd00947 'https://github.com/KittenML/KittenTTS/releases/download/0.8/kittentts-0.8.0-py3-none-any.whl' > "$base/logs/jasper.log" 2>&1 &
+speech_qa > "$base/logs/asr.log" 2>&1 &
+alignment > "$base/logs/align.log" 2>&1 &
+pids=$(jobs -p)
+exitcode=0
+for pid in $pids; do wait "$pid" || exitcode=1; done
+exit "$exitcode"

@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "story_id": "button-controller-lamp",
+  "title": "Why a button can light a lamp",
+  "premise": "A button sends a request to a controller, and the controller turns on a lamp.",
+  "context": "Explain a two-step signal path rather than implying that a button powers the lamp.",
+  "signature": "Pocket Cutouts: blunt plum ink contours, warm ivory paper, apricot focal shapes, teal shadows, simple rounded shapes and ample negative space. Expressive objects; no baked words.",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "audio": {
+    "part": "audio",
+    "format": "pcm_s16le",
+    "sample_rate": 48000,
+    "channels": 1
+  },
+  "end_ms": 13325,
+  "cues": [
+    {
+      "id": "first",
+      "ms": 0,
+      "say": "Press a button."
+    },
+    {
+      "id": "send",
+      "ms": 1072,
+      "say": "The controller receives a signal,"
+    },
+    {
+      "id": "on",
+      "ms": 3259,
+      "say": "and then it switches the lamp on.",
+      "caption": "and then it switches the lamp on."
+    },
+    {
+      "id": "lamp",
+      "ms": 4872,
+      "say": "",
+      "caption": "and then it switches the lamp on."
+    },
+    {
+      "id": "detail",
+      "ms": 5852,
+      "say": "The button doesn't power the lamp directly."
+    },
+    {
+      "id": "last",
+      "ms": 8514,
+      "say": "It tells the controller what to do."
+    }
+  ],
+  "panels": [
+    {
+      "id": "S01",
+      "scene": "desk",
+      "op": "new_scene",
+      "cue": "first",
+      "visual": "One large round apricot push button on the far left, one rectangular teal controller box in the middle, and one tall desk lamp on the right. Isolated on ivory paper with lots of clear white space between all three. The lamp is fully DARK, no illumination, no glowing rays or beams. There are NO painted arrows, NO symbols, no signal lines, no connections between objects, no cables and no writing anywhere.",
+      "change": "Establish the three distinct components.",
+      "keep": "Left-to-right readable diagram, no other buttons, controllers or lamps.",
+      "refs": [],
+      "seed": 403,
+      "visual_checks": [
+        {
+          "question": "Are any arrows or arrow-like connector marks already painted between the three objects? Reply yes or no only.",
+          "expected": "no"
+        },
+        {
+          "question": "Are there any bright light rays or glow coming out of the lamp? Reply yes or no only.",
+          "expected": "no"
+        }
+      ],
+      "anchors": {
+        "button.center": "center of the single apricot push button on the left",
+        "controller.center": "center of the single teal controller box in the middle",
+        "lamp.center": "center of the desk lamp on the right"
+      },
+      "overlays": [
+        {
+          "type": "text",
+          "text": "BUTTON   →   CONTROLLER   →   LAMP",
+          "at": "safe.top"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "scene": "desk",
+      "op": "overlay_only",
+      "cue": "send",
+      "visual": "Highlight the first direction.",
+      "change": "Draw one gold arrow from the button to the controller.",
+      "keep": "Original illustration completely unchanged.",
+      "refs": [
+        "S01"
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "BUTTON   →   CONTROLLER   →   LAMP",
+          "at": "safe.top"
+        },
+        {
+          "type": "arrow",
+          "from": "button.center",
+          "to": "controller.center"
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "scene": "desk",
+      "op": "overlay_only",
+      "cue": "on",
+      "visual": "Reveal the second direction.",
+      "change": "Add a second gold arrow from controller to lamp.",
+      "keep": "Keep first connection and all artwork unchanged.",
+      "refs": [
+        "S02"
+      ],
+      "overlays": [
+        {
+          "type": "text",
+          "text": "BUTTON   →   CONTROLLER   →   LAMP",
+          "at": "safe.top"
+        },
+        {
+          "type": "arrow",
+          "from": "button.center",
+          "to": "controller.center"
+        },
+        {
+          "type": "arrow",
+          "from": "controller.center",
+          "to": "lamp.center"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "scene": "desk",
+      "op": "edit_scene",
+      "cue": "lamp",
+      "visual": "Same button and controller in precisely the same locations. The same lamp is now clearly glowing warm gold; bright cone of light below its shade.",
+      "change": "Turn the previously dark lamp on; add warm glow.",
+      "keep": "Button, controller, lamp identity and outline, camera, spacing and palette must remain unchanged. No text.",
+      "refs": [
+        "S03"
+      ],
+      "seed": 409,
+      "anchors": {
+        "button.center": "center of the single apricot push button on the left",
+        "controller.center": "center of the single teal controller box in the middle",
+        "lamp.center": "center of the desk lamp's trapezoidal SHADE on the right, not its pole, base or light rays"
+      },
+      "overlays": [
+        {
+          "type": "text",
+          "text": "BUTTON   →   CONTROLLER   →   LAMP",
+          "at": "safe.top"
+        },
+        {
+          "type": "arrow",
+          "from": "button.center",
+          "to": "controller.center"
+        },
+        {
+          "type": "arrow",
+          "from": "controller.center",
+          "to": "lamp.center"
+        }
+      ]
+    }
+  ]
+}

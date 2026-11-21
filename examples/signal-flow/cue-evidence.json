@@ -1,0 +1,16 @@
+{
+  "method": "Piper alignment from exact synthesized chunks",
+  "voice": "LJSpeech high ONNX",
+  "length_scale": 1.18,
+  "sentence_silence": 0.12,
+  "cues_ms": {
+    "first": 0,
+    "send": 1072,
+    "on": 3259,
+    "lamp": 4872,
+    "detail": 5852,
+    "last": 8514
+  },
+  "speech_seconds": 10.975419501133787,
+  "end_ms": 13325
+}
