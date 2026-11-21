@@ -37,15 +37,27 @@ def bind(script, aligned):
         ts = tokens(entry["word"])
         word_tokens.extend(ts)
         indexes.extend([i] * len(ts))
-    expected = [t for u in script for t in tokens(u["text"])]
-    if word_tokens != expected:
-        raise TimingReview(f"alignment token mismatch: expected {expected}, observed {word_tokens}")
     bound = {}
     pos = 0
     for u in script:
-        words = tokens(u["text"])
-        bound[u["id"]] = (words, [aligned[indexes[j]] for j in range(pos, pos + len(words))])
-        pos += len(words)
+        words, spans = [], []
+        for group in re.findall(r"[a-z0-9]+(?:'[a-z]+)?(?:[-‐‑][a-z0-9]+(?:'[a-z]+)?)*",
+                                u["text"].replace("’","'").lower()):
+            parts=tokens(group)
+            words.extend(parts)
+            if word_tokens[pos:pos+len(parts)]==parts:
+                spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
+                pos+=len(parts)
+            elif len(parts)>1 and word_tokens[pos:pos+1]==["".join(parts)]:
+                outer=aligned[indexes[pos]]
+                spans.extend({**outer,"internal_start":i>0,"internal_end":i<len(parts)-1}
+                             for i in range(len(parts)))
+                pos+=1
+            else:
+                raise TimingReview(f"alignment token mismatch in {u['id']}: expected {parts!r}, observed {word_tokens[pos:pos+len(parts)]!r}")
+        bound[u["id"]] = (words,spans)
+    if pos!=len(word_tokens):
+        raise TimingReview("alignment token mismatch: extra trailing tokens")
     return bound
 
 
@@ -63,6 +75,8 @@ def cue_sample(cue, bound):
     i = matches[(occurrence or 1) - 1]
     edge = cue.get("edge", "start")
     idx = i if edge == "start" else i + len(phrase) - 1
+    if alignment[idx].get(f"internal_{edge}"):
+        raise TimingReview("cue uses an internal boundary of a fused alignment token")
     return sample(alignment[idx][edge]) + cue.get("offset_ms", 0) * 48
 
 
