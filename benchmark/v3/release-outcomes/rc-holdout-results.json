@@ -1,0 +1,170 @@
+{
+  "config": {
+    "frames": "420876c7a6d8e533e35ae5dff4b0d6c4dacd0281",
+    "video": "3054572c76dc2d30beed4721316135c5b7639a66",
+    "harness": "3054572c76dc2d30beed4721316135c5b7639a66",
+    "mode": "v3",
+    "endpoint": "http://127.0.0.1:8817",
+    "frame_store": "/home/zelio-suter/Videos/storyboard-v3/rc-holdout/frames",
+    "job_store": "/home/zelio-suter/Videos/storyboard-v3/rc-holdout/jobs",
+    "sealed": "0e451e3ee542b1270833aad26463b44daf017d61"
+  },
+  "outcomes": [
+    {
+      "id": "H01",
+      "job_id": "82a375bca8ea4211a3f94a33d29b3e1a",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 54.052,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "5f991b6c765679f6c9c26acc9a4a5137fcdc175cf02d52ef56fef60329f9c2e2",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Decoded frame 0 shows 2 L × 6 m²/L above 3 L × 3 m²/L. The two displayed results are 12 and 9 square meters.",
+        "association": "The upper and lower positions stay fixed through the calculation. The upper bar is longer and its label remains paired with the higher value; the closing line names the smaller tin.",
+        "disclosure": "Neither coverage output appears before frame 326. The question is held first. Closing answer appears at frame 427.",
+        "mechanism": "Multiplication cancels liters: 2 × 6 = 12 and 3 × 3 = 9. The renderer drew both bars from the same baseline with a 4:3 length ratio.",
+        "phone": "The decoded 360×640 text remains readable. The textured background is busy but does not hide the values.",
+        "voice_content": "Independent transcript preserves both volumes, per-liter rates and coverage results; voice quality pending."
+      }
+    },
+    {
+      "id": "H02",
+      "job_id": "141a0a43b8be4509830e6d5a9057541d",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 40.039,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The phone-size graphic shows four colored bars, but the thin connectors marking one folded sheet blend into the busy paper texture. The visual does not reliably distinguish four connected layers from four separate sheets. The final label asserts the distinction instead of making it legible in the mechanism."
+      ],
+      "download_sha256": "0feb4f5d2baaa735d60003eab4d237f35458b73a7c9f76102dc317974b34bc80",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The phone-size graphic shows four colored bars, but the thin connectors marking one folded sheet blend into the busy paper texture. The visual does not reliably distinguish four connected layers from four separate sheets. The final label asserts the distinction instead of making it legible in the mechanism."
+        ]
+      }
+    },
+    {
+      "id": "H03",
+      "job_id": "e45c690d381a446981031c2104ba9c77",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 20.031,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "H04",
+      "job_id": "883065fd35444d52abe2669fa3689d13",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 20.033,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "H05",
+      "job_id": "02f8e4a106d9477eb80709fb0a39496d",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 64.067,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "At frame 283 the arrowhead touches the long rectangular pull assembly below the point where the two toothed rows meet. It does not point at the slider block at the Y junction. A gold-colored parent-region hit is not a semantic part pass."
+      ],
+      "download_sha256": "d73a8b0e40fd969ad0f74776f866e5796914067c3f343a02bcaa945ee126a705",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "At frame 283 the arrowhead touches the long rectangular pull assembly below the point where the two toothed rows meet. It does not point at the slider block at the Y junction. A gold-colored parent-region hit is not a semantic part pass."
+        ]
+      }
+    },
+    {
+      "id": "H06",
+      "job_id": "de683742ffd3453c8bf47df03cc23222",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 34.041,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "H07",
+      "job_id": "b5056796573041e081d127893943b5c1",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 20.021,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "H08",
+      "job_id": "3ac2e923bbba4a03a6f039775b8c1353",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 40.038,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Three labels are drawn over two stationary human silhouettes and arbitrary spaces. At frame 235 the labels change positions while the silhouettes do not move. A viewer cannot trace one marker moving to the back of a three-member queue. The truncated opening title adds ambiguity."
+      ],
+      "download_sha256": "e1680709567ce0f3056ec32f3e2a7c264e41c4b49d6526e51a1b00914b0fbc9f",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Three labels are drawn over two stationary human silhouettes and arbitrary spaces. At frame 235 the labels change positions while the silhouettes do not move. A viewer cannot trace one marker moving to the back of a three-member queue. The truncated opening title adds ambiguity."
+        ]
+      }
+    },
+    {
+      "id": "H09",
+      "job_id": "45a7aa1dd6b9473fa8761fc1457ee131",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 56.051,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The child and reflection pixels stay in the same places between before and after; only an overlaid extent changes. The apparent new interval endpoints do not track the silhouettes. Thus the rendered image does not demonstrate equal offsets while the child approaches the fixed mirror."
+      ],
+      "download_sha256": "4ad5389556c5eae947627af58bac5a9b8a7b39602e1c82179d62e9ba2826f7c8",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The child and reflection pixels stay in the same places between before and after; only an overlaid extent changes. The apparent new interval endpoints do not track the silhouettes. Thus the rendered image does not demonstrate equal offsets while the child approaches the fixed mirror."
+        ]
+      }
+    },
+    {
+      "id": "H10",
+      "job_id": "2b280b28c29340d7a6da5688d4eeb911",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 20.024,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    }
+  ]
+}

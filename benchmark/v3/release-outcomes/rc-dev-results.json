@@ -1,0 +1,858 @@
+{
+  "config": {
+    "frames": "420876c7a6d8e533e35ae5dff4b0d6c4dacd0281",
+    "video": "3054572c76dc2d30beed4721316135c5b7639a66",
+    "harness": "3054572c76dc2d30beed4721316135c5b7639a66",
+    "mode": "v3",
+    "endpoint": "http://127.0.0.1:8815",
+    "frame_store": "/home/zelio-suter/Videos/storyboard-v3/rc-dev/frames",
+    "job_store": "/home/zelio-suter/Videos/storyboard-v3/rc-dev/jobs"
+  },
+  "outcomes": [
+    {
+      "id": "D01",
+      "job_id": "856519186ebd4bedb277e7fa0e790576",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 66.069,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "ba8dcf89a649d39487a251480b91e9fc3caca21ded1c0dbbedb08262466176a1",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Frame 0 shows 3 for $6 and 5 for $8. Independent connected-component scan of the output found [3,5]; phone decoded positions agree.",
+        "association": "Each equation is directly beneath its own row. The conclusion separately names the $8 bag for unit cost and the $6 bag for checkout.",
+        "disclosure": "Decoded frames 249/250 distinguish question and mechanism. Frames 349/350 show the 40-cent conclusion beginning only at the intended beat. Independent ASR contains no premature answer.",
+        "mechanism": "Visible division computes cents-per-orange: 600/3=200, 800/5=160, 200-160=40.",
+        "phone": "Question and arithmetic readable on decoded phone sheet; manual read confirms ÷ where OCR transcribed +. Repeated cutout edge fragments remain a cosmetic flaw.",
+        "voice_content": "Independent ASR reproduced the quantities, dollar totals and 40-cent distinction without obvious missing words. Naturalness not heard."
+      }
+    },
+    {
+      "id": "D02",
+      "job_id": "d85b716e8bce4b9791ed5734ca32ece8",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 100.104,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The narration correction removed the ASR refusal and the final durations are correct. During the visible mechanism, however, the 4-minute wait and 12-minute ride disappear into one undifferentiated red bar. This does not show the promised shared origin and waiting segment. See decoded frame 290."
+      ],
+      "download_sha256": "a1e6e7cad9175b6bbcd9e74357648d3a7fb49c8625af4d6df2602ba585661b54",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The narration correction removed the ASR refusal and the final durations are correct. During the visible mechanism, however, the 4-minute wait and 12-minute ride disappear into one undifferentiated red bar. This does not show the promised shared origin and waiting segment. See decoded frame 290."
+        ]
+      }
+    },
+    {
+      "id": "D03",
+      "job_id": "37b085b2f9de454cad0911e016cea642",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 66.08,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Frame 230 swaps the original price inputs for two bare equations. A muted viewer can read the claims, but the graphic never represents accumulating the 2-dollar trips or preserves which side is the pass. Frame 503 repeats the claim without showing the mechanism."
+      ],
+      "download_sha256": "690d72909870f77eb668566e304e93a8f665ec2a92dcabf8248821457174428a",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Frame 230 swaps the original price inputs for two bare equations. A muted viewer can read the claims, but the graphic never represents accumulating the 2-dollar trips or preserves which side is the pass. Frame 503 repeats the claim without showing the mechanism."
+        ]
+      }
+    },
+    {
+      "id": "D04",
+      "job_id": "2d390b7b7aae44d884ffed82ff387dba",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 44.05,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "At the demonstration the photo disappears, leaving two boxes and verdicts. There is no overlay, edge alignment or visual test of the photo against the shorter side. Readable labels and correct narration do not substitute for the proposed fit demonstration."
+      ],
+      "download_sha256": "ae84f5c632792fe10573c7460fcadc57cccbfaff95f38215c14fcf0759e037d8",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "At the demonstration the photo disappears, leaving two boxes and verdicts. There is no overlay, edge alignment or visual test of the photo against the shorter side. Readable labels and correct narration do not substitute for the proposed fit demonstration."
+        ]
+      }
+    },
+    {
+      "id": "D05",
+      "job_id": "99a5b11f5fcb4d8aade29b2536fa0809",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 38.043,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D06",
+      "job_id": "ea8b477136bf45b386a58e39f72d9c29",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 26.032,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The numbers are right, but the decoded opening merely says THREE TRAYS without depicting any. Later the loose rows lack tray boundaries and the remainder is just another dot. The grouping mechanism is under-specified. Compare the separately queued revision with explicit trays and an outside remainder."
+      ],
+      "download_sha256": "ba44a77936cac235dc0c97102db990c2a3edf6fbff1df1b21cac98e7f0c13119",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The numbers are right, but the decoded opening merely says THREE TRAYS without depicting any. Later the loose rows lack tray boundaries and the remainder is just another dot. The grouping mechanism is under-specified. Compare the separately queued revision with explicit trays and an outside remainder."
+        ]
+      }
+    },
+    {
+      "id": "D07",
+      "job_id": "c7f3edbc01814c4faea76b774fee8f81",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 46.043,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D08",
+      "job_id": "9401de8c14f6425c846a2e13a32c4741",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 30.035,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "At the question one is said to be unmarked, but none of the first frame's four areas is actually marked. Only after the prediction hold do the marked areas appear. The question cannot be answered from the picture at the intended time."
+      ],
+      "download_sha256": "f323dcd997d703ad3c93353dd598844e0c1a193e1e768b97c1615a4a54149de4",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "At the question one is said to be unmarked, but none of the first frame's four areas is actually marked. Only after the prediction hold do the marked areas appear. The question cannot be answered from the picture at the intended time."
+        ]
+      }
+    },
+    {
+      "id": "D09",
+      "job_id": "827b5c6986b04550a1ff6913760b5a54",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 26.026,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "93d3e46f379f92ead103f0e042c15c6ffd7126bb543e5b856b3d522b10232594",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "At frame zero, six distinct filled counters are visible. Raster checks pass for the six expected counter centers before and after.",
+        "association": "The X marks are directly above the first two of the same six. No copied subset or alternative pile appears.",
+        "disclosure": "Before frame 192, no X marks or changed-result caption. The question has a 2.08 s observed hold. The closing rule does not appear until frame 269.",
+        "mechanism": "The counters retain their positions; marking two changes subset membership without adding objects.",
+        "phone": "Decoded contact sheet clearly distinguishes the X glyphs from the six round silhouettes, without needing color.",
+        "voice_content": "Independent transcript exactly conveys six, marking two and still six. Subjective delivery pending."
+      }
+    },
+    {
+      "id": "D10",
+      "job_id": "2d8b2bea49ba473ebbc23c19b8190c3c",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 28.033,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "077e7de171070879b1900cc029338135e5137bb58ea904c207144d72243b3ce7",
+      "inspection": null
+    },
+    {
+      "id": "D11",
+      "job_id": "e2ed1330de834c68a11921814e874a25",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 54.064,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The frozen revision retains the printed key and repairs the lost labels. However frames 0–282 still present one continuous unticked segment while the question asks about two countable intervals. Required visual inputs must exist before prediction. The correct 4 km result and two equal ticks at frame 283 do not fix that earlier deficit."
+      ],
+      "download_sha256": "17b2b34e61fc4535faa5c95132732f53d146335c4e72f27c9bfa5a7baf8f54ed",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The frozen revision retains the printed key and repairs the lost labels. However frames 0–282 still present one continuous unticked segment while the question asks about two countable intervals. Required visual inputs must exist before prediction. The correct 4 km result and two equal ticks at frame 283 do not fix that earlier deficit."
+        ]
+      }
+    },
+    {
+      "id": "D12",
+      "job_id": "6aa545330ae94b97a42d3064595563c0",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 72.112,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "836823b49e92078cc1bb00fa8fc3bc3e60de8eba8dddc6f4a8d1d1e4ac798ce4",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The first phone frame shows the segment with endpoints aligned to the 3 and 11 ticks and eight equal gaps.",
+        "association": "The length bar and ruler share their endpoints; the last mark is not substituted for length.",
+        "disclosure": "Frame 182 adds 11 minus 3 only after a 1.99 s question hold. Frame 302 shows the result.",
+        "mechanism": "Eight equal gaps and independently 11−3=8. Labels remain readable.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR preserves start 3, end 11, and 8 rather than 11."
+      }
+    },
+    {
+      "id": "D13",
+      "job_id": "279c87a5ea264e5ea8e93a80391e3845",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 112.106,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D14",
+      "job_id": "b24dfbf0eb994b18adfad9d555abdec6",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 100.111,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D15",
+      "job_id": "5794c574509746749ec4f78989a1a18b",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 66.075,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D16",
+      "job_id": "2b3c7e72b9784d9b854f8aab2cdac5be",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 28.035,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The labels identifying sensor, controller and outputs vanish when the arrows appear. At the state change the viewer cannot unambiguously associate the free-floating branches with active fan versus unchanged lamp."
+      ],
+      "download_sha256": "e3620031135dbba5f14ec534a1baa9521e8838ed14384a3d534573aa74e50f47",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The labels identifying sensor, controller and outputs vanish when the arrows appear. At the state change the viewer cannot unambiguously associate the free-floating branches with active fan versus unchanged lamp."
+        ]
+      }
+    },
+    {
+      "id": "D17",
+      "job_id": "d13a090647b844dbb316a4e65146c5b8",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 30.037,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The claimed two chutes are just labels. Only the selected path is drawn, so the setup does not establish two alternative routes returning to a common merge."
+      ],
+      "download_sha256": "08acbab85724e36b0c8651ef3f85c6931af3eda8e2a364f28120a33c9f0f0621",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The claimed two chutes are just labels. Only the selected path is drawn, so the setup does not establish two alternative routes returning to a common merge."
+        ]
+      }
+    },
+    {
+      "id": "D18",
+      "job_id": "837f97391bbe43cf926955365a65e301",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 30.038,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The source, request and power topology eventually draws, but that topology is absent during the prediction, when the viewer is asked to choose 'which connection'. The first four-word title fragment is incomplete too."
+      ],
+      "download_sha256": "880cecbf9cc8a653aff2be0cdd8cbad32325104543cd475bfb20b24d579c7d59",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The source, request and power topology eventually draws, but that topology is absent during the prediction, when the viewer is asked to choose 'which connection'. The first four-word title fragment is incomplete too."
+        ]
+      }
+    },
+    {
+      "id": "D19",
+      "job_id": "cd31a27861fd428199337f2edea49944",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 38.037,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "f2504c963b2b1edad67d5e138469bc67838be42ad8572c1dc2e6d2f3d6a1ca7b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Opening shows the lower water line beneath the overflow mark, with the lower outlet declared shut.",
+        "association": "After the cut the tank stays fixed. The shaft begins on the right wall at the new surface, directed outside.",
+        "disclosure": "No overflow arrow during the 1.59 s prediction hold. It appears at frame 230.",
+        "mechanism": "Surface reaches upper opening before the flow is indicated; diagram ends with the rule. Schematic, not physical footage.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR says lower outlet closed and water leaves only at the upper opening."
+      }
+    },
+    {
+      "id": "D20",
+      "job_id": "6dd00c42f3c34cb5bea8cded202cf098",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 28.031,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The initial picture has only two horizontal segments and no bell or underlying loop; it cannot show the proposed series topology or isolate one open switch."
+      ],
+      "download_sha256": "01a01222bc39c2c8470e01a9bbfc27632ce2b1d8940024f98417f11e341f1f05",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The initial picture has only two horizontal segments and no bell or underlying loop; it cannot show the proposed series topology or isolate one open switch."
+        ]
+      }
+    },
+    {
+      "id": "D21",
+      "job_id": "f07593dc57c841b9b4d6b2fe7180e840",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 84.08,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The setup asserts two tags, but only the right bag has a clearly visible tag in the decoded phone frame. The stripe and knot are visible, but the promised two-tag association is not established."
+      ],
+      "download_sha256": "c6e70ad1bf61bb4819aba437d1dad1cf91a76127d986f76ce18ab08d4a577473",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The setup asserts two tags, but only the right bag has a clearly visible tag in the decoded phone frame. The stripe and knot are visible, but the promised two-tag association is not established."
+        ]
+      }
+    },
+    {
+      "id": "D22",
+      "job_id": "3bda8e357f6c4dfba06bbff9c5796bba",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 60.067,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The opening title says 'Into the basket' before the question asks where the apple should go. The later arrow is a good spatial result, but the picture spoils the prediction."
+      ],
+      "download_sha256": "a49ffa876bfbbf8869b4ee44c305712ade8b3a57a4f11273dd4d955307daa041",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The opening title says 'Into the basket' before the question asks where the apple should go. The later arrow is a good spatial result, but the picture spoils the prediction."
+        ]
+      }
+    },
+    {
+      "id": "D23",
+      "job_id": "a276658f8f264429ba6289936aa7029e",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 28.034,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "2359fcc97fe77528fa5b13c1fe9b441332d148efd1d242eae2f9b621a5cd7998",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Both hands are visible on the schematic before the question, the longer points up to 12 and the shorter to 3.",
+        "association": "Arrow lands on the long hand away from the pivot. The 'minutes' label follows that hand.",
+        "disclosure": "The referent marker first appears at frame 226 after a 2.41 s question hold.",
+        "mechanism": "Correct hour and minute hand lengths, endpoints, and zero-minute conclusion on decoded frames.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR preserves 3, 12, and zero minutes."
+      }
+    },
+    {
+      "id": "D24",
+      "job_id": "92a017b614f44504b9f1b3efe4b5bcea",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 74.091,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The before/after faces are already the same three-quarter viewpoint, despite the front-view label and claim that the book turns. The edit changes coloring, not the diagnostic view."
+      ],
+      "download_sha256": "35e8079abf9ba0439fd110207d10e7eafe803b2c00b70db28b2177136831ba2a",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The before/after faces are already the same three-quarter viewpoint, despite the front-view label and claim that the book turns. The edit changes coloring, not the diagnostic view."
+        ]
+      }
+    },
+    {
+      "id": "D25",
+      "job_id": "aaa793c9f7264a71b1b1af07b369c2f5",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 70.081,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The striped mug has a striped body but an unstriped handle, and the arrow points into its aperture rather than visibly touching handle material."
+      ],
+      "download_sha256": "9b5b26e1c12e41a2738c79f4d9882aa4b18fd0b32e9027e1eed2ac2cb1eb91e9",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The striped mug has a striped body but an unstriped handle, and the arrow points into its aperture rather than visibly touching handle material."
+        ]
+      }
+    },
+    {
+      "id": "D26",
+      "job_id": "b5051fdfdb1540d4887c15e2571e7c64",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 24.029,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D27",
+      "job_id": "91e9326caa684a0d9528bb0eeca8b865",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 38.035,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Only two static pendulum lengths are visible. There is no common elapsed interval, marked phases or count of swings; a longer period is asserted rather than compared."
+      ],
+      "download_sha256": "a2929df18024e648218e8b6a24edfd49c65b6183134ff59bd78543d4d9e45f1c",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Only two static pendulum lengths are visible. There is no common elapsed interval, marked phases or count of swings; a longer period is asserted rather than compared."
+        ]
+      }
+    },
+    {
+      "id": "D28",
+      "job_id": "d860d69bfdd341668045058844f522f8",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 30.039,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The dark shutter is visibly shorter after the movement. The fixture states only the shutter's position changes, but the shape would also need to retain its height."
+      ],
+      "download_sha256": "203ab8cf9b533207e3ffe371717149136a48ed63b2ce77b4be96c614c4c5229b",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The dark shutter is visibly shorter after the movement. The fixture states only the shutter's position changes, but the shape would also need to retain its height."
+        ]
+      }
+    },
+    {
+      "id": "D29",
+      "job_id": "edf239afec8542ef91174cc832b84367",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.024,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D30",
+      "job_id": "03bb945fdb7e4f82a56b35d5523168fc",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.025,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D31",
+      "job_id": "994d1b753f46423f8f19f2532af0ee01",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 28.041,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "d79f3c50bcdda9b0b60bafdebd0110104a8a1a92d8022dbbaedb45cd604184c3",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The opening shows levels 8 and 10 on a visible 0–10 axis.",
+        "association": "Both values retain their row identities on the second axis. Bars share a common baseline in each view.",
+        "disclosure": "The baseline changes at frame 218 after a 2.15 s hold; the numbers themselves do not.",
+        "mechanism": "First bars represent 8 and 10 intervals. The second represents intervals 2 and 4 above baseline 6, with the same rendered scale. Actual raster checks retained.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR distinguishes unchanged values from a changed baseline."
+      }
+    },
+    {
+      "id": "D32",
+      "job_id": "626b650dd3e34e46a59b06305cbf9ad0",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.021,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D33",
+      "job_id": "4d51d62621524b43a3b9ee732ef6f101",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 60.056,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "c98f3d9196c6b9361173f753be84e0b6011679f6b73672f494620a46781f7823",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The two hourly amounts are shown as 2 mm and 3 mm, before the question.",
+        "association": "Top/bottom remain the first/second observations; heading clearly switches from hourly rain to running total.",
+        "disclosure": "5 mm first appears at frame 302, after a measured 1.35 s hold.",
+        "mechanism": "First sum remains 2, the second becomes 5, and the final annotation spells out 2+3=5 mm.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR preserves amounts, units, second-hour quantity and cumulative quantity."
+      }
+    },
+    {
+      "id": "D34",
+      "job_id": "e5065f7c85654fe99af7301c09f7e514",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 28.04,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "5d75789d7cb304bba405393d91f2b279ce280e40b646bfa77e250f1ad3df9faf",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The end-to-end icon widths at the question are whole, whole, half; the printed key says one block represents four tickets.",
+        "association": "Each value is centered beneath its corresponding symbol, with the half visibly narrower.",
+        "disclosure": "Values first appear at frame 228, after a 2.24 s question hold.",
+        "mechanism": "The rendered sizes and resolved 4+4+2=10 agree. The mechanism is visible independently of the narrator.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR renders 'whole' as the homophone 'hole' once; both fours, two and ten stay correct."
+      }
+    },
+    {
+      "id": "D35",
+      "job_id": "820736054b65485fb0f68db3cb9d17a3",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 28.037,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The arrow tip sits just left of the labeled center and the independent transcript repeatedly substitutes 'weights' for 'waits'. The opening lacks a clear time-unit association with each value once it sorts."
+      ],
+      "download_sha256": "f781dbb5664206119c9c03c6178a5dd27aece1231dc627df165e671aa4333c90",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The arrow tip sits just left of the labeled center and the independent transcript repeatedly substitutes 'weights' for 'waits'. The opening lacks a clear time-unit association with each value once it sorts."
+        ]
+      }
+    },
+    {
+      "id": "D36",
+      "job_id": "f83988fdd24a4db799b4550ed1af45cc",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 28.03,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The setup does not depict the square's former state before the edit. The image shows one color turning into another, but provides no evidence that this is the prior color as distinct from an arbitrary new recoloring."
+      ],
+      "download_sha256": "7e101eb3c812715a8a9a9225cd0ec13563fcec89ed49a0328d85d23cf8a23e0c",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The setup does not depict the square's former state before the edit. The image shows one color turning into another, but provides no evidence that this is the prior color as distinct from an arbitrary new recoloring."
+        ]
+      }
+    },
+    {
+      "id": "D37",
+      "job_id": "fb34125d3e8b4b7795c5b637905d2717",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.028,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D38",
+      "job_id": "ef36acb722144e1a8dd5817842a3cba0",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.029,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D39",
+      "job_id": "6f44c855380c4ebdb7c42a2bbe5e695d",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 52.058,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "e4013e4b892ebdbf65d7f260b35c80e2199523d52c6d95be60caabd9394e4104",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The front is identified, with the dot near its top and the pivot edge at its side.",
+        "association": "The back label replaces front, side edge changes, and the dot stays at the same vertical level.",
+        "disclosure": "Back first appears at frame 290, after a 1.43 s hold.",
+        "mechanism": "A before/after schematic preserves vertical orientation under a sideways flip.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR independently describes the vertical-edge flip and the dot staying at the top."
+      }
+    },
+    {
+      "id": "D40",
+      "job_id": "69a8456edadb47499901a30b4af0deb7",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 28.031,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "ec8b2659bbc5698046c36c5ebf90028182c3608b95c1afa04c7db5160a05015a",
+      "inspection": null
+    },
+    {
+      "id": "D41",
+      "job_id": "9e9630bed772489aa944c2d4a726dd1c",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 94.109,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "9cb131bbfecbb6ccbd4ebdaf437cf0429389f0fd4d71707edf11d5072db3fe9b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The character faces the viewer with neither hand raised at opening. No answer overlay yet.",
+        "association": "Across the edit, the same face and pose orientation remain; the clear raised hand is on screen right.",
+        "disclosure": "Prediction holds 1.85 s; gesture and directional caption first appear at frame 214.",
+        "mechanism": "Screen-right is her own left because she faces the viewer. Gesture and text agree on decoded phone images.",
+        "phone": "Inspected the actual decoded phone sheet, not only author instructions.",
+        "voice_content": "ASR preserves her own left and viewer right despite imperfect transcription of the name."
+      }
+    },
+    {
+      "id": "D42",
+      "job_id": "7464425b3f9a401ca0385e1471e18cba",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 24.032,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D43",
+      "job_id": "645f262e549045e78a31cdb1b51fbd7c",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 42.059,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The book shelf stays pixel-stable. A number 4 appears below it without an inserted volume, so the lesson does not show the required before/after action."
+      ],
+      "download_sha256": "ff38e38d64e088f47390cdfa0ea8371d1793f6d99d645348919a78e233cdadfa",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The book shelf stays pixel-stable. A number 4 appears below it without an inserted volume, so the lesson does not show the required before/after action."
+        ]
+      }
+    },
+    {
+      "id": "D44",
+      "job_id": "662386488b5d48eb8faa405ca0d0b4e5",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 44.054,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The stated two-unit allowance is not marked with a legible numeric measurement, and the supposed finished-hem guide lies across the tailor's torso rather than clearly on the cloth."
+      ],
+      "download_sha256": "3a222a21916b6b017938d1600737b8bf93d4190acb2582a2dbed30e238deed31",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The stated two-unit allowance is not marked with a legible numeric measurement, and the supposed finished-hem guide lies across the tailor's torso rather than clearly on the cloth."
+        ]
+      }
+    },
+    {
+      "id": "D45",
+      "job_id": "1b340dceb1cb45778a7a881168c08638",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 28.025,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D46",
+      "job_id": "166c0e8fc8e54c15b13f32d91ea6303b",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 20.02,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D47",
+      "job_id": "c3a1ce89e886436e8c215053a0cb0b7d",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 32.029,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D48",
+      "job_id": "fb14d2f0afe6435abf22955d99c8439b",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 26.037,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The entire lesson is a diagram on blank paper. It fails the mixed-visual requirement to trace the same physical joints from an illustrated shelf into the triangle."
+      ],
+      "download_sha256": "daf8afb1bbafcd653665af3d556d3deaa9041e5a6d54cf7ba2ad57272e367261",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The entire lesson is a diagram on blank paper. It fails the mixed-visual requirement to trace the same physical joints from an illustrated shelf into the triangle."
+        ]
+      }
+    },
+    {
+      "id": "D49",
+      "job_id": "53de57b83d6b49debc9e42b50e0ed8d4",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 40.04,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The colored counters are all identical and not independently labeled as flour or water. They land over arbitrary parts of a decorative kitchen image, so a muted viewer cannot reliably associate either group with its ingredient."
+      ],
+      "download_sha256": "277f80b74cc25eb57cdd2d9946b0afedf16675542b70d0aa8805b401b6fa522a",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The colored counters are all identical and not independently labeled as flour or water. They land over arbitrary parts of a decorative kitchen image, so a muted viewer cannot reliably associate either group with its ingredient."
+        ]
+      }
+    },
+    {
+      "id": "D50",
+      "job_id": "3d887150aadd42718f9a60d290122277",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 26.026,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Before asking how much is uncovered, the graphic shows only an empty divided window. It does not establish two equal-width curtains or where the overlap constraint applies. The three correct final regions do not restore the visual prediction setup."
+      ],
+      "download_sha256": "cb92717ad22e885bc3f57b3cfa0a444460360d2a66cac661ebf67d453874a9ea",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Before asking how much is uncovered, the graphic shows only an empty divided window. It does not establish two equal-width curtains or where the overlap constraint applies. The three correct final regions do not restore the visual prediction setup."
+        ]
+      }
+    }
+  ]
+}

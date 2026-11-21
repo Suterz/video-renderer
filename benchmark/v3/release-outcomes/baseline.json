@@ -1,0 +1,758 @@
+{
+  "config": {
+    "frames": "ffc6013c517ce3c1a95bbbb7ae9e1e6d7a2e93fc",
+    "video": "e3de7f279d7446db537cf2920492ff2bfc68777a",
+    "harness": "80316953c7b63d03427dc2fc4f4a9088d09716bf",
+    "mode": "v2",
+    "endpoint": "http://127.0.0.1:8811",
+    "frame_store": "/home/zelio-suter/Videos/storyboard-v3/v2-base/frames",
+    "job_store": "/home/zelio-suter/Videos/storyboard-v3/v2-base/jobs"
+  },
+  "outcomes": [
+    {
+      "id": "D01",
+      "job_id": "ed0cf5e9f09f4fe78f197e223df0f0e1",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 48.058,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "49349c7e214797f4ac8cde2dbad0bd469d5274e3798fc6558d496bd28f13ef46",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "3 for $6 and 5 for $8 are visible at frame 0; same eight countable icons.",
+        "association": "Each equation remains directly beneath the correct row.",
+        "disclosure": "Same 1.61 s hold; division appears at 250, conclusion at 350.",
+        "mechanism": "Independent arithmetic 600/3=200 and 800/5=160; difference 40.",
+        "phone": "Muted decoded phone composition is countable and values readable; the stale question caption and minor debris are presentation flaws.",
+        "voice_content": "Independent ASR preserves the intended totals and unit-price distinction."
+      }
+    },
+    {
+      "id": "D02",
+      "job_id": "0809e4369da241e19edde108ab00fffe",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 26.035,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D03",
+      "job_id": "d8ba7a51a83143bb9a690a480279771c",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 98.092,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "After the cut, two unsupported equations replace the inputs; there is no visible accumulation or retained mapping of each cost to its option."
+      ],
+      "download_sha256": "b8fed9ca037ed5f93d0fe636e06e23bb4edfcf344e3e4cb1a6becc74a5562aa0",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "After the cut, two unsupported equations replace the inputs; there is no visible accumulation or retained mapping of each cost to its option."
+        ]
+      }
+    },
+    {
+      "id": "D04",
+      "job_id": "f59d745c617641898562c60f44c96698",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 64.066,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "8f8de13764a18fe7f25f29f00586d291135bde2ce5eafd3b6114b3edf8cc874a",
+      "inspection": null
+    },
+    {
+      "id": "D05",
+      "job_id": "765d869b843045688d93c5dd346c709b",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 106.104,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D06",
+      "job_id": "5830b16e4ea34e1686b2f5268b38891b",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 40.045,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The asserted three trays are not drawn. Scattered small rings overlap distracting art, making the group membership and remainder ambiguous."
+      ],
+      "download_sha256": "4ec1532edd44cd5cd57ab93177a38c97771060c0da7eb4a0241bd7ae38ef2679",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The asserted three trays are not drawn. Scattered small rings overlap distracting art, making the group membership and remainder ambiguous."
+        ]
+      }
+    },
+    {
+      "id": "D07",
+      "job_id": "225015fcc4354e23a765e213d77d4f42",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 118.108,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D08",
+      "job_id": "2b8b3b109a6848ada59e778c47c27b9c",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 184.212,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "efd6345e757d07460f046b4f2e2a3825fe08a115a9ba493b1fbebae875776fb2",
+      "inspection": null
+    },
+    {
+      "id": "D09",
+      "job_id": "5c109a27948a4d97af39b348bf76c3fd",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 62.071,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Unrelated generated rings and dots intermingle with the actual counters. The muted image does not clearly show the same six identifiable marbles throughout."
+      ],
+      "download_sha256": "04949c42b6322f71e35bdeb501424a45952dadceca0fd331a4abd581cb4fd597",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Unrelated generated rings and dots intermingle with the actual counters. The muted image does not clearly show the same six identifiable marbles throughout."
+        ]
+      }
+    },
+    {
+      "id": "D10",
+      "job_id": "a011487f73c94210a9076779db83a945",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 56.057,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The occupancy diagram is obscured by a busy cut-paper image. Identical tiny markers and confusing backgrounds make the distinction between places and people unreadable."
+      ],
+      "download_sha256": "384a2f9920c50fd67b4c1c47d8c930c2392f4704327a28ca483383557342075b",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The occupancy diagram is obscured by a busy cut-paper image. Identical tiny markers and confusing backgrounds make the distinction between places and people unreadable."
+        ]
+      }
+    },
+    {
+      "id": "D11",
+      "job_id": "7e0b542faabf49be80ba0d981819410e",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 40.052,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "05e7e0baeaebf5b061009006ddbda8eff418b3ad65867b8c089e1875a7bc0b33",
+      "inspection": null
+    },
+    {
+      "id": "D12",
+      "job_id": "43aed1c7adbb4f758ea36713eef8b4c5",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 44.055,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "378063855341a1ca7acd8e8e217c2b330364b8e3eff702721a19cef1d1a6df51",
+      "inspection": null
+    },
+    {
+      "id": "D13",
+      "job_id": "37eb6e2da2ac400b95be7103ad7b9e1d",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 62.069,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "0410014314f7dd629a1bf4df10257b67bda7629025eb2894a314a3b54cce8de9",
+      "inspection": null
+    },
+    {
+      "id": "D14",
+      "job_id": "5d9f6d25c9a84830877ccda272423c47",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.033,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D15",
+      "job_id": "6d9494ea3bde44c4934f2e87ff2be171",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 24.024,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D16",
+      "job_id": "10b1a7bb543641d8a699cc3a233794e6",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 40.038,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Labels disappear when the branch arrows appear; neither the unchanged lamp nor the active fan is reliably linked to its arrow."
+      ],
+      "download_sha256": "cc8b47711d015b4e952fa80b862722a86dc66e2caaccc5d96d21cf6110b58952",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Labels disappear when the branch arrows appear; neither the unchanged lamp nor the active fan is reliably linked to its arrow."
+        ]
+      }
+    },
+    {
+      "id": "D17",
+      "job_id": "4973082b06e6427f8b76aa3d792e90ef",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 62.082,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Only the selected branch is drawn. Two possible chutes cannot be inferred at the prediction beat."
+      ],
+      "download_sha256": "8ff6dc35434964fea39bac752964556e4b7b3fb9ff8ecea55d13eb1b7efdc0f0",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Only the selected branch is drawn. Two possible chutes cannot be inferred at the prediction beat."
+        ]
+      }
+    },
+    {
+      "id": "D18",
+      "job_id": "613c33e6029e4165a473a1009b69aafe",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 66.067,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D19",
+      "job_id": "2c95f19d9eb7468089d31f4db5442c06",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 74.076,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "fd687b74752a380fd79ce604baec432ec7e81eabf3bb3a80cf0a3231435c765b",
+      "inspection": null
+    },
+    {
+      "id": "D20",
+      "job_id": "f570fc555f5b4858821720de6b9a83f5",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 42.046,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "8b128f0f12350071764c1b57c4012f2e276d31d45d874ea47443bfce6e139759",
+      "inspection": null
+    },
+    {
+      "id": "D21",
+      "job_id": "c48f6abc28d745248c198295fc0e826a",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 78.092,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The figure promises two tags, but the left striped bow lacks a clearly visible tag. The contrast between the requested two tagged targets is not established."
+      ],
+      "download_sha256": "a708dbb558aa849292ad4ff37578d0af8c81589a0932aa46d78096ecdc45344e",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The figure promises two tags, but the left striped bow lacks a clearly visible tag. The contrast between the requested two tagged targets is not established."
+        ]
+      }
+    },
+    {
+      "id": "D22",
+      "job_id": "76a46d75ac014310a4e48ce17f3e90d9",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 72.074,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The title answers 'Into the basket' at frame zero, before asking for a prediction."
+      ],
+      "download_sha256": "a49a4a787e236754657dd8dc155025e015b27487660391495482ee8198d06868",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The title answers 'Into the basket' at frame zero, before asking for a prediction."
+        ]
+      }
+    },
+    {
+      "id": "D23",
+      "job_id": "d3bd67e189ba48fc844c3da9af044b35",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 46.06,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "77925fb21890d2b16d65103dc7e509d1c45c8ded143faac8cac040ada498cb4b",
+      "inspection": null
+    },
+    {
+      "id": "D24",
+      "job_id": "839fe10cc70d41d9a8138c9c8e8f14c2",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 82.09,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The before/after book has essentially the same viewpoint; the apparent change is color, not the diagnostic turn."
+      ],
+      "download_sha256": "53721de3dfb87b167685da1a08e96d3ec9a4d6239c2a4a6ffadc3ef49fdb4dcf",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The before/after book has essentially the same viewpoint; the apparent change is color, not the diagnostic turn."
+        ]
+      }
+    },
+    {
+      "id": "D25",
+      "job_id": "f00b549d2dd84791a657aff05b9aaf96",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 88.096,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The stripe is on the mug body, not the handle. The arrow lands inside the handle opening, not on visible handle material."
+      ],
+      "download_sha256": "189e6f1cefa8f725f0a659bc3d14c8258ac1e4a0b3e264cb6f66a180a114e333",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The stripe is on the mug body, not the handle. The arrow lands inside the handle opening, not on visible handle material."
+        ]
+      }
+    },
+    {
+      "id": "D26",
+      "job_id": "a6f47ba42367475ba85d3d5db33b27fc",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 58.057,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D27",
+      "job_id": "8e9ab9a2c42e44dd8b2479b2d93e7881",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 106.107,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "a9abd6472ef0f0c4edb7fe1151920d8a6c91f3b07f9871d2b17ec7f4e5a710cb",
+      "inspection": null
+    },
+    {
+      "id": "D28",
+      "job_id": "1fc0f7f73b3948fba61d86cf22658260",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 44.048,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "9c14a0482a0df3ede369ca7754805df5eb2746c3d306a7f8774477ee827b896a",
+      "inspection": null
+    },
+    {
+      "id": "D29",
+      "job_id": "e30596ab26e046e1abebac39f280d8fb",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 24.028,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D30",
+      "job_id": "b9dc3331a0e940e09fa32cb8dd28e3e6",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 24.023,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D31",
+      "job_id": "9dd2bda8ce9e435086c1b9eaa5a60843",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 108.116,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "c05e30cff315cdb845fd9268ac82b692a882bea2894602ee00746b3c294e40c9",
+      "inspection": null
+    },
+    {
+      "id": "D32",
+      "job_id": "605e0c9a11274eccba0577f914e85a00",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 24.028,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D33",
+      "job_id": "85c11e598b0844e7868316f9d776f2b6",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 108.106,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "129db995757bc0d8498cd1da395c72129944010d17ce6f64d7dadbbe830e6697",
+      "inspection": null
+    },
+    {
+      "id": "D34",
+      "job_id": "7408e091131d4648acb336a330fa510d",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 44.046,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "219974a204127283efea13f794b73c8cddab84ae60e60e64d0469a89f38450f2",
+      "inspection": null
+    },
+    {
+      "id": "D35",
+      "job_id": "7e4e50d6b21a43258c1efda54867c288",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 44.061,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "The arrow points beside the center value and the visual loses the minutes label when it sorts. The stray art competes with the list."
+      ],
+      "download_sha256": "4bd0ab0ee9ef04dedd21db8c7a609cd3871a6a7881751d611e569c62670fc9ab",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The arrow points beside the center value and the visual loses the minutes label when it sorts. The stray art competes with the list."
+        ]
+      }
+    },
+    {
+      "id": "D36",
+      "job_id": "5107dd4321474f0491e783a2420acf26",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 104.129,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "7a5df67b1662e98bda57da1e5a6198e4c3bf7faf7972a2e2b41176146dc1bd2a",
+      "inspection": null
+    },
+    {
+      "id": "D37",
+      "job_id": "8e85a82c3ad9469983e14e31adb05870",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.031,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D38",
+      "job_id": "26f04ea411be4eb6831f444c6d996aa7",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.026,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D39",
+      "job_id": "4abdade9f66c47caa008f0aba13ac8d0",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 66.063,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "23107637048f2bae64c73bf7f1565f0f68a0e5a7db9730d843be8a1cb011ad0f",
+      "inspection": null
+    },
+    {
+      "id": "D40",
+      "job_id": "15faf66f6f844115b72c16f65933858c",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 46.069,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "No visible robot or heading change is shown, and rings and route blend into scenery. A viewer cannot distinguish a right turn on the same square from an extra step."
+      ],
+      "download_sha256": "cfa8d835dc6134aa0e0ede17f764ffff42ba92392cb94d274c43253ed734093d",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "No visible robot or heading change is shown, and rings and route blend into scenery. A viewer cannot distinguish a right turn on the same square from an extra step."
+        ]
+      }
+    },
+    {
+      "id": "D41",
+      "job_id": "9b108fc09c06494d8cea9577f5959a66",
+      "service_state": "succeeded",
+      "judgment": "verified_pass",
+      "seconds": 196.203,
+      "first_candidate": true,
+      "repairs": 0,
+      "errors": [],
+      "download_sha256": "d7b610c516b2a674f2ffa6d7177a4a2eb340b50929beabbd288b28566afda06b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The same facing character is visible before and after the gesture.",
+        "association": "The arm on screen-right rises; anatomical left and viewer right agree.",
+        "disclosure": "The gesture starts after the 1.85 s prediction hold, at frame 214.",
+        "mechanism": "The before/after change genuinely demonstrates the viewpoint difference.",
+        "phone": "Art and labels remain readable at phone size; the question caption needlessly persists.",
+        "voice_content": "ASR preserves the two directions, despite imperfect name spelling."
+      }
+    },
+    {
+      "id": "D42",
+      "job_id": "ef40d1bb85c74dd3903ed8185bd86bc2",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 22.023,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D43",
+      "job_id": "050f97f0cb5f4872911ae8d00ad2aca4",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 42.046,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "66499048dfb17074d7e1860ffb4e1cdc693e72b81d8fef67c2242cd6aeedb10f",
+      "inspection": null
+    },
+    {
+      "id": "D44",
+      "job_id": "f7f86dc4a4774695a4b8ba478f6c744c",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 56.06,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "bd34904e8880b4770ed2c73037648ba0d8020705ce93f5bbdb90c18a39bc4381",
+      "inspection": null
+    },
+    {
+      "id": "D45",
+      "job_id": "deaf1a05b0744a1b8de108b01863b36d",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 32.038,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D46",
+      "job_id": "eee11ed6c06149958bb57c50773ab578",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 66.08,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D47",
+      "job_id": "188c2aa8d1d047178a7c3c682ee35d1a",
+      "service_state": "needs_review",
+      "judgment": "safe_refusal",
+      "seconds": 40.038,
+      "first_candidate": null,
+      "repairs": null,
+      "errors": null,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D48",
+      "job_id": "6a719ad5914542128d5d343f6206b441",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 60.068,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "07864c664782758819451e76ee835cf7d77c999cf43a4d123861aa778671fbe9",
+      "inspection": null
+    },
+    {
+      "id": "D49",
+      "job_id": "833e343472ef4b71988a938cbe981b0b",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 46.065,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "Identical markers are not identified individually as flour or water and float over unrelated kitchen props."
+      ],
+      "download_sha256": "14e7447e7a1599f92b14e6eb780958a7b874194d77b2697c8eb87a9af775286f",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "Identical markers are not identified individually as flour or water and float over unrelated kitchen props."
+        ]
+      }
+    },
+    {
+      "id": "D50",
+      "job_id": "002067a0a1a8405c8dbe80d3b0480702",
+      "service_state": "succeeded",
+      "judgment": "false_accept",
+      "seconds": 46.056,
+      "first_candidate": false,
+      "repairs": 0,
+      "errors": [
+        "required raster/geometry check failed"
+      ],
+      "download_sha256": "dc05db8570378cafe0696d7aa126a242a7cec7c32c642774bbd1a2c11d37d03e",
+      "inspection": null
+    }
+  ]
+}
