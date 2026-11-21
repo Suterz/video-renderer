@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Cold smoke via the pinned v1 rollback instance, serialized against v2 GPU."""
+import fcntl
+import hashlib
+import json
+import time
+from pathlib import Path
+
+import httpx
+
+home = Path.home()
+demo = home / "git/storyboard-renderer/examples/smoke"
+expected = "49d2e5be07fca7261c9b1191976cadc8edd082802f09bcf69b17ab8eb1da2ea4"
+with (home / "ai/storyboard-build/v2/gpu.lock").open("a") as lock:
+    fcntl.flock(lock, fcntl.LOCK_EX)
+    with httpx.Client(base_url="http://127.0.0.1:8790", timeout=30) as h:
+        h.get("/ready").raise_for_status()
+        old = h.get("/renders/571b239eab0e4358a5597e9b3469dee5/video")
+        old.raise_for_status()
+        assert hashlib.sha256(old.content).hexdigest() == expected
+        req = json.loads((demo / "story.json").read_text())
+        req["signature"] = (demo / "signature.md").read_text()
+        with (demo / "narration.wav").open("rb") as audio:
+            r = h.post("/renders", data={"story": json.dumps(req)}, files={"audio": audio})
+        r.raise_for_status()
+        job = r.json()
+        until = time.monotonic() + 180
+        while time.monotonic() < until:
+            status = h.get(job["status_url"]).json()
+            if status["state"] not in ("queued", "running"):
+                break
+            time.sleep(1)
+        assert status["state"] == "succeeded", status
+        output = h.get(job["video_url"])
+        output.raise_for_status()
+        print(json.dumps({"state": status["state"], "job": job["id"], "verified_v1_sha256": expected,
+                          "fresh_video_bytes": len(output.content)}))
