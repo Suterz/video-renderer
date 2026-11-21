@@ -24,7 +24,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .media import FFMPEG, FFPROBE, encode
-from .timeline import TimingReview, bind, cue_sample, end_frame, sample, start_frame, tokens
+from .timeline import TimingReview, bind, corroborate_cue, cue_sample, end_frame, sample, start_frame, tokens
 
 ROOT = Path(os.environ.get("VIDEO_STORE", Path.home() / "Videos/video-renderer/jobs"))
 LEGACY = Path.home() / "Videos/storyboard-renderer/jobs"
@@ -310,7 +310,10 @@ def run(p):
                         raise Review(f"{u.id}: critical speech not corroborated: {alternatives!r}; heard {' '.join(nearby)!r}")
             if words and u.caption is not None:
                 boundaries.append((sample(words[0]["start"]), u.caption))
-    starts_samples = [cue_sample(b.cue.model_dump(exclude_none=True), bound) for b in req.beats]
+    cues = [b.cue.model_dump(exclude_none=True) for b in req.beats]
+    starts_samples = [cue_sample(c, bound) for c in cues]
+    cue_evidence = [corroborate_cue(c, bound, asr) if "phrase" in c else {"method": "authored-ms"}
+                    for c in cues]
     starts = [start_frame(i, f) for i in starts_samples]
     if starts != sorted(set(starts)) or starts[0] != 0 or starts[-1] >= end or min(starts_samples) < 0:
         raise Review(f"collapsed, reversed or out-of-range required cue: {starts_samples}")
@@ -337,8 +340,8 @@ def run(p):
     save(p / "manifest.json", {**manifest, "wav_sha256": hash_bytes(wav.read_bytes()),
          "speech_samples": n, "voice_profile": req.voice_profile, "aligned": aligned, "asr": asr,
          "recording_reused": bool(req.reuse_recording_from),
-         "beats": [{"id": b.id, "cue": b.cue.model_dump(), "sample": a, "frame": c}
-                   for b, a, c in zip(req.beats, starts_samples, starts)],
+         "beats": [{"id": b.id, "cue": b.cue.model_dump(), "sample": a, "frame": c, "validation": e}
+                   for b, a, c, e in zip(req.beats, starts_samples, starts, cue_evidence)],
          "verification": verification, "seconds": time.monotonic() - started})
     candidate.replace(p / "video.mp4")
 
@@ -440,6 +443,7 @@ def translate_legacy(story):
         raise ValueError("invalid legacy cue sequence")
     visual = {"story_context": f"{story['premise']} {story.get('context', '')}", "visual_signature": story["signature"],
               "canvas": [story["output"]["width"], story["output"]["height"]], "legacy_input": True,
+              "legacy_premise": story["premise"], "legacy_context": story.get("context", ""),
               **{k: story.get(k, d) for k, d in (("values", {}), ("checks", []), ("assets", {}))}}
     beats = []
     for panel in story["panels"]:

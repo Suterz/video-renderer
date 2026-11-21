@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Explicit workstation operation after the release acceptance gates pass.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+repo="$PWD"
+legacy="$HOME/git/storyboard-renderer"
+logs="$HOME/ai/storyboard-build/v2/logs"
+old_id=571b239eab0e4358a5597e9b3469dee5
+old_hash=49d2e5be07fca7261c9b1191976cadc8edd082802f09bcf69b17ab8eb1da2ea4
+if [[ "${1:-}" != --approved ]]; then
+  echo 'Usage: cutover-workstation --approved (only after the staged gates and rollback test pass)' >&2
+  exit 2
+fi
+test -d "$legacy/src/storyboard_renderer"
+test -x "$legacy/bin/start-renderer"
+curl -fsS http://127.0.0.1:8789/ready >/dev/null
+curl -fsS http://127.0.0.1:8788/ready >/dev/null
+curl -fsS http://127.0.0.1:8188/queue | jq -e '(.queue_running|length)==0 and (.queue_pending|length)==0'
+python3 - <<'PY'
+import json
+from pathlib import Path
+h=Path.home()/"Videos"
+files=[*h.glob("storyboard-renderer/jobs/*/status.json"),
+       *h.glob("video-renderer/jobs/*/status.json"),
+       *h.glob("frames-renderer/sessions/*/panels/*/status.json")]
+busy=[p for p in files if json.loads(p.read_text())["state"] in {"queued","running"}]
+if busy:
+    raise SystemExit(f"Refusing cutover while jobs are active: {busy}")
+PY
+rollback() {
+  tmux kill-session -t v2-video-public 2>/dev/null || true
+  tmux has-session -t storyboard-api 2>/dev/null ||
+    tmux new-session -d -s storyboard-api "cd \"$legacy\" && ./bin/start-renderer >> \"$logs/rollback.log\" 2>&1"
+  tmux has-session -t v2-video 2>/dev/null ||
+    tmux new-session -d -s v2-video "cd \"$repo\" && ./bin/start-video-renderer >> \"$logs/video.log\" 2>&1"
+}
+trap rollback ERR
+tmux kill-session -t storyboard-api
+tmux kill-session -t v2-video
+tmux new-session -d -s v2-video-public "cd \"$repo\" && VIDEO_PORT=8787 ./bin/start-video-renderer >> \"$logs/video-public.log\" 2>&1"
+curl -fsS --retry 6 --retry-connrefused http://127.0.0.1:8787/ready
+got=$(curl -fsS "http://127.0.0.1:8787/renders/$old_id/video" | sha256sum | cut -d' ' -f1)
+test "$got" = "$old_hash"
+trap - ERR
+echo 'Video now owns :8787; old demo retrieval verified.'

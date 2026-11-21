@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Record the actual checkpoint file hashes and runtime package versions."""
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+metadata = {
+    "ryan": ("Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice", "Apache-2.0"),
+    "heart": ("hexgrad/Kokoro-82M", "Apache-2.0"),
+    "chatter": ("ResembleAI/chatterbox", "MIT; bundled conds.pt; preserve Perth watermark"),
+    "laura": ("parler-tts/parler-tts-mini-v1", "Apache-2.0"),
+    "jasper": ("KittenML/kitten-tts-mini-0.8", "Apache-2.0; not Kitten-TTS 2"),
+    "align": ("Qwen/Qwen3-ForcedAligner-0.6B", "Apache-2.0"),
+    "asr": ("Systran/faster-whisper-small.en", "MIT"),
+}
+components = {}
+for key, (source, license_) in metadata.items():
+    python = Path.home() / "venvs" / f"v2-{key}" / "bin/python"
+    packages = json.loads(subprocess.check_output([str(python), "-c",
+        'import json,importlib.metadata as m; print(json.dumps({d.metadata["Name"]:d.version for d in m.distributions()}))']))
+    model = root / "models" / key
+    files = {}
+    for p in sorted(model.rglob("*")):
+        if p.is_file() and ".cache" not in p.parts and p.suffix in {".safetensors", ".bin", ".pt", ".pth", ".onnx", ".npz", ".json", ".model"}:
+            with p.open("rb") as f:
+                files[str(p.relative_to(model))] = {"sha256": hashlib.file_digest(f, "sha256").hexdigest(), "bytes": p.stat().st_size}
+    components[key] = {"source": source, "terms": license_, "packages": packages, "files": files}
+(root / "blind" / "Reproducibility - reveals identities.json").write_text(json.dumps(components, indent=2))

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export PATH="$HOME/.local/bin:$PATH"
+cd "$(dirname "$0")/.."
+env="$HOME/venvs/video-renderer"
+test -x "$env/bin/python" || uv venv "$env" --python /usr/bin/python3
+uv pip install --python "$env/bin/python" '.[test]'

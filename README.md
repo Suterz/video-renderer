@@ -12,3 +12,13 @@ curl -fsS http://127.0.0.1:8789/v2/renders/<job>/video -o lesson.mp4
 `ryan`, `heart`, `chatter`, `laura`, `jasper` are separate local voice profiles. A second argument to the fixture is the prior visual job: the accepted PNG hashes stay unchanged. For subtitle-only revisions, also set `reuse_recording_from` to reuse the verified WAV and alignment. `POST /v2/renders/upload` accepts multipart `request` and `audio`. Original `/renders` continues as a migration route for bundled WAVs and authored milliseconds. Old jobs are read only.
 
 `bin/setup-audition` provisions isolated environments and pinned model snapshots outside Git. See its logs on failure; it needs Ubuntu user-space eSpeak support and the existing workstation tools. `bin/package-audition`, `bin/check-audition` and `bin/audition-reel` produce the blind pack, independent transcription, and the short reel. Voice naturalness and perceived sync are not machine-certified. Qwen forced alignment estimates timings; unprompted faster-whisper supplies a separate transcript, not ground truth.
+
+Run `./bin/install-video-renderer` for the service environment. Use `GET /docs`
+to inspect request fields. The server's default `VIDEO_STORE` is
+`~/Videos/video-renderer/jobs`; existing `~/Videos/storyboard-renderer/jobs`
+are read-only compatibility artifacts.
+
+The local `bin/cutover-workstation` wrapper is an explicit port migration,
+not part of installation. It checks both services, refuses while jobs are
+queued/running and verifies the pinned v1 demo after routing `:8787` to v2.
+Keep the `~/git/storyboard-renderer` detached v1 worktree for rollback.

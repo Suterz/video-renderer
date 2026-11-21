@@ -57,3 +57,18 @@ def cue_sample(cue, bound):
     edge = cue.get("edge", "start")
     idx = i if edge == "start" else i + len(phrase) - 1
     return sample(alignment[idx][edge]) + cue.get("offset_ms", 0) * 48
+
+
+def corroborate_cue(cue, bound, asr, tolerance=.65):
+    """Independent lexical check near each forced onset, not a confidence score."""
+    raw = {**cue, "edge": "start", "offset_ms": 0}
+    onset = cue_sample(raw, bound) / 48000
+    aliases = {**dict(zip("zero one two three four five six seven eight nine".split(), "0123456789")),
+               "cm": "centimeters", "km": "kilometers"}
+    phrase = [aliases.get(t, t) for t in tokens(cue["phrase"])]
+    spoken = [(aliases.get(t, t), w) for w in asr for t in tokens(w["word"])]
+    nearby = [[a for a, _ in spoken[i:i + len(phrase)]] for i, (_, w) in enumerate(spoken)
+              if abs(w["start"] - onset) <= tolerance]
+    if phrase not in nearby:
+        raise TimingReview(f"independent transcript does not corroborate cue {cue['phrase']!r} near {onset:.2f}s")
+    return {"forced_onset": onset, "transcript_match_within_seconds": tolerance}

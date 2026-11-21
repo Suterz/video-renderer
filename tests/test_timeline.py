@@ -1,6 +1,6 @@
 import pytest
 
-from video_renderer.timeline import TimingReview, bind, cue_sample, end_frame, start_frame
+from video_renderer.timeline import TimingReview, bind, corroborate_cue, cue_sample, end_frame, start_frame
 
 
 def test_second_occurrence_and_internal_phrase():
@@ -29,3 +29,13 @@ def test_nonspoken_token_is_rejected():
     with pytest.raises(TimingReview, match="token mismatch"):
         bind([{"id": "u", "text": "one dollar sixty"}],
              [{"word": "one", "start": 0, "end": .1}, {"word": "dollar", "start": .1, "end": .2}])
+
+
+def test_independent_asr_corroborates_correct_units_but_not_wrong_ones():
+    a = [{"word": "four", "start": 1.2, "end": 1.4}, {"word": "kilometers", "start": 1.4, "end": 1.9}]
+    bound = bind([{"id": "u", "text": "four kilometers"}], a)
+    cue = {"utterance_id": "u", "phrase": "four kilometers"}
+    asr = [{"word": "4", "start": 1.3}, {"word": "km", "start": 1.5}]
+    assert corroborate_cue(cue, bound, asr)["forced_onset"] == 1.2
+    with pytest.raises(TimingReview, match="does not corroborate"):
+        corroborate_cue(cue, bound, [asr[0], {"word": "meters", "start": 1.5}])

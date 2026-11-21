@@ -2,4 +2,4 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 export PYTHONPATH="$PWD/src"
-exec "${VIDEO_PYTHON:-$HOME/venvs/storyboard-renderer/bin/python}" -m uvicorn video_renderer.api:app --host 127.0.0.1 --port "${VIDEO_PORT:-8789}" --workers 1
+exec "${VIDEO_PYTHON:-$HOME/venvs/video-renderer/bin/python}" -m uvicorn video_renderer.api:app --host 127.0.0.1 --port "${VIDEO_PORT:-8789}" --workers 1
