@@ -26,6 +26,7 @@ while candidates:
     if len(island) >= 100:
         centroids.append((sum(x for x, _ in island)/len(island), sum(y for _, y in island)/len(island)))
 counts = [sum(y < 300 for _, y in centroids), sum(y >= 300 for _, y in centroids)]
-assert counts == [3, 5], (counts, centroids)
+expected = [5, 3] if "--reversed" in sys.argv[2:] else [3, 5]
+assert counts == expected, (counts, centroids)
 assert 600 // 3 == 200 and 800 // 5 == 160 and 200 - 160 == 40
 print("Phone-size independent orange components:", counts, "integer cent difference:", 40)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -9,6 +10,7 @@ base = Path.home() / "Videos/video-renderer/jobs"
 ff = str(Path.home() / "ai/tools/media/bin/ffmpeg")
 dest = Path(sys.argv[1])
 dest.mkdir(parents=True, exist_ok=True)
+url = os.environ.get("VIDEO_URL", "http://127.0.0.1:8789")
 rows, art = [], []
 for id_, letter in zip(sys.argv[2:], ("01", "02"), strict=True):
     p = base / id_
@@ -27,7 +29,7 @@ for id_, letter in zip(sys.argv[2:], ("01", "02"), strict=True):
                        check=True, timeout=90)
         names.append(name)
     name = f"{letter} - Same lesson.mp4"
-    process = subprocess.run(["curl", "-fsS", f"http://127.0.0.1:8789/v2/renders/{id_}/video", "-o", str(dest / name)], check=True)
+    subprocess.run(["curl", "-fsS", f"{url}/v2/renders/{id_}/video", "-o", str(dest / name)], check=True)
     sha = hashlib.sha256((dest / name).read_bytes()).hexdigest()
     assert sha == hashlib.sha256((p / "video.mp4").read_bytes()).hexdigest()
     rows.append({"id": id_, "voice": m["voice_profile"], "beats": m["beats"], "audio_hash": m["wav_sha256"],
