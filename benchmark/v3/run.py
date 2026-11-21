@@ -31,6 +31,7 @@ def commit(path):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--file",type=Path,action="append")
+    p.add_argument("--frozen",type=Path,help="Directory of sealed HXX/request.json + oracle.json pairs")
     p.add_argument("--id",action="append")
     p.add_argument("--mode",choices=["v2","v3"],required=True)
     p.add_argument("--url",required=True)
@@ -40,12 +41,21 @@ def main():
     p.add_argument("--frames-store",type=Path,required=True)
     p.add_argument("--root",type=Path,required=True)
     a=p.parse_args()
-    cases=read_cases(*(a.file or [HERE/"first.tsv",HERE/"development.tsv"]))
+    if a.frozen:
+        if a.mode!="v3" or a.file or a.id:
+            raise SystemExit("sealed evaluation requires the full unfiltered v3 set")
+        cases={d.name:d for d in a.frozen.glob("H[0-9][0-9]") if d.is_dir()}
+        if len(cases)!=10:
+            raise SystemExit("10 sealed cases required")
+    else:
+        cases=read_cases(*(a.file or [HERE/"first.tsv",HERE/"development.tsv"]))
     ids=a.id or sorted(cases)
     a.root.mkdir(parents=True,exist_ok=True)
     ledger=a.root/"ledger.jsonl"
     pair={"frames":commit(a.frames),"video":commit(a.video),
           "harness":commit(HERE),"mode":a.mode,"endpoint":a.url,"frame_store":str(a.frames_store),"job_store":str(a.jobs)}
+    if a.frozen:
+        pair["sealed"]=commit(a.frozen)
     if (a.root/"config.json").exists():
         previous=json.loads((a.root/"config.json").read_text())
         if {k:v for k,v in previous.items() if k!="harness"} != {k:v for k,v in pair.items() if k!="harness"}:
@@ -60,9 +70,16 @@ def main():
             if (out/"outcome.json").exists():
                 continue
             start=time.monotonic()
-            req,spec=compile_case(cases[id],a.mode)
-            if not (out/"submission.json").exists():
+            if a.frozen:
+                payload=(cases[id]/"request.json").read_bytes()
+                req=json.loads(payload)
+                spec=json.loads((cases[id]/"oracle.json").read_bytes())
+                if req.get("reuse_visuals_from") or req.get("reuse_recording_from"):
+                    raise SystemExit(f"{id}: fixture-specific reuse is not allowed")
+            else:
+                req,spec=compile_case(cases[id],a.mode)
                 payload=json.dumps(req,ensure_ascii=False,separators=(",",":")).encode()
+            if not (out/"submission.json").exists():
                 (out/"request.json").write_bytes(payload)
                 write(out/"oracle.json",spec)
                 submission={"state":"posting","request_sha256":hashlib.sha256(payload).hexdigest(),"pair":pair,"submitted":time.time()}

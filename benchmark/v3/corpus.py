@@ -171,6 +171,8 @@ def compile_case(case, mode):
         op="new_scene"
     setup_panel = {"op":"new_scene","scene_id":"lesson","objective":case["setup"],
                    "instruction":nice, "seed":seed,"overlays":[title]+shape_start,**before}
+    if native and not brief:
+        setup_panel["paper_scene"]=True
     demonstrator = {
         "op":op, "scene_id":"lesson" if op!="new_scene" else "diagram",
         "objective":case["mechanism"],
@@ -178,6 +180,8 @@ def compile_case(case, mode):
                        else action if op=="edit_scene" else "Preserve the clean image; show the requested explanatory graphics."),
         "seed":seed+1, "overlays":[title]+shape_process, **after,
     }
+    if native and op=="new_scene":
+        demonstrator["paper_scene"]=True
     # Unit-price calculations annotate the same rows rather than replacing them.
     if before.get("layout"):
         demonstrator["overlays"][1:1] = shape_start
