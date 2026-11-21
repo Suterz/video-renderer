@@ -60,16 +60,21 @@ def layers(commands, native, theme):
             endpoint = target(a[2]) if len(a)==3 else [p(a[2]),p(a[3])]
             overlays.append({"type":"arrow","from":source,"to":endpoint})
             checks.append({"kind":"arrow","from":source,"to":endpoint})
-        elif kind == "G":
+        elif kind in ("G","C"):
+            if kind == "C":
+                x,y,d = (float(k) for k in a)
+                a=[x,y,1,1,1,1]
+            else:
+                d=7
             x,y,cols,rows,dx,dy = (float(k) for k in a)
             for iy in range(int(rows)):
                 for ix in range(int(cols)):
                     at = [p(x+ix*dx), p(y+iy*dy)]
                     if native:
-                        overlays.append({"type":"shape","shape":"disc","at":at,"extent":[.070,.039],"ink":"accent"})
+                        overlays.append({"type":"shape","shape":"disc","at":at,"extent":[p(d),p(d)*9/16],"ink":"accent"})
                     else:
                         overlays.append({"type":"marker","at":at})
-                    checks.append({"kind":"counter","at":at})
+                    checks.append({"kind":"counter","at":at,"diameter":p(d)})
         elif kind in ("S","K"):
             x,y,u,v = (p(z) for z in a[:4])
             n = int(a[4]) if kind == "K" else None
@@ -145,12 +150,23 @@ def compile_case(case, mode):
         before["layout"]={"layers":[{"id":f"fruit{i}","asset":"fruit","center":xy,"width":.110,"max_height":.065}
                                for i,xy in enumerate(centers,1)]}
         nice="Present two separated rows of illustrated orange fruit, with clear room for the authored values."
-    if "teal.knot" in case["demonstration"]:
-        before["anchors"]={"teal.knot":"the center knot where the striped teal bow loops join, not the tag or bag; absent if obscured"}
+    anchor_defs={"teal.knot":"the center knot where the striped teal bow loops join, not the tag or bag; absent if obscured",
+                 "basket.opening":"the inside of the visible dark basket opening, not rim or front wall; absent if obscured",
+                 "book.spine":"the narrow bound edge of the book, not its cover or page block; absent if obscured",
+                 "mug.handle":"the striped side handle of the middle mug, not the cup body; absent if obscured",
+                 "zipper.slider":"the metal block where the two rows of teeth meet, not the dangling pull tab; absent if obscured"}
+    named={k:v for k,v in anchor_defs.items() if k in case["demonstration"]}
+    if named:
+        before["anchors"]=named
     if "During the edit" in brief:
         nice, action = brief.split("During the edit ",1)
         op = "edit_scene"
         after.update(change=action, keep="Preserve the exact character, viewpoint, position and props.")
+        if named:
+            after["anchors"]=before.pop("anchors")
+    elif "mug.handle" in named:
+        op="focus"
+        after["focus"]={"anchor":"mug.handle","zoom":1.8}
     if case["id"] in ("D46","H10"):
         op="new_scene"
     setup_panel = {"op":"new_scene","scene_id":"lesson","objective":case["setup"],
@@ -172,8 +188,8 @@ def compile_case(case, mode):
                "subtitle_font_size":42, "closing_hold_ms":1350,
                "script":[{"id":"setup","text":case["setup"],"caption":None},
                          {"id":"question","text":case["question"],"caption":case["question"],"pause_after_ms":1250+(number%3)*220},
-                         {"id":"mechanism","text":case["mechanism"],"caption":None},
-                         {"id":"answer","text":case["objective"],"caption":None}],
+                         {"id":"mechanism","text":case["mechanism"],"caption":"" if native else None},
+                         {"id":"answer","text":case["objective"],"caption":"" if native else None}],
                "beats":[
                    {"id":"setup","cue":{"ms":0},"panel":setup_panel},
                    {"id":"demonstrate","parent":"setup" if op!="new_scene" else None,
