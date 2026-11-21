@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+"""Upload the same recorded lesson with a known 800 ms injected pause."""
+from io import BytesIO
+import json
+import os
+import sys
+import wave
+from pathlib import Path
+
+import httpx
+
+id_ = sys.argv[1]
+root = Path.home() / "Videos/video-renderer/jobs" / id_
+request = json.loads((root / "request.json").read_text())
+evidence = json.loads((root / "manifest.json").read_text())
+entry = next(i for i, w in enumerate(evidence["aligned"]) if w["word"].lower() == "checkout")
+before, after = evidence["aligned"][entry-2], evidence["aligned"][entry-1]
+assert before["end"] <= after["start"], (before, after)
+pause_point = (before["end"] + after["start"]) / 2
+insertion = 38400
+with wave.open(str(root / "narration.wav"), "rb") as original:
+    assert original.getframerate() == 48000 and original.getsampwidth() == 2 and original.getnchannels() == 1
+    data = original.readframes(original.getnframes())
+point = round(pause_point * 48000) * 2
+wav = BytesIO()
+with wave.open(wav, "wb") as f:
+    f.setparams((1, 2, 48000, 0, "NONE", "not compressed"))
+    f.writeframes(data[:point] + bytes(insertion * 2) + data[point:])
+request.update(voice_profile=None, reuse_visuals_from=id_, reuse_recording_from=None)
+base = os.environ.get("VIDEO_URL", "http://127.0.0.1:8789")
+r = httpx.post(base + "/v2/renders/upload", data={"request": json.dumps(request)},
+              files={"audio": ("known-pause.wav", wav.getvalue(), "audio/wav")}, timeout=30)
+r.raise_for_status()
+print(json.dumps({"injected_samples": insertion, "pause_point_seconds": pause_point, "original_beats": evidence["beats"], **r.json()}))
