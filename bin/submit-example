@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+"""Submit an original v1 fixture to the compatibility adapter."""
+import json
+import os
+import sys
+from pathlib import Path
+
+import httpx
+
+path = Path(sys.argv[1])
+base = os.getenv("VIDEO_URL", "http://127.0.0.1:8789")
+story = json.loads((path / "story.json").read_text())
+story["signature"] = (path / "signature.md").read_text()
+data = {}
+if len(sys.argv) > 2:
+    data["reuse_from"] = sys.argv[2]
+if len(sys.argv) > 3:
+    story["end_ms"] += int(sys.argv[3])
+with (path / "narration.wav").open("rb") as audio:
+    r = httpx.post(base + "/renders", data={**data, "story": json.dumps(story)}, files={"audio": audio}, timeout=30)
+r.raise_for_status()
+print(r.json()["id"])
