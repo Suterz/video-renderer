@@ -9,7 +9,9 @@ def tokens(text):
 
 def speech_terms(words):
     """Normalize equivalent ASR spellings without merging different values."""
-    aliases = {**dict(zip("zero one two three four five six seven eight nine".split(), "0123456789")),
+    names = ("zero one two three four five six seven eight nine ten eleven twelve "
+             "thirteen fourteen fifteen sixteen seventeen eighteen nineteen").split()
+    aliases = {**{name: str(index) for index,name in enumerate(names)},
                "cm": "centimeters", "centimeter": "centimeters", "km": "kilometers", "kilometer": "kilometers"}
     return [aliases.get(t, t) for t in words]
 
