@@ -485,6 +485,13 @@ def legacy_submit(story: str = Form(...), audio: UploadFile = File(...), reuse_f
         if reuse_from:
             old = job_folder(reuse_from, allow_legacy=True)
             if (old / "panels.json").is_file():
+                accepted_request = read(old / "request.json")
+                old_visual = accepted_request.get("visual", {})
+                if old_visual.get("legacy_input") and "legacy_premise" not in old_visual:
+                    # Retiming a pre-upgrade compatibility render should keep
+                    # its proven visual recipe, not switch the prompt version.
+                    for name in ("legacy_premise", "legacy_context"):
+                        req.visual.pop(name, None)
                 req.reuse_visuals_from = reuse_from
     except (ValueError, TypeError, KeyError, wave.Error, EOFError) as exc:
         raise HTTPException(422, str(exc)) from exc
