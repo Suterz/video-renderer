@@ -24,7 +24,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .media import FFMPEG, FFPROBE, encode
-from .timeline import TimingReview, bind, corroborate_cue, cue_sample, end_frame, sample, start_frame, tokens
+from .timeline import TimingReview, bind, corroborate_cue, cue_sample, end_frame, sample, speech_terms, start_frame, tokens
 
 ROOT = Path(os.environ.get("VIDEO_STORE", Path.home() / "Videos/video-renderer/jobs"))
 LEGACY = Path.home() / "Videos/storyboard-renderer/jobs"
@@ -295,7 +295,7 @@ def run(p):
         observed = tokens(" ".join(w["word"] for w in asr))
         # ASR may write numeric phrases as digits. Preserve raw observations and
         # compare near each cue separately rather than treating them as ground truth.
-        agreement = SequenceMatcher(None, tokens(text), observed, autojunk=False).ratio()
+        agreement = SequenceMatcher(None, speech_terms(tokens(text)), speech_terms(observed), autojunk=False).ratio()
         if agreement < .70:
             raise Review(f"independent ASR divergence ({agreement:.2f}): {' '.join(observed)}")
         boundaries = [(0, "")]

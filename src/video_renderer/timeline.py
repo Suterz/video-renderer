@@ -7,6 +7,13 @@ def tokens(text):
     return re.findall(r"[a-z0-9]+(?:'[a-z]+)?", text.replace("’", "'").lower())
 
 
+def speech_terms(words):
+    """Normalize equivalent ASR spellings without merging different values."""
+    aliases = {**dict(zip("zero one two three four five six seven eight nine".split(), "0123456789")),
+               "cm": "centimeters", "centimeter": "centimeters", "km": "kilometers", "kilometer": "kilometers"}
+    return [aliases.get(t, t) for t in words]
+
+
 def sample(time, rate=48000):
     return int((Decimal(str(time)) * rate).to_integral_value(rounding=ROUND_HALF_UP))
 
@@ -63,10 +70,8 @@ def corroborate_cue(cue, bound, asr, tolerance=.65):
     """Independent lexical check near each forced onset, not a confidence score."""
     raw = {**cue, "edge": "start", "offset_ms": 0}
     onset = cue_sample(raw, bound) / 48000
-    aliases = {**dict(zip("zero one two three four five six seven eight nine".split(), "0123456789")),
-               "cm": "centimeters", "km": "kilometers"}
-    phrase = [aliases.get(t, t) for t in tokens(cue["phrase"])]
-    spoken = [(aliases.get(t, t), w) for w in asr for t in tokens(w["word"])]
+    phrase = speech_terms(tokens(cue["phrase"]))
+    spoken = [(t, w) for w in asr for t in speech_terms(tokens(w["word"]))]
     nearby = [[a for a, _ in spoken[i:i + len(phrase)]] for i, (_, w) in enumerate(spoken)
               if abs(w["start"] - onset) <= tolerance]
     if phrase not in nearby:
