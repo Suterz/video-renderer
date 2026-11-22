@@ -408,10 +408,14 @@ def run(p):
                 errors[n]=encoded_match(image,expected,region)
                 if q <= n < a:
                     panel_idx=max(i for i,s in enumerate(starts) if s<=n)
-                    for mark in req.instructional.required_facts:
-                        box=facts[panel_idx][mark]["bbox"]
-                        # The region of the actual educational mark must survive separately.
-                        encoded_match(image,expected,tuple(v/(360,640)[i%2] for i,v in enumerate(box)))
+                    source=p/manifest["panels"][panel_idx]["filename"]
+                    with Image.open(source) as accepted_art:
+                        for mark in req.instructional.required_facts:
+                            box=facts[panel_idx][mark]["bbox"]
+                            # Compare against the verified non-captioned panel.
+                            # Otherwise a subtitle could obscure the same mark
+                            # in both the candidate and its supposed reference.
+                            encoded_match(image,accepted_art,tuple(v/(360,640)[i%2] for i,v in enumerate(box)))
             image.save(p/f"checked-{n}.png")
         teaching["matched_decoded_frames"]=errors
     save(p / "manifest.json", {**manifest, "wav_sha256": hash_bytes(wav.read_bytes()),

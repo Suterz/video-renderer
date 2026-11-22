@@ -74,3 +74,14 @@ def test_composed_tens_are_lexically_equal_without_accepting_wrong_units():
             corroborate_cue(cue,b,[{"word":word,"start":.15},asr[1]])
     with pytest.raises(TimingReview):
         corroborate_cue(cue,b,[asr[0],{"word":"meters","start":.40}])
+
+
+def test_a_caption_covering_a_fact_does_not_match_verified_art():
+    mark=Image.new("RGB",(360,640),"ivory")
+    d=ImageDraw.Draw(mark)
+    for x in (130,165,200):
+        d.rectangle((x,555,x+11,572),fill="#a1352a")
+    masked=mark.copy()
+    ImageDraw.Draw(masked).rectangle((115,549,240,579),fill="#122036")
+    with pytest.raises(InstructionalReview,match="checked visual region"):
+        encoded_match(masked,mark,(.34,.86,.61,.90))
