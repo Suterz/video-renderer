@@ -28,6 +28,11 @@ def prepare(record):
     for i, item in enumerate(opening["overlays"][1:],1):
         if item["type"] not in ("text","segment","shape"):
             continue
+        if item["type"]=="shape" and item.get("ink")=="pale":
+            # Pale backplates are not the foreground claim; requiring their
+            # unpainted fill to survive marked areas would reject correct
+            # partitions. Ticks/marks and exact labels remain required.
+            continue
         # Annotation bounds are computed by frames-renderer and verified on its actual raster.
         fact=f"opening-{i}"
         item["fact"]=fact
@@ -41,6 +46,8 @@ def prepare(record):
             point=graphic.get("to")
             if graphic["type"]=="arrow" and isinstance(point,str) and point in named:
                 graphic["part_target"]=named[point].split(", not")[0].split("; absent")[0]
+                if re.search(r"inside|interior|opening",named[point],re.I):
+                    graphic["part_relation"]="inside_region"
     if reveal["op"]=="edit_scene":
         reveal["action_claim"]=reveal["change"]
     oracle["evaluation_version"]="v4-1"

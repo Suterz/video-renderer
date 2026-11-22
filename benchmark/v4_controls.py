@@ -60,7 +60,7 @@ def parts(url,root):
 
 def reveal_controls(url,root):
     with httpx.Client(base_url=url,timeout=20) as h:
-        for positive in (True,False):
+        for positive in (True,False,"repair"):
             title="Count the equal gaps"
             tick={"type":"segment","from":[.24,.47],"to":[.76,.47],"divisions":2,"fact":"ruler"}
             label={"type":"text","at":[.5,.28],"text":"ONE GAP IS TWO UNITS","fact":"scale","role":"value"}
@@ -72,17 +72,21 @@ def reveal_controls(url,root):
                            {"id":"r","text":"Two gaps make four units.","caption":""}],
                  "instructional":{"question_utterance":"q","answer_beat":"answer","required_facts":["ruler","scale"],"minimum_ms":1180,"region":[.1,.2,.9,.78]},
                  "beats":[{"id":"opening","cue":{"ms":0},"panel":{"op":"new_scene","scene_id":"scale","paper_scene":True,
-                           "instruction":"An exact scale.","objective":"Show the key and mark the span.","overlays":[label]+([tick] if positive else [{"type":"segment","from":[.24,.47],"to":[.76,.47]}])}},
+                           "instruction":"An exact scale.","objective":"Show the key and mark the span.","overlays":[label]+([tick] if positive is True else [{"type":"segment","from":[.24,.47],"to":[.76,.47]}]),
+                           "overlay_repairs":[[label,tick]] if positive=="repair" else [],"retry_budget":1}},
                           {"id":"answer","cue":{"utterance_id":"r","phrase":"Two gaps"},"parent":"opening",
                            "panel":{"op":"overlay_only","scene_id":"scale","instruction":"Reveal answer.","objective":"Show four units.",
                                     "overlays":[label,tick,{"type":"text","at":[.5,.64],"text":"TWO GAPS = FOUR UNITS","role":"value"}]}}]}
-            folder=root/("before-correct" if positive else "before-wrong")
+            folder=root/("before-repaired" if positive=="repair" else "before-correct" if positive else "before-wrong")
             d=send(h,"/v2/renders",req,folder)
             (folder/"status.json").write_text(json.dumps(d,indent=2))
             if positive:
                 assert d["state"]=="succeeded",d
                 (folder/"video.mp4").write_bytes(h.get(d["video_url"]).content)
-                (folder/"manifest.json").write_bytes(h.get(d["status_url"]+"/manifest").content)
+                m=h.get(d["status_url"]+"/manifest").json()
+                if positive=="repair":
+                    assert m["panels"][0]["accepted_attempt"]==1,m
+                (folder/"manifest.json").write_text(json.dumps(m,indent=2))
             else:
                 assert d["state"]=="needs_review" and "ruler" in d["error"],d
             print(folder.name,d["state"],flush=True)

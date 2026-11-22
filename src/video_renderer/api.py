@@ -205,7 +205,7 @@ def canonical(p, req):
         return wav, f.getnframes()
 
 
-def frames(p, req):
+def frames(p, req, required_by_beat=None):
     spec = {"visual": req.visual, "panels": [(b.id, b.parent, b.panel) for b in req.beats]}
     fingerprint = hash_bytes(json.dumps(spec, sort_keys=True).encode())
     if req.reuse_visuals_from:
@@ -228,6 +228,8 @@ def frames(p, req):
         for b in req.beats:
             state(p, phase=f"frame:{b.id}")
             payload = {**b.panel, "key": b.id, "parent_panel_id": by_key.get(b.parent)}
+            if required_by_beat and b.id in required_by_beat:
+                payload["require_fact_ids"]=required_by_beat[b.id]
             r = client.post(f"/v2/sessions/{sid}/panels", json=payload)
             if r.is_error:
                 raise Review(f"frame beat {b.id}: {r.text}")
@@ -355,9 +357,8 @@ def run(p):
         raise Review("cue fires after the spoken recording")
     if not legacy:
         guard_captions(req.script,bound,{b.id:f for b,f in zip(req.beats,starts,strict=True)},f)
-    manifest = frames(p, req)
-    save(p / "panels.json", manifest)
     teaching=None
+    required_by_beat={}
     if req.instructional:
         rule=req.instructional
         spans=bound[rule.question_utterance][1]
@@ -368,10 +369,16 @@ def run(p):
         answer=next(starts[i] for i,b in enumerate(req.beats) if b.id==rule.answer_beat)
         if (answer-question_end)*1000 < rule.minimum_ms*f:
             raise InstructionalReview("insufficient prediction hold after the spoken question")
+        for i,start in enumerate(starts):
+            if start<answer and (i==len(starts)-1 or starts[i+1]>question):
+                required_by_beat[req.beats[i].id]=rule.required_facts
+        teaching={"question_frame":question,"question_end_frame":question_end,"answer_frame":answer,"required_facts":rule.required_facts}
+    manifest = frames(p, req, required_by_beat) if required_by_beat else frames(p, req)
+    save(p / "panels.json", manifest)
+    if teaching:
         facts=[x.get("verified_facts",{}) for x in manifest["panels"]]
         for mark in rule.required_facts:
             exposure(mark,question,answer,facts,starts,f,rule.minimum_ms)
-        teaching={"question_frame":question,"question_end_frame":question_end,"answer_frame":answer,"required_facts":rule.required_facts}
     c = {start_frame(s, f): t for s, t in boundaries if 0 <= start_frame(s, f) < end}
     cuts = sorted({0, end, *starts, *c})
     paths, segments, caption_trace = [], [], []
