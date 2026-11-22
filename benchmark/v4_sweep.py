@@ -43,18 +43,23 @@ def sweep(a):
         seal=git(a.sealed)
     else:
         rows=read_cases(loc/"v3/first.tsv",loc/"v3/development.tsv")
-        for extra in ("v4-author-revisions.tsv","v4-clarity.tsv","v4-latest.tsv","v4-state-repairs.tsv","v4-visible-repairs.tsv"):
+        for extra in ("v4-author-revisions.tsv","v4-clarity.tsv","v4-latest.tsv","v4-state-repairs.tsv","v4-visible-repairs.tsv","v4-topology-repair.tsv"):
             if (loc/extra).is_file():
                 rows.update(read_cases(loc/extra))
         specs={}
         for k,v in rows.items():
             req,oracle=prepare(v)
+            if a.controlled_parts:
+                from v4_geometry_details import DETAILS,diagram_request
+                if k in DETAILS:
+                    req,oracle=diagram_request(k,req,oracle)
             specs[k]=(json.dumps(req,sort_keys=True,ensure_ascii=False).encode(),oracle)
         seal=None
     ids=a.id or sorted(specs)
     a.out.mkdir(parents=True,exist_ok=True)
     conf={"frames":git(a.frames),"video":git(a.video),"harness":git(loc),"sealed":seal,"mode":"v3",
-          "endpoint":a.url,"job_store":str(a.jobs),"frame_store":str(a.frame_store),"case_ids":ids}
+          "endpoint":a.url,"job_store":str(a.jobs),"frame_store":str(a.frame_store),"case_ids":ids,
+          **({"controlled_parts":True} if a.controlled_parts else {})}
     config=a.out/"config.json"
     if config.exists():
         if conf!=json.loads(config.read_text()):
@@ -131,4 +136,5 @@ if __name__=="__main__":
     p.add_argument("--url",required=True)
     p.add_argument("--id",action="append")
     p.add_argument("--sealed",type=Path)
+    p.add_argument("--controlled-parts",action="store_true",help="Use the authored cut-paper alternatives for development only")
     main(p.parse_args())
