@@ -1,0 +1,1430 @@
+{
+  "controls-fixed/part-wrong": {
+    "status": {
+      "panel_id": "425a147c586e4600ad21587004e8c188",
+      "key": "wrong",
+      "fingerprint": "289caeb3154ad26308811a902ff1536418c06ae9c47a25d24643e3098f03a3cf",
+      "state": "needs_review",
+      "status_url": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188",
+      "error": "arrow does not touch the authored target region",
+      "artifacts": {
+        "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/artifacts/clean.png",
+        "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/artifacts/composed.png",
+        "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/artifacts/overlay.png",
+        "review.json": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/artifacts/review.json"
+      },
+      "summary": {
+        "scene_root": "425a147c586e4600ad21587004e8c188"
+      },
+      "attempt_artifacts": [
+        {
+          "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/attempts/0/clean.png",
+          "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/attempts/0/composed.png",
+          "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/attempts/0/overlay.png"
+        },
+        {
+          "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/attempts/1/clean.png",
+          "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/attempts/1/composed.png",
+          "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/425a147c586e4600ad21587004e8c188/attempts/1/overlay.png"
+        }
+      ]
+    },
+    "review": {
+      "attempts": [
+        {
+          "attempt": 0,
+          "feedback": "",
+          "outcome": "rejected",
+          "clean_source": "authored_paper_scene",
+          "overlays": [
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.4
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.08
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.5
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.1
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "text",
+              "text": "WHICH PART IS THE LATCH?",
+              "at": [
+                0.48,
+                0.22
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": "question",
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "arrow",
+              "text": null,
+              "at": null,
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.49
+              ],
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": [
+                0.395,
+                0.36,
+                0.566,
+                0.441
+              ],
+              "target_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "part_checks": [],
+          "geometry": [
+            {
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.49
+              ],
+              "source": [
+                853,
+                576
+              ],
+              "tip": [
+                540,
+                941
+              ],
+              "tip_alpha": 255
+            }
+          ],
+          "stage": "composition",
+          "defect": "arrow does not touch the authored target region"
+        },
+        {
+          "attempt": 1,
+          "feedback": "arrow does not touch the authored target region",
+          "outcome": "rejected",
+          "clean_source": "authored_paper_scene",
+          "overlays": [
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.4
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.08
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.5
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.1
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "text",
+              "text": "WHICH PART IS THE LATCH?",
+              "at": [
+                0.48,
+                0.22
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": "question",
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "arrow",
+              "text": null,
+              "at": null,
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.49
+              ],
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": [
+                0.395,
+                0.36,
+                0.566,
+                0.441
+              ],
+              "target_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "part_checks": [],
+          "geometry": [
+            {
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.49
+              ],
+              "source": [
+                853,
+                576
+              ],
+              "tip": [
+                540,
+                941
+              ],
+              "tip_alpha": 255
+            }
+          ],
+          "stage": "composition",
+          "defect": "arrow does not touch the authored target region"
+        }
+      ]
+    }
+  },
+  "controls-fixed/part-correct": {
+    "status": {
+      "panel_id": "b6415d382f7c4a5ab22fe8daf3bd3d89",
+      "key": "correct",
+      "fingerprint": "3644a352b42c8cdbc583a0c271dc992bfcdb7190d2c3f53a2e338e09ee16b3d1",
+      "state": "accepted",
+      "status_url": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89",
+      "artifacts": {
+        "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/artifacts/clean.png",
+        "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/artifacts/composed.png",
+        "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/artifacts/overlay.png",
+        "review.json": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/artifacts/review.json",
+        "phone.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/artifacts/phone.png"
+      },
+      "summary": {
+        "clean_sha256": "7aa5dca2c477973b7b94512d09df96aa2c18529eae385c482a42b1b4cc4f1a4c",
+        "composed_sha256": "ae251fea5e892d3b505353fd795f8452dc2a6af6a23ec83663434e4e2128ede1",
+        "scene_root": "b6415d382f7c4a5ab22fe8daf3bd3d89",
+        "anchors": {},
+        "verified_facts": {},
+        "accepted_attempt": 0
+      },
+      "attempt_artifacts": [
+        {
+          "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/attempts/0/clean.png",
+          "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/attempts/0/composed.png",
+          "phone.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/attempts/0/phone.png",
+          "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/b6415d382f7c4a5ab22fe8daf3bd3d89/attempts/0/overlay.png"
+        }
+      ]
+    },
+    "review": {
+      "attempts": [
+        {
+          "attempt": 0,
+          "feedback": "",
+          "outcome": "accepted",
+          "clean_source": "authored_paper_scene",
+          "overlays": [
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.4
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.08
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.5
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.1
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "text",
+              "text": "WHICH PART IS THE LATCH?",
+              "at": [
+                0.48,
+                0.22
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": "question",
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "arrow",
+              "text": null,
+              "at": null,
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.4
+              ],
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": [
+                0.395,
+                0.36,
+                0.566,
+                0.441
+              ],
+              "target_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "part_checks": [
+            {
+              "tip": [
+                540,
+                768
+              ],
+              "region_px": [
+                427,
+                691,
+                611,
+                847
+              ],
+              "source_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "geometry": [
+            {
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.4
+              ],
+              "source": [
+                853,
+                576
+              ],
+              "tip": [
+                540,
+                768
+              ],
+              "tip_alpha": 255
+            }
+          ],
+          "facts": {}
+        }
+      ],
+      "accepted_attempt": 0
+    }
+  },
+  "controls-fixed/part-repaired": {
+    "status": {
+      "panel_id": "94a5276807ca464680d3f95ad6983946",
+      "key": "repaired",
+      "fingerprint": "c8b1f6601765aba25c198b8861ed7a2b9c2b05967119b32022f80aabc902e8be",
+      "state": "accepted",
+      "status_url": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946",
+      "artifacts": {
+        "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/artifacts/clean.png",
+        "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/artifacts/composed.png",
+        "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/artifacts/overlay.png",
+        "review.json": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/artifacts/review.json",
+        "phone.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/artifacts/phone.png"
+      },
+      "summary": {
+        "clean_sha256": "7aa5dca2c477973b7b94512d09df96aa2c18529eae385c482a42b1b4cc4f1a4c",
+        "composed_sha256": "ae251fea5e892d3b505353fd795f8452dc2a6af6a23ec83663434e4e2128ede1",
+        "scene_root": "94a5276807ca464680d3f95ad6983946",
+        "anchors": {},
+        "verified_facts": {},
+        "accepted_attempt": 1
+      },
+      "attempt_artifacts": [
+        {
+          "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/0/clean.png",
+          "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/0/composed.png",
+          "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/0/overlay.png"
+        },
+        {
+          "clean.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/1/clean.png",
+          "composed.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/1/composed.png",
+          "phone.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/1/phone.png",
+          "overlay.png": "/v2/sessions/702e9d6b77bf4c91ab18654f7bf9e4ad/panels/94a5276807ca464680d3f95ad6983946/attempts/1/overlay.png"
+        }
+      ]
+    },
+    "review": {
+      "attempts": [
+        {
+          "attempt": 0,
+          "feedback": "",
+          "outcome": "rejected",
+          "clean_source": "authored_paper_scene",
+          "overlays": [
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.4
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.08
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.5
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.1
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "text",
+              "text": "WHICH PART IS THE LATCH?",
+              "at": [
+                0.48,
+                0.22
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": "question",
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "arrow",
+              "text": null,
+              "at": null,
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.49
+              ],
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": [
+                0.395,
+                0.36,
+                0.566,
+                0.441
+              ],
+              "target_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "part_checks": [],
+          "geometry": [
+            {
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.49
+              ],
+              "source": [
+                853,
+                576
+              ],
+              "tip": [
+                540,
+                941
+              ],
+              "tip_alpha": 255
+            }
+          ],
+          "stage": "composition",
+          "defect": "arrow does not touch the authored target region"
+        },
+        {
+          "attempt": 1,
+          "feedback": "arrow does not touch the authored target region",
+          "outcome": "accepted",
+          "reused_clean_for_repair": "7aa5dca2c477973b7b94512d09df96aa2c18529eae385c482a42b1b4cc4f1a4c",
+          "overlays": [
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.4
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.08
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "shape",
+              "text": null,
+              "at": [
+                0.48,
+                0.5
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": "rect",
+              "extent": [
+                0.17,
+                0.1
+              ],
+              "ink": "accent",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "text",
+              "text": "WHICH PART IS THE LATCH?",
+              "at": [
+                0.48,
+                0.22
+              ],
+              "from": null,
+              "to": null,
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": "question",
+              "fact": null,
+              "part_target": null,
+              "target_region": null,
+              "target_rgb": null
+            },
+            {
+              "type": "arrow",
+              "text": null,
+              "at": null,
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.4
+              ],
+              "divisions": null,
+              "shape": null,
+              "extent": null,
+              "ink": "ink",
+              "role": null,
+              "fact": null,
+              "part_target": null,
+              "target_region": [
+                0.395,
+                0.36,
+                0.566,
+                0.441
+              ],
+              "target_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "part_checks": [
+            {
+              "tip": [
+                540,
+                768
+              ],
+              "region_px": [
+                427,
+                691,
+                611,
+                847
+              ],
+              "source_rgb": [
+                191,
+                77,
+                49
+              ]
+            }
+          ],
+          "geometry": [
+            {
+              "from": [
+                0.79,
+                0.3
+              ],
+              "to": [
+                0.5,
+                0.4
+              ],
+              "source": [
+                853,
+                576
+              ],
+              "tip": [
+                540,
+                768
+              ],
+              "tip_alpha": 255
+            }
+          ],
+          "facts": {},
+          "repair_action": "alternate overlay on same clean art"
+        }
+      ],
+      "accepted_attempt": 1
+    }
+  },
+  "controls-fixed/before-correct": {
+    "status": {
+      "id": "a56722b4824245ddb775bbf425fd9fd0",
+      "state": "succeeded",
+      "status_url": "/v2/renders/a56722b4824245ddb775bbf425fd9fd0",
+      "video_url": "/v2/renders/a56722b4824245ddb775bbf425fd9fd0/video",
+      "submission_sha256": "f8454078fa5480357f44955fe1e3629942ae1d7aaad0b7746dd641ff848482a0",
+      "updated": 1795341805.0239906,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": {
+        "question_frame": 67,
+        "question_end_frame": 122,
+        "answer_frame": 192,
+        "required_facts": [
+          "ruler",
+          "scale"
+        ],
+        "matched_decoded_frames": {
+          "67": 1.768,
+          "191": 1.768,
+          "192": 1.866,
+          "272": 1.849
+        }
+      },
+      "panels": [
+        {
+          "id": "opening",
+          "panel_id": "76cc4cb26e174a67937b0c8bf1c4ff5a",
+          "sha256": "1cb932e95b0f19399483e9da6dcc5dcf9fb62668713677c7280611e087abf859",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/e7e1cab3a2a8421c86ece21cbba70549/panels/76cc4cb26e174a67937b0c8bf1c4ff5a",
+          "verified_facts": {
+            "scale": {
+              "bbox": [
+                46,
+                169,
+                315,
+                195
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "ruler": {
+              "bbox": [
+                82,
+                292,
+                278,
+                310
+              ],
+              "visible_fraction": 1.0,
+              "type": "segment"
+            }
+          },
+          "accepted_attempt": 0
+        },
+        {
+          "id": "answer",
+          "panel_id": "d3a5c39181164e5a994fe85c69cb52a2",
+          "sha256": "fc99fda4f36f9ce729324935306cebbca11a20cb34d212906b4a8b1a4b262153",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/e7e1cab3a2a8421c86ece21cbba70549/panels/d3a5c39181164e5a994fe85c69cb52a2",
+          "verified_facts": {
+            "scale": {
+              "bbox": [
+                46,
+                169,
+                315,
+                195
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "ruler": {
+              "bbox": [
+                82,
+                292,
+                278,
+                310
+              ],
+              "visible_fraction": 1.0,
+              "type": "segment"
+            }
+          },
+          "accepted_attempt": 0
+        }
+      ]
+    }
+  },
+  "controls-fixed/before-wrong": {
+    "status": {
+      "id": "79de484b9bdb4ea5b169c027a21256d0",
+      "state": "needs_review",
+      "status_url": "/v2/renders/79de484b9bdb4ea5b169c027a21256d0",
+      "video_url": "/v2/renders/79de484b9bdb4ea5b169c027a21256d0/video",
+      "submission_sha256": "1e6bfe8e4f16b5f9881f03551c26ebcbc07a957dde34e6f0d60bc7bbe533ccc6",
+      "updated": 1795341868.397488,
+      "phase": "frame:answer",
+      "error": "required visual fact 'ruler' absent while viewer is asked to decide",
+      "diagnostic": "InstructionalReview"
+    }
+  },
+  "repair-stage/controls/before-repaired": {
+    "status": {
+      "id": "e4269577d4d244d6be735c6f586eb388",
+      "state": "succeeded",
+      "status_url": "/v2/renders/e4269577d4d244d6be735c6f586eb388",
+      "video_url": "/v2/renders/e4269577d4d244d6be735c6f586eb388/video",
+      "submission_sha256": "0f148acf192395e0debf5af0beec9f57c45aa5fa9ec8156fbb01486bd094588c",
+      "updated": 1795342407.1121228,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": {
+        "question_frame": 67,
+        "question_end_frame": 122,
+        "answer_frame": 192,
+        "required_facts": [
+          "ruler",
+          "scale"
+        ],
+        "matched_decoded_frames": {
+          "67": 1.768,
+          "191": 1.768,
+          "192": 1.866,
+          "272": 1.849
+        }
+      },
+      "panels": [
+        {
+          "id": "opening",
+          "panel_id": "e2a1f92654d84ee1b8167f26588c7ae4",
+          "sha256": "1cb932e95b0f19399483e9da6dcc5dcf9fb62668713677c7280611e087abf859",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/ff1e12b3bcdb49af9250850835f466d5/panels/e2a1f92654d84ee1b8167f26588c7ae4",
+          "verified_facts": {
+            "scale": {
+              "bbox": [
+                46,
+                169,
+                315,
+                195
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "ruler": {
+              "bbox": [
+                82,
+                292,
+                278,
+                310
+              ],
+              "visible_fraction": 1.0,
+              "type": "segment"
+            }
+          },
+          "accepted_attempt": 1
+        },
+        {
+          "id": "answer",
+          "panel_id": "a033402070a846ce8c5fe1827f595ae6",
+          "sha256": "fc99fda4f36f9ce729324935306cebbca11a20cb34d212906b4a8b1a4b262153",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/ff1e12b3bcdb49af9250850835f466d5/panels/a033402070a846ce8c5fe1827f595ae6",
+          "verified_facts": {
+            "scale": {
+              "bbox": [
+                46,
+                169,
+                315,
+                195
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "ruler": {
+              "bbox": [
+                82,
+                292,
+                278,
+                310
+              ],
+              "visible_fraction": 1.0,
+              "type": "segment"
+            }
+          },
+          "accepted_attempt": 0
+        }
+      ]
+    }
+  },
+  "known-repairs-r2/full-repair": {
+    "status": {
+      "id": "5126dd72d8c742608e7003d1b8b4448f",
+      "state": "succeeded",
+      "status_url": "/v2/renders/5126dd72d8c742608e7003d1b8b4448f",
+      "video_url": "/v2/renders/5126dd72d8c742608e7003d1b8b4448f/video",
+      "submission_sha256": "6dfd4c6f7788057c40fb8fd76c441885822ccae434fdc4ce94b0480f00970838",
+      "updated": 1795342415.1761975,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": {
+        "question_frame": 108,
+        "question_end_frame": 151,
+        "answer_frame": 221,
+        "required_facts": [
+          "latch",
+          "handle",
+          "upper-label",
+          "lower-label"
+        ],
+        "matched_decoded_frames": {
+          "108": 2.353,
+          "220": 2.353,
+          "221": 2.413,
+          "312": 2.405
+        }
+      },
+      "panels": [
+        {
+          "id": "opening",
+          "panel_id": "66997281ee4548e3b729cb687c2c016a",
+          "sha256": "d74797f6b22ec3a83673d0cc9f91c1e66829a1af3ef87c4bf263fd4055762ad2",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/c950c6c6fc4041db9e14fd9afe7839eb/panels/66997281ee4548e3b729cb687c2c016a",
+          "verified_facts": {
+            "question-title": {
+              "bbox": [
+                28,
+                110,
+                332,
+                135
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "latch": {
+              "bbox": [
+                139,
+                228,
+                206,
+                285
+              ],
+              "visible_fraction": 1.0,
+              "type": "shape"
+            },
+            "handle": {
+              "bbox": [
+                139,
+                285,
+                206,
+                355
+              ],
+              "visible_fraction": 1.0,
+              "type": "shape"
+            },
+            "upper-label": {
+              "bbox": [
+                52,
+                246,
+                129,
+                271
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "lower-label": {
+              "bbox": [
+                58,
+                313,
+                122,
+                329
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            }
+          },
+          "accepted_attempt": 0
+        },
+        {
+          "id": "reveal",
+          "panel_id": "8f82018ace134227b0f55d370a59560e",
+          "sha256": "50d24b90cfa3414388e1528ddf96e820c006034e82ae357d2c1871eb7486431d",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/c950c6c6fc4041db9e14fd9afe7839eb/panels/8f82018ace134227b0f55d370a59560e",
+          "verified_facts": {
+            "question-title": {
+              "bbox": [
+                28,
+                110,
+                332,
+                135
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "latch": {
+              "bbox": [
+                139,
+                228,
+                206,
+                285
+              ],
+              "visible_fraction": 0.901,
+              "type": "shape"
+            },
+            "handle": {
+              "bbox": [
+                139,
+                285,
+                206,
+                355
+              ],
+              "visible_fraction": 1.0,
+              "type": "shape"
+            },
+            "upper-label": {
+              "bbox": [
+                52,
+                246,
+                129,
+                271
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            },
+            "lower-label": {
+              "bbox": [
+                58,
+                313,
+                122,
+                329
+              ],
+              "visible_fraction": 1.0,
+              "type": "text"
+            }
+          },
+          "accepted_attempt": 1
+        }
+      ]
+    }
+  },
+  "performance/other-voice": {
+    "status": {
+      "id": "431aa5fb307b45bca60a789aa339d1e2",
+      "state": "succeeded",
+      "status_url": "/v2/renders/431aa5fb307b45bca60a789aa339d1e2",
+      "video_url": "/v2/renders/431aa5fb307b45bca60a789aa339d1e2/video",
+      "submission_sha256": "1081663013a65ad83310121d0e8cf5ca6e6226b51164367bf213f3d8e0692ff0",
+      "updated": 1795342266.3150208,
+      "phase": "complete"
+    },
+    "evidence": {
+      "before_frames": [
+        0,
+        283,
+        391
+      ],
+      "after_frames": [
+        0,
+        326,
+        499
+      ],
+      "same_art": [
+        "b0837632e6f309281f211535835d559434055c7ba2dc7d593568be49dcce6ac2",
+        "e2cf8e5ef9be5a18c3fc186041206ebf53a8d33c7cc546ffaa504376c36f27ae",
+        "ef9af1549d8bf23551a5975147152fd6fe0302533e174c1ca22302196dd27815"
+      ],
+      "frame_shifts": [
+        0,
+        43,
+        108
+      ],
+      "verified_decode": {
+        "question_frame": 190,
+        "question_end_frame": 271,
+        "answer_frame": 326,
+        "required_facts": [
+          "opening-1",
+          "opening-2",
+          "opening-3",
+          "opening-4",
+          "opening-5",
+          "opening-6",
+          "opening-7"
+        ],
+        "matched_decoded_frames": {
+          "190": 1.949,
+          "325": 1.954,
+          "326": 1.943,
+          "650": 2.0
+        }
+      }
+    }
+  },
+  "performance/paused-upload": {
+    "status": {
+      "id": "52f9fdcfce344a2fb28cf9f8582257df",
+      "state": "succeeded",
+      "status_url": "/v2/renders/52f9fdcfce344a2fb28cf9f8582257df",
+      "video_url": "/v2/renders/52f9fdcfce344a2fb28cf9f8582257df/video",
+      "submission_sha256": "0f2350b752a43399fbcfcd7fd3e976e03b11eb049179365b6df6c0559bdb2501",
+      "updated": 1795342386.353412,
+      "phase": "complete"
+    },
+    "evidence": {
+      "before_frames": [
+        0,
+        283,
+        391
+      ],
+      "after_frames": [
+        0,
+        305,
+        415
+      ],
+      "same_art": [
+        "b0837632e6f309281f211535835d559434055c7ba2dc7d593568be49dcce6ac2",
+        "e2cf8e5ef9be5a18c3fc186041206ebf53a8d33c7cc546ffaa504376c36f27ae",
+        "ef9af1549d8bf23551a5975147152fd6fe0302533e174c1ca22302196dd27815"
+      ],
+      "frame_shifts": [
+        0,
+        22,
+        24
+      ],
+      "verified_decode": {
+        "question_frame": 144,
+        "question_end_frame": 211,
+        "answer_frame": 305,
+        "required_facts": [
+          "opening-1",
+          "opening-2",
+          "opening-3",
+          "opening-4",
+          "opening-5",
+          "opening-6",
+          "opening-7"
+        ],
+        "matched_decoded_frames": {
+          "144": 1.95,
+          "304": 1.955,
+          "305": 1.942,
+          "546": 2.0
+        }
+      }
+    }
+  },
+  "known-speech-r2/known-v3-H03": {
+    "status": {
+      "id": "bf283d4bf77f40f18aa799b735c1798a",
+      "state": "succeeded",
+      "status_url": "/v2/renders/bf283d4bf77f40f18aa799b735c1798a",
+      "video_url": "/v2/renders/bf283d4bf77f40f18aa799b735c1798a/video",
+      "submission_sha256": "7695b037feccfd16915b5c8822b9ad9a69c6a27f181f3afd0b4fb64d1c427d32",
+      "updated": 1795342383.3337467,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": null,
+      "panels": [
+        {
+          "id": "setup",
+          "panel_id": "efa34696d7514799af498c1bad4ecbf5",
+          "sha256": "818da43cca5792391775cb0edad5871457e236f3aaaa8ef782133c70833f1772",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/4e71e9b97ed04e3990572db73df6bab8/panels/efa34696d7514799af498c1bad4ecbf5",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "demonstrate",
+          "panel_id": "c471bc1d23f142d8969259c9d84c8c34",
+          "sha256": "d57442320849b57ca52e5b21021a07aa66a703cab166f7f174f8aca3f51962b2",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/4e71e9b97ed04e3990572db73df6bab8/panels/c471bc1d23f142d8969259c9d84c8c34",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "conclude",
+          "panel_id": "9996bea81aa74c558de63ef749e62a7e",
+          "sha256": "0bf0406edad997c8acc23d792648e0c6919800d1b533664e434ebae832c28e4e",
+          "filename": "frame-2.png",
+          "status_url": "/v2/sessions/4e71e9b97ed04e3990572db73df6bab8/panels/9996bea81aa74c558de63ef749e62a7e",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        }
+      ]
+    }
+  },
+  "known-speech-r2/known-v3-H04": {
+    "status": {
+      "id": "53371a8fa13046a79e7cd2352048c602",
+      "state": "succeeded",
+      "status_url": "/v2/renders/53371a8fa13046a79e7cd2352048c602",
+      "video_url": "/v2/renders/53371a8fa13046a79e7cd2352048c602/video",
+      "submission_sha256": "c84d3ea4ae692c1252a6051b8ff4af0f9d8ae96db27438aa386d0f548f76617d",
+      "updated": 1795342601.6241608,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": null,
+      "panels": [
+        {
+          "id": "setup",
+          "panel_id": "c700df431cf041ceb37ff74cdf276619",
+          "sha256": "7fd4e29a0d74141054721ba57b70ca806bdc8bc53f324f9dce4d90dc485b528f",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/de308e22537349b39908be968de06f85/panels/c700df431cf041ceb37ff74cdf276619",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "demonstrate",
+          "panel_id": "7cb1f96f727d4ea582dc8c6174d27adb",
+          "sha256": "5a132992f164294dbc45fce001daaa180ef0a69e3315b2af2f7751c0d2ef338c",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/de308e22537349b39908be968de06f85/panels/7cb1f96f727d4ea582dc8c6174d27adb",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "conclude",
+          "panel_id": "1b4af72ee4de42f887fae1e95982e84a",
+          "sha256": "04e59ab6e4c49cc192fc96dc09994302c0c12fc400d9a9ad3f45922b92cd6bec",
+          "filename": "frame-2.png",
+          "status_url": "/v2/sessions/de308e22537349b39908be968de06f85/panels/1b4af72ee4de42f887fae1e95982e84a",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        }
+      ]
+    }
+  },
+  "known-speech-r2/known-v3-H07": {
+    "status": {
+      "id": "ebc26813a9fa4b138c2dcf3adffb1120",
+      "state": "succeeded",
+      "status_url": "/v2/renders/ebc26813a9fa4b138c2dcf3adffb1120",
+      "video_url": "/v2/renders/ebc26813a9fa4b138c2dcf3adffb1120/video",
+      "submission_sha256": "d6a17b67e524ee43371d779b8f07b4648e030c6894e9b7e50df06fe9b27e4bea",
+      "updated": 1795342682.816861,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": null,
+      "panels": [
+        {
+          "id": "setup",
+          "panel_id": "252f5baec4764d14b29bd1c9d34f9ba0",
+          "sha256": "ff6e668aad7619d57e13cba0afabc8ebee1eb00652ff61447b946b32d331d445",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/811b2e14dffd4406b5adc59cae588816/panels/252f5baec4764d14b29bd1c9d34f9ba0",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "demonstrate",
+          "panel_id": "f201293bdf4d47d8ab7d2e7633265bdd",
+          "sha256": "c6256c269d8b1973f98bca9508b879728e44fd2dd05d3cf651e4f4733170dbac",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/811b2e14dffd4406b5adc59cae588816/panels/f201293bdf4d47d8ab7d2e7633265bdd",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "conclude",
+          "panel_id": "fd6af7d126a5429ca83abe9c39eeeef4",
+          "sha256": "bdb75aa6e416a6cdbf0b747ad6f5f2e5499ca4d4dc6096708bbadebcdb834113",
+          "filename": "frame-2.png",
+          "status_url": "/v2/sessions/811b2e14dffd4406b5adc59cae588816/panels/fd6af7d126a5429ca83abe9c39eeeef4",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        }
+      ]
+    }
+  },
+  "known-speech-r2/known-v3-H10": {
+    "status": {
+      "id": "de5c8639edb342a78a339e78694f19a8",
+      "state": "succeeded",
+      "status_url": "/v2/renders/de5c8639edb342a78a339e78694f19a8",
+      "video_url": "/v2/renders/de5c8639edb342a78a339e78694f19a8/video",
+      "submission_sha256": "8df7fae7c1c7d4381bb9c052faf1055d8cdb1d2294ebcfa20a534d351d32cccd",
+      "updated": 1795342773.3186665,
+      "phase": "complete"
+    },
+    "manifest": {
+      "instructional_evidence": null,
+      "panels": [
+        {
+          "id": "setup",
+          "panel_id": "52d11a0195f2414ea465e6bad3b6b38e",
+          "sha256": "94d334f18c0b17348360b5c47532833aba6488d826b79abfa0378009fa673fda",
+          "filename": "frame-0.png",
+          "status_url": "/v2/sessions/4b362e7a268d4202a57e014f5a6e2815/panels/52d11a0195f2414ea465e6bad3b6b38e",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "demonstrate",
+          "panel_id": "daedf2f6d0ad4797aab0d33f1919493c",
+          "sha256": "16f13dea1e318054f0e5b599db3d5a75d3e6672d7623998e12bf3a9e27ceb401",
+          "filename": "frame-1.png",
+          "status_url": "/v2/sessions/4b362e7a268d4202a57e014f5a6e2815/panels/daedf2f6d0ad4797aab0d33f1919493c",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        },
+        {
+          "id": "conclude",
+          "panel_id": "9bfe33780114487789152fa8977dc194",
+          "sha256": "c9197b742ebca569327c530028b496237727c5bff74f357a913d91656fa85b5c",
+          "filename": "frame-2.png",
+          "status_url": "/v2/sessions/4b362e7a268d4202a57e014f5a6e2815/panels/9bfe33780114487789152fa8977dc194",
+          "verified_facts": {},
+          "accepted_attempt": 0
+        }
+      ]
+    }
+  },
+  "known-visual/H05": {
+    "status": {
+      "id": "ed57da6c87544209b6024943b00c447b",
+      "state": "needs_review",
+      "status_url": "/v2/renders/ed57da6c87544209b6024943b00c447b",
+      "video_url": "/v2/renders/ed57da6c87544209b6024943b00c447b/video",
+      "submission_sha256": "d00aac3fb464ebfdcc80e886bd0db459d1edaaa1e199793ecaffbdf5dcc8475d",
+      "updated": 1795342812.8624866,
+      "phase": "frame:demonstrate",
+      "error": "frame beat demonstrate: {'panel_id': '0de1a6420dc3479d9995997e0d447b48', 'key': 'demonstrate', 'fingerprint': 'd25bc94435ea03c56644fac658ca8c156a9418a5aaed032b6ae44856a3a800be', 'state': 'needs_review', 'status_url': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48', 'error': 'composited arrow tip does not clearly satisfy touch_surface for zipper slider block at the Y junction of the two rows of teeth, not its rectangular pull or ring in both views', 'artifacts': {'clean.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/artifacts/clean.png', 'composed.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/artifacts/composed.png', 'overlay.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/artifacts/overlay.png', 'review.json': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/artifacts/review.json', 'phone.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/artifacts/phone.png'}, 'summary': {'scene_root': '6cdd42edb7404eadb3b0f3a46d907419'}, 'attempt_artifacts': [{'clean.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/0/clean.png', 'composed.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/0/composed.png', 'phone.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/0/phone.png', 'overlay.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/0/overlay.png'}, {'clean.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/1/clean.png', 'composed.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/1/composed.png', 'phone.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/1/phone.png', 'overlay.png': '/v2/sessions/d983d173cc8b4cbb96ff9efed59c8eaf/panels/0de1a6420dc3479d9995997e0d447b48/attempts/1/overlay.png'}]}",
+      "diagnostic": "Review"
+    }
+  },
+  "known-visual/H09": {
+    "status": {
+      "id": "261da075e14945dbae93f87a8ff0ed16",
+      "state": "needs_review",
+      "status_url": "/v2/renders/261da075e14945dbae93f87a8ff0ed16",
+      "video_url": "/v2/renders/261da075e14945dbae93f87a8ff0ed16/video",
+      "submission_sha256": "8b3b9accc0c2670c2da161ede7c7b118d0f66b92fa859cbb40c000ede7346912",
+      "updated": 1795342920.1669695,
+      "phase": "frame:demonstrate",
+      "error": "frame beat demonstrate: {\"detail\":[{\"type\":\"value_error\",\"loc\":[\"body\"],\"msg\":\"Value error, a depicted action requires an edit_scene, not only an annotation\",\"input\":{\"instruction\":\"Preserve the clean image; show the requested explanatory graphics.\",\"objective\":\"Use the mirror as the halfway line. The two distances shrink equally.\",\"op\":\"overlay_only\",\"overlays\":[{\"at\":[0.5,0.095],\"role\":\"question\",\"text\":\"WHY THE MIRROR GREETING\",\"type\":\"text\"},{\"at\":[0.5,0.24],\"role\":\"support\",\"text\":\"MIRROR\",\"type\":\"text\"},{\"divisions\":null,\"from\":[0.5,0.3],\"ink\":\"ink\",\"to\":[0.5,0.64],\"type\":\"segment\"},{\"divisions\":2,\"from\":[0.34,0.5],\"ink\":\"ink\",\"to\":[0.66,0.5],\"type\":\"segment\"},{\"at\":[0.26,0.67],\"role\":\"support\",\"text\":\"CHILD\",\"type\":\"text\"},{\"at\":[0.74,0.67],\"role\":\"support\",\"text\":\"IMAGE\",\"type\":\"text\"}],\"scene_id\":\"lesson\",\"seed\":50584389,\"action_claim\":\"The actual child moves toward the mirror and its image moves by the same distance.\",\"key\":\"demonstrate\",\"parent_panel_id\":\"fb177b51ccc24cce9f01adf3eb4ad113\"},\"ctx\":{\"error\":{}}}]}",
+      "diagnostic": "Review"
+    }
+  }
+}
