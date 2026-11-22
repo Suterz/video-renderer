@@ -50,6 +50,16 @@ def prepare(record):
                     graphic["part_relation"]="inside_region"
     if reveal["op"]=="edit_scene":
         reveal["action_claim"]=reveal["change"]
+    for beat in req["beats"]:
+        panel=beat["panel"]
+        ink=[x for x in panel["overlays"] if x["type"]=="shape" and x.get("ink")=="accent"]
+        if panel.get("paper_scene") or panel["op"]=="overlay_only" and opening.get("paper_scene"):
+            if ink and all(x.get("shape")=="disc" for x in ink):
+                lo=[min(x["at"][i]-x["extent"][i]/2-.025 for x in ink) for i in range(2)]
+                hi=[max(x["at"][i]+x["extent"][i]/2+.025 for x in ink) for i in range(2)]
+                panel["component_claims"]=[{"region":[max(0,x) for x in lo]+[min(1,x) for x in hi],
+                    "rgb":[191,77,49] if req["visual"]["graphic_theme"]=="paper" else [183,70,54],
+                    "minimum_pixels":65,"expected":len(ink)}]
     oracle["evaluation_version"]="v4-1"
     oracle["phone_truth_required"]=True
     return req,oracle
