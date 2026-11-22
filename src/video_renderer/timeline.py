@@ -120,10 +120,17 @@ def corroborate_cue(cue, bound, asr, tolerance=.65):
     phrase = speech_terms([possessive_form(t) for t in tokens(cue["phrase"])])
     raw_words=[(possessive_form(t),w) for w in asr for t in tokens(w["word"])]
     spoken=[(t,raw_words[i][1]) for t,i in normalized_terms([v for v,_ in raw_words])]
+    # Independent ASR can write “8×10” as one word span.
+    # This alternative is limited to x between exact numeric values.
+    written=[]
+    for w in asr:
+        raw_text=re.sub(r"(?<=\d)\s*[×x]\s*(?=\d)"," by ",w["word"],flags=re.I)
+        written.extend((possessive_form(t),w) for t in tokens(raw_text))
+    graphic=[(t,written[i][1]) for t,i in normalized_terms([v for v,_ in written])]
     # ASR sometimes assigns the initial word the outgoing silence as well.
     # Require the *same phrase*, but allow the forced onset anywhere inside
     # that bounded ASR span instead of demanding agreement on its left edge.
-    nearby = [[a for a, _ in spoken[i:i + len(phrase)]] for i, (_, w) in enumerate(spoken)
+    nearby = [[a for a, _ in sequence[i:i + len(phrase)]] for sequence in (spoken,graphic) for i, (_, w) in enumerate(sequence)
               if abs(w["start"] - onset) <= tolerance or
               (w["start"] <= onset <= w.get("end",w["start"]) and w.get("end",w["start"])-w["start"]<=1.2)]
     if phrase not in nearby:

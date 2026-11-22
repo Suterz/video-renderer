@@ -94,3 +94,14 @@ def test_spoken_answer_is_not_allowed_before_viewer_has_seen_reveal():
     assert spoken_disclosures({"answer":b["answer"]},["the left chute"],144000)
     with pytest.raises(InstructionalReview,match="before"):
         spoken_disclosures(b,["the left chute"],144000)
+
+
+def test_corroborate_dimensions_written_with_a_multiplication_sign():
+    from video_renderer.timeline import corroborate_cue,TimingReview
+    b={"u":(["the","eight","by","ten","box"],[{"start":3.2}]*5)}
+    phrase={"utterance_id":"u","phrase":"the eight by ten box"}
+    audio=[{"word":"The","start":3.2},{"word":" 8×10","start":3.31},{"word":" box","start":3.8}]
+    assert corroborate_cue(phrase,b,audio)["forced_onset"]==3.2
+    audio[1]["word"]=" 8×12"
+    with pytest.raises(TimingReview):
+        corroborate_cue(phrase,b,audio)
