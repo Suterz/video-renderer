@@ -13,6 +13,7 @@ def main():
     p.add_argument("url")
     p.add_argument("root", type=Path)
     p.add_argument("out", type=Path)
+    p.add_argument("--short-transfer-only", action="store_true")
     a = p.parse_args()
 
     photo = json.loads((a.root / "r5-dev-results/D04/request.json").read_text())
@@ -20,9 +21,16 @@ def main():
     floor["script"][2]["text"] = "A three by four rectangle has a boundary and an inside."
     floor["beats"][1]["cue"] = {"utterance_id": floor["script"][2]["id"],
                                "phrase": "A three by four rectangle"}
+    if a.short_transfer_only:
+        floor["script"][0]["text"] = "This rectangle is three units wide and four tall."
+        floor["script"][1].update(text="Which measure counts squares?", caption="Which measure counts squares?")
+        floor["script"][2]["text"] = "A three by four rectangle: trace, then count."
+        floor["script"][3]["text"] = "The boundary is fourteen units. The area is twelve square units."
+    cases = (("floor-short-transfer", floor),) if a.short_transfer_only else (
+        ("photo-original", photo), ("floor-transfer", floor))
 
     with httpx.Client(base_url=a.url, timeout=30) as client:
-        for name, request in (("photo-original", photo), ("floor-transfer", floor)):
+        for name, request in cases:
             folder = a.out / name
             status = send(client, "/v2/renders", request, folder)
             (folder / "status.json").write_text(json.dumps(status, indent=2) + "\n")
