@@ -104,8 +104,12 @@ def corroborate_cue(cue, bound, asr, tolerance=.65):
     onset = cue_sample(raw, bound) / 48000
     phrase = speech_terms([possessive_form(t) for t in tokens(cue["phrase"])])
     spoken = [(t, w) for w in asr for t in speech_terms([possessive_form(v) for v in tokens(w["word"])])]
+    # ASR sometimes assigns the initial word the outgoing silence as well.
+    # Require the *same phrase*, but allow the forced onset anywhere inside
+    # that bounded ASR span instead of demanding agreement on its left edge.
     nearby = [[a for a, _ in spoken[i:i + len(phrase)]] for i, (_, w) in enumerate(spoken)
-              if abs(w["start"] - onset) <= tolerance]
+              if abs(w["start"] - onset) <= tolerance or
+              (w["start"] <= onset <= w.get("end",w["start"]) and w.get("end",w["start"])-w["start"]<=1.2)]
     if phrase not in nearby:
         raise TimingReview(f"independent transcript does not corroborate cue {cue['phrase']!r} near {onset:.2f}s")
     return {"forced_onset": onset, "transcript_match_within_seconds": tolerance}

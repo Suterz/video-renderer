@@ -47,3 +47,15 @@ def test_submission_acknowledgement_recovery_is_durable(tmp_path,monkeypatch):
     with pytest.raises(api.HTTPException) as err:
         api.submit(q,key="sealed-evaluation-1")
     assert err.value.status_code==409
+
+
+def test_corroboration_with_asr_assigning_the_leading_pause():
+    from video_renderer.timeline import corroborate_cue,TimingReview
+    desired={"utterance_id":"u","phrase":"The order is"}
+    bound={"u":(["the","order","is"],[{"start":13.76}])}
+    asr=[{"word":"The","start":13.08,"end":13.84},{"word":"order","start":13.84,"end":14.08},
+         {"word":"is","start":14.08,"end":14.34}]
+    assert corroborate_cue(desired,bound,asr)["forced_onset"]==13.76
+    asr[1]["word"]="answer"
+    with pytest.raises(TimingReview):
+        corroborate_cue(desired,bound,asr)
