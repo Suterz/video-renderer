@@ -9,11 +9,26 @@ def tokens(text):
 
 def speech_terms(words):
     """Normalize equivalent ASR spellings without merging different values."""
+    return [term for term,_ in normalized_terms(words)]
+
+
+def normalized_terms(words):
+    """Yield normalized terms with first word index for timing evidence."""
     names = ("zero one two three four five six seven eight nine ten eleven twelve "
              "thirteen fourteen fifteen sixteen seventeen eighteen nineteen").split()
     aliases = {**{name: str(index) for index,name in enumerate(names)},
                "cm": "centimeters", "centimeter": "centimeters", "km": "kilometers", "kilometer": "kilometers"}
-    return [aliases.get(t, t) for t in words]
+    tens=dict(zip("twenty thirty forty fifty sixty seventy eighty ninety".split(),range(20,100,10),strict=True))
+    narrow=set(names[1:10])
+    i=0
+    while i<len(words):
+        t=words[i]
+        if t in tens and i+1<len(words) and words[i+1] in narrow:
+            yield str(tens[t]+int(aliases[words[i+1]])),i
+            i+=2
+        else:
+            yield str(tens[t]) if t in tens else aliases.get(t,t),i
+            i+=1
 
 
 def sample(time, rate=48000):
@@ -103,7 +118,8 @@ def corroborate_cue(cue, bound, asr, tolerance=.65):
     raw = {**cue, "edge": "start", "offset_ms": 0}
     onset = cue_sample(raw, bound) / 48000
     phrase = speech_terms([possessive_form(t) for t in tokens(cue["phrase"])])
-    spoken = [(t, w) for w in asr for t in speech_terms([possessive_form(v) for v in tokens(w["word"])])]
+    raw_words=[(possessive_form(t),w) for w in asr for t in tokens(w["word"])]
+    spoken=[(t,raw_words[i][1]) for t,i in normalized_terms([v for v,_ in raw_words])]
     # ASR sometimes assigns the initial word the outgoing silence as well.
     # Require the *same phrase*, but allow the forced onset anywhere inside
     # that bounded ASR span instead of demanding agreement on its left edge.

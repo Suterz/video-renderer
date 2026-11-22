@@ -59,3 +59,18 @@ def test_corroboration_with_asr_assigning_the_leading_pause():
     asr[1]["word"]="answer"
     with pytest.raises(TimingReview):
         corroborate_cue(desired,bound,asr)
+
+
+def test_composed_tens_are_lexically_equal_without_accepting_wrong_units():
+    from video_renderer.timeline import bind,corroborate_cue,TimingReview
+    words=["Read","twenty","three","degrees"]
+    b=bind([{"id":"u","text":"Read twenty-three degrees."}],
+           [{"word":w,"start":i*.15,"end":i*.15+.12} for i,w in enumerate(words)])
+    cue={"utterance_id":"u","phrase":"twenty-three degrees"}
+    asr=[{"word":"23","start":.15},{"word":"degrees","start":.40}]
+    assert corroborate_cue(cue,b,asr)["forced_onset"]==.15
+    for word in ("twenty","24"):
+        with pytest.raises(TimingReview):
+            corroborate_cue(cue,b,[{"word":word,"start":.15},asr[1]])
+    with pytest.raises(TimingReview):
+        corroborate_cue(cue,b,[asr[0],{"word":"meters","start":.40}])
