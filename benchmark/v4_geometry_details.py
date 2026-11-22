@@ -98,15 +98,42 @@ def cups():
         "The crop keeps the same marked mug.","The arrow lands on the dark handle of that same mug.")
 
 
-DETAILS={"D21":knot,"D22":basket,"D24":book,"D25":cups}
+def robot():
+    def board(x,y,left,face,caption):
+        # Three columns and three rows, all equal in screen pixels.
+        x1=x+.27;y1=y+.152
+        grid=[line(x,y,x1,y),line(x,y1,x1,y1)]
+        grid += [line(x+.09*i,y,x+.09*i,y1) for i in range(4)]
+        grid += [line(x,y+i*.0506667,x1,y+i*.0506667) for i in (1,2)]
+        cx=x+left[0]*.09+.045;cy=y+left[1]*.0506667+.025333
+        if face=="up":
+            a=[[cx,cy-.014],[cx-.027,cy+.013],[cx+.027,cy+.013]]
+        else:
+            a=[[cx+.025,cy],[cx-.023,cy-.016],[cx-.023,cy+.016]]
+        return grid+[shape(a,"accent"),label(caption,x+.135,y1+.035)]
+    a=board(.365,.335,(1,2),"up","START FACING UP")
+    a+=[label("FORWARD · RIGHT TURN · FORWARD",.50,.63)]
+    b=board(.15,.245,(1,1),"up","1 · MOVED")
+    b+=board(.58,.245,(1,1),"right","2 · TURNED")
+    b+=board(.365,.575,(2,1),"right","3 · MOVED")
+    return a,b,"TWO MOVES · ONE TURN",(
+        "A TURN IS NOT A STEP","The robot faces up. Its commands are forward, turn right, then forward.",
+        "How many grid spaces does it move?","Compare the robot's tile before and after the turn.",
+        "The robot moves two spaces. The turn only changes direction.")
+
+
+DETAILS={"D21":knot,"D22":basket,"D24":book,"D25":cups,"D40":robot}
 
 
 def diagram_request(case_id,original_req,original_oracle):
     opening,shown,closing,(headline,intro,question,mechanism,answer)=DETAILS[case_id]()
     fixed=[label(headline,.50,.16,"question")]
     opening=fixed+opening
-    shown=fixed+shown
-    close=shown+[label(closing,.50,.818,"value")]
+    # The prediction proof is defined on the opening; the answer's arrow can
+    # legitimately overlap a small part that is being pointed at. Its separate
+    # own-mask/target-region assertion still has to pass.
+    shown=[{k:v for k,v in g.items() if k!="fact"} for g in fixed+shown]
+    close=shown+[label(closing,.50,.818 if case_id!="D40" else .831,"value")]
     req={"title":question,"voice_profile":original_req["voice_profile"],
          "visual":{"story_context":"An explicit authored diagram with distinguishable parts.",
                    "visual_signature":"Warm editorial cut-paper illustration with distinct silhouettes; no ornamental text.","graphic_theme":"paper"},
@@ -128,3 +155,41 @@ def diagram_request(case_id,original_req,original_oracle):
     oracle={**original_oracle,"stage":[[],[],[]],"art_continuity_requires_review":True,
             "authored_variant":"flat cut-paper exact-part composition; independent visual adjudication required"}
     return req,oracle
+
+
+def shelf_request(original,oracle):
+    opening,reveal,closing = json_clone(original["beats"])
+    original=json_clone(original)
+    original["visual"]["assets"]={"book":{"kind":"generated_cutout","seed":144,
+        "visual":"One upright blue closed book with a plain rectangular cover, isolated on pure white without text.",
+        "keep_largest_component":True}}
+    original["script"]=[{"id":"setup","text":"Books three and five are on the shelf."},
+                         {"id":"question","text":"Which book goes in the middle?","pause_after_ms":1600},
+                         {"id":"mechanism","text":"Insert book four, leaving the neighboring books still."},
+                         {"id":"answer","text":"The order is three, four, five."}]
+    original["instructional"]={"question_utterance":"question","answer_beat":"demonstrate",
+         "minimum_ms":1080,"required_facts":["book-3","book-5"],"region":[.08,.12,.92,.80]}
+    def layout(values):
+        xs={3:.23,4:.50,5:.77}
+        return {"layers":[{"id":f"book{v}","asset":"book","center":[xs[v],.45],"width":.15,"max_height":.18} for v in values]}
+    def drawings(values):
+        return [label("FIND THE MISSING BOOK",.5,.14,"question"),line(.09,.58,.91,.58)]+[
+            {**label(str(v),x,.66,"value"),"fact":f"book-{v}"} for v,x in ((3,.23),(4,.5),(5,.77)) if v in values]
+    opening["panel"]={"op":"new_scene","scene_id":"shelf","instruction":"Place the two existing books as visible cutouts.",
+                      "objective":"Establish books three and five with a clear empty position.",
+                      "layout":layout((3,5)),"overlays":drawings((3,5))}
+    reveal["panel"]={"op":"layout_transition","scene_id":"shelf","instruction":"Insert the actual new book in the middle.",
+                      "objective":"Keep both adjacent books intact.",
+                      "layout":layout((3,4,5)),"inserted_instances":["book4"],"overlays":drawings((3,4,5))}
+    reveal["cue"]={"utterance_id":"mechanism","phrase":"Insert book four"}
+    closing["panel"]={"op":"overlay_only","scene_id":"shelf","instruction":"Keep the shelf.","objective":"Show the complete order.",
+                      "overlays":drawings((3,4,5))+[label("THREE, FOUR, FIVE",.50,.78,"value")]}
+    closing["cue"]={"utterance_id":"answer","phrase":"The order is"}
+    original["beats"]=[opening,reveal,closing]
+    return original,{**oracle,"stage":[[],[],[]],"art_continuity_requires_review":True,
+                      "authored_variant":"pixel-checked book insertion with fixed neighbors"}
+
+
+def json_clone(value):
+    from copy import deepcopy
+    return deepcopy(value)
