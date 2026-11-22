@@ -1,6 +1,7 @@
 """Author-side V4 compiler; corpus IDs never enter service decision logic."""
 import json
 import hashlib
+import re
 from pathlib import Path
 import sys
 
@@ -12,6 +13,15 @@ def prepare(record):
     req,oracle=compile_case(record,"v3")
     opening=req["beats"][0]["panel"]
     reveal=req["beats"][1]["panel"]
+    # Preserve the apostrophe and hyphen group in the authored phrase. A
+    # partial prefix of a possessive token is not a real spoken boundary.
+    utterances={u["id"]:u["text"] for u in req["script"]}
+    for beat in req["beats"]:
+        cue=beat["cue"]
+        if "phrase" in cue:
+            words=list(re.finditer(r"\w+(?:['’\-]\w+)*",utterances[cue["utterance_id"]]))
+            if words:
+                cue["phrase"]=utterances[cue["utterance_id"]][words[0].start():words[min(2,len(words)-1)].end()]
     # Teaching area is above the subtitle reserve.
     req["instructional"]={"question_utterance":"question","answer_beat":req["beats"][1]["id"],
          "minimum_ms":1180,"region":[.06,.14,.94,.83],"required_facts":[]}

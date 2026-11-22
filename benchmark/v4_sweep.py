@@ -33,8 +33,9 @@ def main(a):
         seal=git(a.sealed)
     else:
         rows=read_cases(loc/"v3/first.tsv",loc/"v3/development.tsv")
-        if (loc/"v4-author-revisions.tsv").is_file():
-            rows.update(read_cases(loc/"v4-author-revisions.tsv"))
+        for extra in ("v4-author-revisions.tsv","v4-clarity.tsv"):
+            if (loc/extra).is_file():
+                rows.update(read_cases(loc/extra))
         specs={}
         for k,v in rows.items():
             req,oracle=prepare(v)
