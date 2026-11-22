@@ -30,3 +30,20 @@ def test_alignment_punctuation_recovery_preserves_cue_boundaries():
     spans[3]["word"]="fiftyeight"
     with pytest.raises(TimingReview,match="mismatch"):
         bind(script,spans)
+
+
+def test_submission_acknowledgement_recovery_is_durable(tmp_path,monkeypatch):
+    import queue
+    from video_renderer import api
+    monkeypatch.setattr(api,"ROOT",tmp_path)
+    monkeypatch.setattr(api,"tasks",queue.Queue())
+    q=api.Video(title="one lesson",visual={},voice_profile="heart",script=[{"id":"a","text":"A lesson."}],
+                beats=[{"id":"open","cue":{"ms":0},"panel":{}}])
+    first=api.submit(q,key="sealed-evaluation-1")
+    assert api.submitted("sealed-evaluation-1")["id"]==first["id"]
+    assert api.submit(q,key="sealed-evaluation-1")["id"]==first["id"]
+    assert api.tasks.qsize()==1
+    q.title="changed"
+    with pytest.raises(api.HTTPException) as err:
+        api.submit(q,key="sealed-evaluation-1")
+    assert err.value.status_code==409

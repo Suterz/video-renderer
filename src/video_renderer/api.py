@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Annotated, Literal
 
 import httpx
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from PIL import Image, ImageDraw, ImageFont
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -448,23 +448,40 @@ async def lifespan(_):
 app = FastAPI(title="video-renderer", version="2.0", lifespan=lifespan)
 
 
-def submit(req, audio=None, legacy=None):
+submit_lock=threading.Lock()
+
+
+def keyed_job(key):
+    if not re.fullmatch(r"[A-Za-z0-9_.-]{8,128}",key):
+        raise HTTPException(422,"invalid idempotency key")
+    return hash_bytes(("storyboard-submit-v4:"+key).encode())[:32]
+
+
+def submit(req, audio=None, legacy=None, key=None):
     if bool(req.voice_profile) == bool(audio):
         raise HTTPException(422, "supply exactly one voice_profile or WAV")
     if audio and len(audio) > 20_000_000:
         raise HTTPException(413, "WAV exceeds 20 MB")
-    p = ROOT / uuid.uuid4().hex
-    p.mkdir()
-    if audio:
-        (p / "upload.wav").write_bytes(audio)
-    if legacy:
-        save(p / "legacy.json", legacy)
-    save(p / "request.json", req.model_dump(mode="json"))
-    d = {"id": p.name, "state": "queued", "status_url": f"/v2/renders/{p.name}",
-         "video_url": f"/v2/renders/{p.name}/video"}
-    save(p / "status.json", d)
-    tasks.put(p)
-    return d
+    p = ROOT / (keyed_job(key) if key else uuid.uuid4().hex)
+    obj=req.model_dump(mode="json")
+    fingerprint=hash_bytes(json.dumps([obj,legacy,hash_bytes(audio) if audio else None],sort_keys=True).encode())
+    with submit_lock:
+        if key and (p/"status.json").is_file():
+            prior=read(p/"status.json")
+            if prior.get("submission_sha256")!=fingerprint:
+                raise HTTPException(409,"idempotency key already used for a different submission")
+            return prior
+        p.mkdir(exist_ok=bool(key))
+        if audio:
+            (p / "upload.wav").write_bytes(audio)
+        if legacy:
+            save(p / "legacy.json", legacy)
+        save(p / "request.json", obj)
+        d = {"id": p.name, "state": "queued", "status_url": f"/v2/renders/{p.name}",
+             "video_url": f"/v2/renders/{p.name}/video","submission_sha256":fingerprint}
+        save(p / "status.json", d)
+        tasks.put(p)
+        return d
 
 
 @app.get("/health")
@@ -484,8 +501,14 @@ def ready():
 
 
 @app.post("/v2/renders", status_code=202)
-def synth(req: Video):
-    return submit(req)
+def synth(req: Video, idempotency_key: str | None = Header(default=None)):
+    return submit(req,key=idempotency_key)
+
+
+@app.get("/v2/submissions/{key}")
+def submitted(key:str):
+    root=job_folder(keyed_job(key))
+    return read(root/"status.json")
 
 
 @app.post("/v2/renders/upload", status_code=202)
