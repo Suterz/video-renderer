@@ -32,6 +32,16 @@ class TimingReview(ValueError):
     pass
 
 
+def possessive_form(word):
+    # Only an orthographic apostrophe before terminal s. No plural deletion.
+    return word[:-2]+"s" if word.endswith("'s") else word
+
+
+def clock_fusion(a,b):
+    return (a in {"twenty","thirty","forty","fifty","oh"} and
+            b in {"one","two","three","four","five","six","seven","eight","nine"})
+
+
 def bind(script, aligned):
     """Map ordered engine words to approved utterances, retaining exact ranges."""
     word_tokens, indexes = [], []
@@ -43,11 +53,17 @@ def bind(script, aligned):
     pos = 0
     for u in script:
         words, spans = [], []
-        for group in re.findall(r"[a-z0-9]+(?:'[a-z]+)?(?:[-‐‑][a-z0-9]+(?:'[a-z]+)?)*",
-                                u["text"].replace("’","'").lower()):
-            parts=tokens(group)
+        groups=re.findall(r"[a-z0-9]+(?:'[a-z]+)?(?:[-‐‑][a-z0-9]+(?:'[a-z]+)?)*",
+                          u["text"].replace("’","'").lower())
+        i=0
+        while i<len(groups):
+            parts=tokens(groups[i])
+            if (i+1<len(groups) and clock_fusion(groups[i],groups[i+1])
+                    and word_tokens[pos:pos+1]==[groups[i]+groups[i+1]]):
+                parts.append(groups[i+1]); i+=1
+            i+=1
             words.extend(parts)
-            if word_tokens[pos:pos+len(parts)]==parts:
+            if [possessive_form(t) for t in word_tokens[pos:pos+len(parts)]]==[possessive_form(t) for t in parts]:
                 spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
                 pos+=len(parts)
             elif len(parts)>1 and word_tokens[pos:pos+1]==["".join(parts)]:
@@ -86,8 +102,8 @@ def corroborate_cue(cue, bound, asr, tolerance=.65):
     """Independent lexical check near each forced onset, not a confidence score."""
     raw = {**cue, "edge": "start", "offset_ms": 0}
     onset = cue_sample(raw, bound) / 48000
-    phrase = speech_terms(tokens(cue["phrase"]))
-    spoken = [(t, w) for w in asr for t in speech_terms(tokens(w["word"]))]
+    phrase = speech_terms([possessive_form(t) for t in tokens(cue["phrase"])])
+    spoken = [(t, w) for w in asr for t in speech_terms([possessive_form(v) for v in tokens(w["word"])])]
     nearby = [[a for a, _ in spoken[i:i + len(phrase)]] for i, (_, w) in enumerate(spoken)
               if abs(w["start"] - onset) <= tolerance]
     if phrase not in nearby:

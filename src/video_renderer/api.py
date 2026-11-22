@@ -25,6 +25,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .media import FFMPEG, FFPROBE, encode
 from .timeline import TimingReview, bind, corroborate_cue, cue_sample, end_frame, sample, speech_terms, start_frame, tokens
+from .instructional import InstructionalReview,exposure,decode,encoded_match
 
 ROOT = Path(os.environ.get("VIDEO_STORE", Path.home() / "Videos/video-renderer/jobs"))
 LEGACY = Path.home() / "Videos/storyboard-renderer/jobs"
@@ -70,6 +71,21 @@ class Beat(Strict):
     parent: str | None = None
 
 
+class Instructional(Strict):
+    question_utterance: str
+    answer_beat: str
+    minimum_ms: int = Field(default=1200,ge=250,le=10000)
+    region: tuple[float,float,float,float]
+    required_facts: list[str] = Field(min_length=1,max_length=24)
+
+    @model_validator(mode="after")
+    def bounds(self):
+        l,t,r,b=self.region
+        if not (0<=l<r<=1 and 0<=t<b<=1 and (r-l)>=.02 and (b-t)>=.02):
+            raise ValueError("instructional region must be nonempty and normalized")
+        return self
+
+
 class Video(Strict):
     title: str
     visual: dict
@@ -82,6 +98,7 @@ class Video(Strict):
     subtitle_font_size: int = Field(default=46, ge=24, le=78)
     reuse_visuals_from: str | None = None
     reuse_recording_from: str | None = None
+    instructional: Instructional | None = None
 
     @model_validator(mode="after")
     def valid(self):
@@ -100,6 +117,8 @@ class Video(Strict):
         for u in self.script:
             if u.caption_not_before_beat is not None and (u.caption is None or u.caption_not_before_beat not in seen):
                 raise ValueError("caption guard requires a caption and an existing beat")
+        if self.instructional and (self.instructional.question_utterance not in ids or self.instructional.answer_beat not in seen):
+            raise ValueError("instructional question and answer must reference existing entries")
         return self
 
 
@@ -233,7 +252,9 @@ def frames(p, req):
             (p / name).write_bytes(data)
             by_key[b.id] = panel["panel_id"]
             result.append({"id": b.id, "panel_id": panel["panel_id"], "sha256": digest,
-                           "filename": name, "status_url": panel["status_url"]})
+                           "filename": name, "status_url": panel["status_url"],
+                           "verified_facts":panel["summary"].get("verified_facts",{}),
+                           "accepted_attempt":panel["summary"].get("accepted_attempt")})
             save(p / "panels.partial.json", {"fingerprint": fingerprint, "session_id": sid, "panels": result})
     return {"fingerprint": fingerprint, "session_id": sid, "panels": result, "reused": False}
 
@@ -336,6 +357,21 @@ def run(p):
         guard_captions(req.script,bound,{b.id:f for b,f in zip(req.beats,starts,strict=True)},f)
     manifest = frames(p, req)
     save(p / "panels.json", manifest)
+    teaching=None
+    if req.instructional:
+        rule=req.instructional
+        spans=bound[rule.question_utterance][1]
+        if not spans:
+            raise InstructionalReview("no measured question speech")
+        question=start_frame(sample(spans[0]["start"]),f)
+        question_end=start_frame(sample(spans[-1]["end"]),f)
+        answer=next(starts[i] for i,b in enumerate(req.beats) if b.id==rule.answer_beat)
+        if (answer-question_end)*1000 < rule.minimum_ms*f:
+            raise InstructionalReview("insufficient prediction hold after the spoken question")
+        facts=[x.get("verified_facts",{}) for x in manifest["panels"]]
+        for mark in rule.required_facts:
+            exposure(mark,question,answer,facts,starts,f,rule.minimum_ms)
+        teaching={"question_frame":question,"question_end_frame":question_end,"answer_frame":answer,"required_facts":rule.required_facts}
     c = {start_frame(s, f): t for s, t in boundaries if 0 <= start_frame(s, f) < end}
     cuts = sorted({0, end, *starts, *c})
     paths, segments, caption_trace = [], [], []
@@ -353,10 +389,29 @@ def run(p):
     verification = encode(paths, segments, size, f, end, wav, candidate)
     if verification["expected_video_frames"] != end:
         raise RuntimeError("encoder disagrees with exact timeline")
+    if teaching:
+        state(p,phase="instructional_media_check")
+        region=req.instructional.region
+        q,a=teaching["question_frame"],teaching["answer_frame"]
+        decoded=decode(FFMPEG,candidate,[q,a-1,a,end-1])
+        errors={}
+        for n,image in decoded.items():
+            trace=next(seg for seg in segments if seg[0]<=n<seg[1])
+            with Image.open(paths[trace[2]]) as expected:
+                errors[n]=encoded_match(image,expected,region)
+                if q <= n < a:
+                    panel_idx=max(i for i,s in enumerate(starts) if s<=n)
+                    for mark in req.instructional.required_facts:
+                        box=facts[panel_idx][mark]["bbox"]
+                        # The region of the actual educational mark must survive separately.
+                        encoded_match(image,expected,tuple(v/(360,640)[i%2] for i,v in enumerate(box)))
+            image.save(p/f"checked-{n}.png")
+        teaching["matched_decoded_frames"]=errors
     save(p / "manifest.json", {**manifest, "wav_sha256": hash_bytes(wav.read_bytes()),
          "speech_samples": n, "voice_profile": req.voice_profile, "aligned": aligned, "asr": asr,
           "recording_reused": bool(req.reuse_recording_from),
           "caption_trace":caption_trace,
+          "instructional_evidence":teaching,
          "beats": [{"id": b.id, "cue": b.cue.model_dump(), "sample": a, "frame": c, "validation": e}
                    for b, a, c, e in zip(req.beats, starts_samples, starts, cue_evidence)],
          "verification": verification, "seconds": time.monotonic() - started})
@@ -370,8 +425,8 @@ def work():
             state(p, state="running")
             run(p)
             state(p, state="succeeded", phase="complete")
-        except (Review, TimingReview) as exc:
-            state(p, state="needs_review", error=str(exc))
+        except (Review, TimingReview, InstructionalReview) as exc:
+            state(p, state="needs_review", error=str(exc),diagnostic=type(exc).__name__)
         except Exception as exc:
             state(p, state="failed", error=f"{type(exc).__name__}: {exc}")
         finally:
