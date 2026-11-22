@@ -24,10 +24,13 @@ def prepare(record):
         req["instructional"]["required_facts"].append(fact)
     if "can.spout" in record["demonstration"]:
         opening["anchors"]={"can.spout":"open mouth of the narrow watering tube, not its handle or tank"}
-        for beat in req["beats"][1:]:
-            for graphic in beat["panel"]["overlays"]:
-                if graphic["type"]=="arrow":
-                    graphic["part_target"]="spout opening of the watering can"
+    # Reuse the author's existing semantic grounding query across later beats.
+    named={key:query for panel in (opening,reveal) for key,query in panel.get("anchors",{}).items() if isinstance(query,str)}
+    for beat in req["beats"][1:]:
+        for graphic in beat["panel"]["overlays"]:
+            point=graphic.get("to")
+            if graphic["type"]=="arrow" and isinstance(point,str) and point in named:
+                graphic["part_target"]=named[point].split(", not")[0].split("; absent")[0]
     if reveal["op"]=="edit_scene":
         reveal["action_claim"]=reveal["change"]
     oracle["evaluation_version"]="v4-1"
