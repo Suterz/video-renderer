@@ -62,6 +62,10 @@ def prepare(record):
                     "minimum_pixels":65,"expected":len(ink)}]
     oracle["evaluation_version"]="v4-1"
     oracle["phone_truth_required"]=True
+    if req["script"][-1]["text"]==record["objective"]:
+        # Author-declared exact spoken result. This guards verbatim disclosure;
+        # visual review still checks paraphrases and the viewer's evidence.
+        req["instructional"]["spoken_answer_phrases"]=[req["script"][-1]["text"]]
     return req,oracle
 
 
