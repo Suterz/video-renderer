@@ -1,6 +1,6 @@
 """Durable scored submission harness; resume reconciles via GET, not POST."""
 from pathlib import Path
-import argparse, json, hashlib, os, sys, time, subprocess
+import argparse, fcntl, json, hashlib, os, sys, time, subprocess
 import httpx
 
 from v4_prepare import prepare,read_cases
@@ -23,6 +23,16 @@ def git(path):
 
 
 def main(a):
+    a.out.mkdir(parents=True,exist_ok=True)
+    with (a.out/".coordinator.lock").open("a") as lock:
+        try:
+            fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise SystemExit("this scored store already has a live coordinator") from exc
+        sweep(a)
+
+
+def sweep(a):
     loc=Path(__file__).parent
     if a.sealed:
         if a.id:
