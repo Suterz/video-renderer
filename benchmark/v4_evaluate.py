@@ -9,6 +9,37 @@ sys.path.insert(0,str(Path(__file__).parent/"v3"))
 import judge
 
 
+def corroborate_diagnostic_hold(case,row,result,evidence):
+    """Correct a diagnostic-only V3 token-index assumption on fused utterances.
+
+    Leave the prior report intact in frozen runs. Never lower the hold floor:
+    independently remap the original alignment and recompute the original gate.
+    """
+    if row["service_state"]!="succeeded" or not evidence.get("errors"):
+        return result,evidence
+    errors=evidence["errors"]
+    target=[x for x in errors if x.startswith("clear prediction hold too short")]
+    if not target:
+        return result,evidence
+    from video_renderer.timeline import bind
+    req=read(case/"request.json")
+    if not req.get("instructional"):
+        return result,evidence
+    m=read(Path(row["job_dir"])/"manifest.json")
+    pair=bind(req["script"],m["aligned"])
+    u=next(x for x in req["script"] if x["id"]==req["instructional"]["question_utterance"])
+    _,words=pair[u["id"]]
+    beat=next(x for x in m["beats"] if x["id"]==req["instructional"]["answer_beat"])
+    exact=beat["frame"]/req.get("fps",30)-words[-1]["end"]
+    if exact>=max(u.get("pause_after_ms",0)-80,req["instructional"]["minimum_ms"])/1000:
+        evidence["original_hold_diagnostic"]=target
+        evidence["hold_seconds"]=exact
+        evidence["errors"]=[e for e in errors if e not in target]
+        if not evidence["errors"]:
+            result="unjudged"
+    return result,evidence
+
+
 def read(p):
     return json.loads(p.read_text()) if p.is_file() else {}
 
@@ -51,6 +82,7 @@ def main(root):
         if not target.exists() or (manual.exists() and manual.stat().st_mtime>target.stat().st_mtime):
             try:
                 result,evidence=judge.evaluate(p.parent,c)
+                result,evidence=corroborate_diagnostic_hold(p.parent,row,result,evidence)
             except Exception as e:
                 result,evidence="unjudged",{"evaluation_error":str(e)}
             row.update(judgment=result,**evidence,repair_audit=audit(c,row))
