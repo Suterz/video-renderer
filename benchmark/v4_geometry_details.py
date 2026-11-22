@@ -38,8 +38,8 @@ def basket():
     setup+=[line(x,.58,x+.024,.68) for x in (.60,.66,.72,.78)]
     setup+=[label("APPLE",.23,.40),label("PEAR",.24,.738),label("BASKET",.70,.767)]
     return setup,setup+[arrow(.29,.34,.696,.483,[.59,.441,.81,.521],[72,37,54])], "INSIDE THE OPENING",(
-        "DRAW THE SCENE", "An apple and a pear sit beside an open basket.","Where should the apple go?",
-        "Follow the arrow past the pear, toward the dark part.","The apple goes into the basket opening.")
+        "FOLLOW THE APPLE", "An apple and a pear sit beside an open basket.","Where should the apple go?",
+        "Follow the arrow from the apple into the dark oval.","The apple goes into the basket opening.")
 
 
 def knot():
@@ -75,24 +75,23 @@ def book():
 
 
 def cups():
-    def mug(x,y,s,striped,key):
+    def mug(x,y,s,striped):
         items=[rect(x-.072*s,y-.062*s,x+.068*s,y+.075*s,"pale"),
-               oval(x+.081*s,y,.094*s,.085*s,"ink",key+"-handle"),
+               oval(x+.081*s,y,.094*s,.085*s,"ink"),
                oval(x+.084*s,y,.045*s,.048*s,"pale"),
                rect(x-.072*s,y-.062*s,x+.068*s,y+.075*s,"pale")]
         if striped:
             items += [rect(x+.066*s,y+.030*s,x+.093*s,y+.047*s,"accent"),
                       rect(x+.089*s,y+.016*s,x+.114*s,y+.032*s,"accent")]
-        # The handle is partly occluded by the cup itself and has an aperture;
-        # require the actual pointing pixel later, not its entire original fill.
-        items[1].pop("fact")
         return items
-    a=[]
-    for x,key in ((.21,"one"),(.49,"two"),(.77,"three")):
-        a+=mug(x,.46,.95,key=="two",key)
-    a += [label("SAME TRAY",.50,.68)]
-    b=mug(.43,.45,2.35,True,"two")+mug(.83,.45,.8,False,"three")
-    b+=[arrow(.68,.264,.716,.465,[.697,.407,.730,.491],[72,37,54])]
+    a=[{**line(.12,.552,.88,.552),"fact":"tray"}]
+    for x in (.21,.49,.77):
+        a+=mug(x,.46,1,x==.49)
+    a += [label("THREE MUGS",.50,.68)]
+    # The two neighbors lie outside this crop. The same scale applies to
+    # the center cup, its handle, the marks and the distance to the tray.
+    b=[line(.05,.6984,.95,.6984)]+mug(.43,.45,2.7,True)
+    b+=[arrow(.71,.264,.755,.465,[.736,.400,.768,.493],[72,37,54])]
     return a,b,"SAME STRIPED HANDLE",(
         "FIND THE HANDLE","Three mugs are on a tray. Only the middle handle has colored marks.","Which handle should we follow in the close view?",
         "The crop keeps the same marked mug.","The arrow lands on the dark handle of that same mug.")
@@ -110,9 +109,10 @@ def robot():
             a=[[cx,cy-.014],[cx-.027,cy+.013],[cx+.027,cy+.013]]
         else:
             a=[[cx+.025,cy],[cx-.023,cy-.016],[cx-.023,cy+.016]]
-        return grid+[shape(a,"accent"),label(caption,x+.135,y1+.035)]
+        return grid+[shape(a,"accent","robot-start" if caption=="START FACING UP" else None),
+                     label(caption,x+.135,y1+.035)]
     a=board(.365,.335,(1,2),"up","START FACING UP")
-    a+=[label("FORWARD · RIGHT TURN · FORWARD",.50,.63)]
+    a+=[{**label("FORWARD · RIGHT TURN · FORWARD",.50,.63),"fact":"commands"}]
     b=board(.15,.245,(1,1),"up","1 · MOVED")
     b+=board(.58,.245,(1,1),"right","2 · TURNED")
     b+=board(.365,.575,(2,1),"right","3 · MOVED")
