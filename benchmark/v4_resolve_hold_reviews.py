@@ -3,7 +3,7 @@ import json,sys
 from pathlib import Path
 
 p=Path(sys.argv[1])
-for k in ("D14","D29","D32"):
+for k in sys.argv[2:] or ("D14","D29","D32"):
     d=p/k
     e=json.loads((d/"evaluation.json").read_text())
     note=json.loads((d/"inspection.json").read_text())
