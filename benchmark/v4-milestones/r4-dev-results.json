@@ -1,0 +1,1016 @@
+{
+  "config": {
+    "frames": "a30c5f1a72bbc73ef2f36dd33e03db03b6e87c20",
+    "video": "51023cba398af6dca98195ad32eed3edcdf3506a",
+    "harness": "51023cba398af6dca98195ad32eed3edcdf3506a",
+    "sealed": null,
+    "mode": "v3",
+    "endpoint": "http://127.0.0.1:8861",
+    "job_store": "/home/zelio-suter/Videos/storyboard-v4/r4-dev/jobs",
+    "frame_store": "/home/zelio-suter/Videos/storyboard-v4/r4-dev/frames",
+    "case_ids": [
+      "D01",
+      "D02",
+      "D03",
+      "D04",
+      "D05",
+      "D06",
+      "D07",
+      "D08",
+      "D09",
+      "D10",
+      "D11",
+      "D12",
+      "D13",
+      "D14",
+      "D15",
+      "D16",
+      "D17",
+      "D18",
+      "D19",
+      "D20",
+      "D21",
+      "D22",
+      "D23",
+      "D24",
+      "D25",
+      "D26",
+      "D27",
+      "D28",
+      "D29",
+      "D30",
+      "D31",
+      "D32",
+      "D33",
+      "D34",
+      "D35",
+      "D36",
+      "D37",
+      "D38",
+      "D39",
+      "D40",
+      "D41",
+      "D42",
+      "D43",
+      "D44",
+      "D45",
+      "D46",
+      "D47",
+      "D48",
+      "D49",
+      "D50"
+    ]
+  },
+  "freeze": {
+    "frames": "a30c5f1a72bbc73ef2f36dd33e03db03b6e87c20",
+    "video": "51023cba398af6dca98195ad32eed3edcdf3506a",
+    "seal": "6f81401960c11c54ca729c872bf8aa0cb98dc2f8",
+    "comfy_commit": "a277b5bf213e8a44fa34817b7770b54f86ef4cea",
+    "evaluator_sha256": "24138c5ed63a8d2d976821d176389286a3fdf7ca06140509cc4aea2e64309ea8",
+    "models": "same local pinned models as R1"
+  },
+  "outcomes": [
+    {
+      "id": "D01",
+      "job_id": "07d026973e82c9837fde8c4129441ed6",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 48.063,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.6133333333333342,
+      "download_sha256": "ba8dcf89a649d39487a251480b91e9fc3caca21ded1c0dbbedb08262466176a1",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Three and five distinct fruit marks sit with $6 and $8 in the opening. The equations stay on the correct rows; 600/3 = 200 and 800/5 = 160 cents, then 40¢. The two meanings of cheaper remain separate.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Three and five distinct fruit marks sit with $6 and $8 in the opening. The equations stay on the correct rows; 600/3 = 200 and 800/5 = 160 cents, then 40¢. The two meanings of cheaper remain separate.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D02",
+      "job_id": "dc1e5456937bb12501b3039306921fd8",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.05,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3066666666666658,
+      "download_sha256": "009878094170dee30086d36d5feb7bb9f6164cfc1e1cc0e45d2884b57c08035c",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Both duration inputs visible at the question. A common origin and distinct wait/ride segments show red 4+12=16, blue 0+19=19. The phone labels remain associated with those segments.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Both duration inputs visible at the question. A common origin and distinct wait/ride segments show red 4+12=16, blue 0+19=19. The phone labels remain associated with those segments.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D03",
+      "job_id": "c07ac247d7c5c7da71b1845394f13e46",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 30.05,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.9866666666666672,
+      "download_sha256": "def8d2c11d6e6a8be490fd6ef029950560212c876f864396e6ce87d5fb0395c9",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The fixed pass is $6 and each trip $2. The pass bar ends at the third equal segment; a fourth adds $2 past that endpoint. Tie and winner are stated separately.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The fixed pass is $6 and each trip $2. The pass bar ends at the third equal segment; a fourth adds $2 past that endpoint. Tie and winner are stated separately.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D04",
+      "job_id": "4f8f1f9359b3c6863493798a7fe40bf4",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.048,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.246666666666666,
+      "download_sha256": "468b87a0bfc3ea3ca4c6eeb3a1b6b80aafb1f61644575a696d57163fc7c5b287",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The same-sized photo overlaps the correctly drawn 8×10 outline but projects beyond the 7×12 outline. Opening and closing retain the distinct units.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The same-sized photo overlaps the correctly drawn 8×10 outline but projects beyond the 7×12 outline. Opening and closing retain the distinct units.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D05",
+      "job_id": "521126ed2f095f30cae9175266e46169",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 42.061,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.8399999999999999,
+      "manual_hold_resolution": "External inspection confirms the decoded mechanism; actual bound question and reveal satisfy the unchanged hold floor.",
+      "download_sha256": "6130f39bfd851153a03989eb19c76c855cf257d9b56e834000ed06a06b194814",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Before the question there are four 30-second transactions versus two 90-second transactions; the checked totals 120 and 180 have a 2:3 bar ratio. The real bound question hold was 1.84 seconds, and the transcript preserves both counts and rates.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Before the question there are four 30-second transactions versus two 90-second transactions; the checked totals 120 and 180 have a 2:3 bar ratio. The real bound question hold was 1.84 seconds, and the transcript preserves both counts and rates.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D06",
+      "job_id": "66d9ae2f8d16e9d42617bf29cfd1d690",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.053,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.0133333333333336,
+      "download_sha256": "e3dbc745e1a0831996b4476f1f26043ff5c27af0bb97b04e9c009bc28345858d",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Ten objects and three visibly empty trays at setup. Nine occupy three equal groups at answer; exactly one remains visibly outside, with no overlap from the label.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Ten objects and three visibly empty trays at setup. Nine occupy three equal groups at answer; exactly one remains visibly outside, with no overlap from the label.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D07",
+      "job_id": "fc22bad07fe3a7274e1981e2b73ef398",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 40.062,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3933333333333326,
+      "download_sha256": "ebdadb97af3779cd6002786e415968820d30aa18e9b5c9e4ff19f4172cbfd241",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The 12- and 8-unit strips are distinct and stay at the same scale. Half fills end halfway along each strip; 6 versus 4 is readable and correct.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The 12- and 8-unit strips are distinct and stay at the same scale. Half fills end halfway along each strip; 6 versus 4 is readable and correct.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D08",
+      "job_id": "02f587f51c917c42b64ea8016713ca78",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 34.065,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.413333333333334,
+      "download_sha256": "43c0a4a0e01279db493f6c9570ffbe732bc13970d697ade4368e82e28989ac2a",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Exactly three of four equal sections carry X marks during the question. The divider and its ticks remain visible over the colored field. Later numbering and 3/4 agree with the setup.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Exactly three of four equal sections carry X marks during the question. The divider and its ticks remain visible over the colored field. Later numbering and 3/4 agree with the setup.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D09",
+      "job_id": "e29880733b13e53f4f0bbf8effed60a2",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 30.057,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.08,
+      "download_sha256": "95054c30396bd4549ec3a396f38c6c5de8b10550fc87594de0c1f6e01d150e79",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "All six circles remain on the same row in the same positions. Two X marks appear above existing circles, without creating or hiding a marble.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "All six circles remain on the same row in the same positions. Two X marks appear above existing circles, without creating or hiding a marble.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D10",
+      "job_id": "9d7b03d1b0b9394740422b81ca4b9327",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 30.054,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.2333333333333334,
+      "download_sha256": "634b298842d3d7c8bda8d645df56f28c43c5a6f9d24ba75e0e2e5a7a50958ae6",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Twelve positions remain visible. Exactly ten circles and two contrasting square empty positions are identifiable in the actual phone frame.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Twelve positions remain visible. Exactly ten circles and two contrasting square empty positions are identifiable in the actual phone frame.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D11",
+      "job_id": "dfcc03a1b7234b40a0a6e9fc3d599bda",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 56.078,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3933333333333335,
+      "download_sha256": "96a2c57d189069d88a560e6a90eda57792956686803d7917e84a5792a4f9a3f8",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Both map pins, the span's two equal tick intervals, and the 2 km key appear together before asking the question. The same intervals remain when 4 km appears.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Both map pins, the span's two equal tick intervals, and the 2 km key appear together before asking the question. The same intervals remain when 4 km appears.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D12",
+      "job_id": "642b3a18c21569d851de8fc08b03518a",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 24.048,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.9866666666666664,
+      "download_sha256": "b778a57d332ad1be1a13f009b5e81cd9865f3d9acaae171dad54a9ad9ae25d44",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The ruler endpoints 3 and 11 align with the same displayed segment. Eight gaps and the subtraction appear clearly; it does not label the length 11.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The ruler endpoints 3 and 11 align with the same displayed segment. Eight gaps and the subtraction appear clearly; it does not label the length 11.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D13",
+      "job_id": "d10c3b1616cb5c9be711a94a6a18e4d3",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 42.073,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.5066666666666677,
+      "download_sha256": "4d5458e04bb8e642adf8a4926aefdf61cdaa81e1651a447308ed36897ec59f4e",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Same rectangle before and after. The after image shows the outline and an array of twelve interior items, with distinct 14 units and 12 square units labels.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Same rectangle before and after. The after image shows the outline and an array of twelve interior items, with distinct 14 units and 12 square units labels.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D14",
+      "job_id": "ae37c2742a6634ee4c105cfdb6503f10",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.048,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3866666666666667,
+      "manual_hold_resolution": "External inspection confirms the decoded mechanism; actual bound question and reveal satisfy the unchanged hold floor.",
+      "download_sha256": "890c7a4311ec7e24a7276dbb05af097d6cd8b92ccdf2050c18d6e67beaabeff3",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Five equal gaps between labeled 20 and 25. The actual arrow lands on the third gap's ending tick above 20 and declares 23 °C. Transcript corroborates exact values.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Five equal gaps between labeled 20 and 25. The actual arrow lands on the third gap's ending tick above 20 and declares 23 °C. Transcript corroborates exact values.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D15",
+      "job_id": "d508cae0fee6e960fea786b7ecea312b",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.054,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.08,
+      "download_sha256": "6fcfab92d8fd10d3f108040256f8ba2501b95cdac3563e391051d34639691540",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The same endpoints and scale support orthogonal lengths 3 and 4; the added direct distance is labeled 5, unlike the seven-unit walk.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The same endpoints and scale support orthogonal lengths 3 and 4; the added direct distance is labeled 5, unlike the seven-unit walk.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D16",
+      "job_id": "b6b9b0011d1856532b9bfd1630b304e0",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.055,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.1466666666666665,
+      "download_sha256": "d00a75ccd881c89ab922199366e5e9433ca94b2921057fdda640280560dd1d78",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The controller's two output names persist. The fan path gets the active arrow and changes from OFF to ON; the separate blue lamp does not change.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The controller's two output names persist. The fan path gets the active arrow and changes from OFF to ON; the separate blue lamp does not change.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D17",
+      "job_id": "aaf2eda8ff6fa1248a37e15fc48dc33c",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.051,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3866666666666667,
+      "download_sha256": "4dc3cd40d765028294ea41ee976371e1c48a633540690dc46af9a83ed707e5f6",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The opening visibly shows the gate pointing left while both downstream paths remain present. The voice gives that observable gate state, not the parcel outcome. Only after the hold is one whole branch emphasized toward the same merge.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The opening visibly shows the gate pointing left while both downstream paths remain present. The voice gives that observable gate state, not the parcel outcome. Only after the hold is one whole branch emphasized toward the same merge.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D18",
+      "job_id": "18a6c199d82f6e1e5f2438c663920494",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.053,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.9066666666666672,
+      "download_sha256": "84c694a77718855cae10736b6eff58e739152a903ab94aceffaa56f00cc50af4",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Button-to-controller-to-lamp and the lower power-supply path remain distinguishable by labels and actual arrowheads. Neither relegates the source of power to the button.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Button-to-controller-to-lamp and the lower power-supply path remain distinguishable by labels and actual arrowheads. Neither relegates the source of power to the button.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D19",
+      "job_id": "a9fe3e925cbc9ab160e1d5c0b73d6cca",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 36.055,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.586666666666667,
+      "download_sha256": "f2504c963b2b1edad67d5e138469bc67838be42ad8572c1dc2e6d2f3d6a1ca7b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Before the cue, the water line is below the open overflow mark, with lower outlet marked shut. The tank's size stays fixed and the flow arrow first appears at the higher surface.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Before the cue, the water line is below the open overflow mark, with lower outlet marked shut. The tank's size stays fixed and the flow arrow first appears at the higher surface.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D20",
+      "job_id": "7c821d070f9c88a300fb112de8e5fe2c",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 28.048,
+      "first_candidate": false,
+      "errors": [
+        "The diagram does not depict two distinct switches in the setup, only an anonymous interruption in a rectangle. It cannot establish the condition of the other switch."
+      ],
+      "hold_seconds": 2.3933333333333335,
+      "download_sha256": "e9f5cd5ba4744ed73c4fdc971a2b0e074a57a7f5a5642b29f5d80feafd03d468",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The diagram does not depict two distinct switches in the setup, only an anonymous interruption in a rectangle. It cannot establish the condition of the other switch."
+        ]
+      }
+    },
+    {
+      "id": "D21",
+      "job_id": "0d66ee402eb5649ae99122afda883ccd",
+      "judgment": "safe_refusal",
+      "service_state": "needs_review",
+      "seconds": 98.119,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D22",
+      "job_id": "27c441b501bc1371e74ccaaa40c6e964",
+      "judgment": "safe_refusal",
+      "service_state": "needs_review",
+      "seconds": 88.114,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D23",
+      "job_id": "80a19a7b4b00584503fb61a9d4c4a689",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.054,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.413333333333333,
+      "download_sha256": "61bc3be7deaeaea116a13c77f5a8f0bd0be790c492d8d27761ec44a6d6c0358b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The longer hand ends at 12, the shorter at 3. The minutes pointer lands near the long-hand tip rather than the pivot, and zero versus three is independently coherent.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The longer hand ends at 12, the shorter at 3. The minutes pointer lands near the long-hand tip rather than the pivot, and zero versus three is independently coherent.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D24",
+      "job_id": "30c4f2dbdea5c8f8b2967672e03ab48e",
+      "judgment": "safe_refusal",
+      "service_state": "needs_review",
+      "seconds": 116.147,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D25",
+      "job_id": "e6cd51abd126f9a5afb6faead010c574",
+      "judgment": "safe_refusal",
+      "service_state": "needs_review",
+      "seconds": 116.15,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D26",
+      "job_id": "fdcad799ad1214e4bd38e42bb17294d0",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.052,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.4066666666666663,
+      "download_sha256": "aae952ac1f8fb033caa4673a3ffaec282e7cd9abd3279e9aca73ea6651dfe8f5",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Source and wall stay fixed. The same-size card moves closer; the lines from the source pass through the card's ends and intercept more of the fixed wall. Spoken wording agrees.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Source and wall stay fixed. The same-size card moves closer; the lines from the source pass through the card's ends and intercept more of the fixed wall. Spoken wording agrees.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D27",
+      "job_id": "d4b02c324d005bdffb5a003224a7b7f6",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 44.061,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.3600000000000012,
+      "download_sha256": "6e9699a08d31a205fdaceab3b737b95a50ca98c9257ecda2feb4f735dfbb2e91",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The four-times-as-long pendulum and smaller one are drawn with the same slope. Over one displayed shared time span the strips show two short periods versus one long period, consistent with the small-angle relation. The transcript's trailing 'you' is a non-substantive ASR flag.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The four-times-as-long pendulum and smaller one are drawn with the same slope. Over one displayed shared time span the strips show two short periods versus one long period, consistent with the small-angle relation. The transcript's trailing 'you' is a non-substantive ASR flag.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D28",
+      "job_id": "c9fd2c01e82357b6089ff4fa76c97ef3",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.047,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.1533333333333333,
+      "download_sha256": "76ee7822f8f715fe791659aaa2e7389468d7bcf6d510277128b1332f594c4e6c",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The same-height dark shutter translates clear of the lamp-to-target line. The two endpoint labels stay fixed and there is no light-path arrow while the shutter blocks it.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The same-height dark shutter translates clear of the lamp-to-target line. The two endpoint labels stay fixed and there is no light-path arrow while the shutter blocks it.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D29",
+      "job_id": "ef43e0630e5528ee0dd62b3e1f89abef",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.057,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.413333333333334,
+      "manual_hold_resolution": "External inspection confirms the decoded mechanism; actual bound question and reveal satisfy the unchanged hold floor.",
+      "download_sha256": "2d91015c43c60c8928469a82c6d0668074e59cbf23874a779b94428c1ab2c3dd",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "A same-size block starts above the same vessel, then sits fully submerged. The new waterline is above the previous marked level.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "A same-size block starts above the same vessel, then sits fully submerged. The new waterline is above the previous marked level.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D30",
+      "job_id": "53f3ab93a50653bd48009d002028f3bc",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.046,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.006666666666667,
+      "download_sha256": "35e6ad429060e4bf6d048fa2f157af814694ef37d288e46beb4bd45f5d8a74ff",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The line is the same length horizontally and on the diagonal at phone scale; the tray stays fixed. Rotation is depicted without shortening. The 52%-width length agrees with the diagonal's screen length to rounding.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The line is the same length horizontally and on the diagonal at phone scale; the tray stays fixed. Rotation is depicted without shortening. The 52%-width length agrees with the diagonal's screen length to rounding.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D31",
+      "job_id": "4f02648d79d97fd7becccc39184c37ee",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.046,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.1466666666666665,
+      "download_sha256": "ae8c6df9b2f8906c7a708580a65dac0594ffd8c0da3a2629a03930c5621a1497",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Both values stay 8 and 10. Visible baseline and equal tick widths show changing the origin from zero to six while the quantities remain unchanged.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Both values stay 8 and 10. Visible baseline and equal tick widths show changing the origin from zero to six while the quantities remain unchanged.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D32",
+      "job_id": "871d65313e4380870268f97b90d80d35",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.052,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.4733333333333336,
+      "manual_hold_resolution": "External inspection confirms the decoded mechanism; actual bound question and reveal satisfy the unchanged hold floor.",
+      "download_sha256": "f0e86a440bbec5e71a050fb068577b687baa2097eb5ceb99531d8d0454b4b6c0",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "On common axes and the same elapsed width the lower line rises four times the higher one. Labels stay next to the right lines and the result distinguishes change from height.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "On common axes and the same elapsed width the lower line rises four times the higher one. Labels stay next to the right lines and the result distinguishes change from height.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D33",
+      "job_id": "435f1e50932f0cfc1b94e4f269af0120",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 40.064,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.3466666666666658,
+      "download_sha256": "c98f3d9196c6b9361173f753be84e0b6011679f6b73672f494620a46781f7823",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Opening gives 2 and 3 mm hourly, after the cut 2 and 5 cumulative. The heading, values, and scaled bars distinguish amount per interval from running total.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Opening gives 2 and 3 mm hourly, after the cut 2 and 5 cumulative. The heading, values, and scaled bars distinguish amount per interval from running total.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D34",
+      "job_id": "170734261bbc0ce3e6f4ce6dc28c850c",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.064,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.2399999999999993,
+      "download_sha256": "2fbbf931446a09ae2d6b554a1e6b2b6b39ec70fc2f57b99749f5d2b67115be91",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Two whole blocks and a genuinely half-width block are visible with a four-tickets-per-block key. Their visible weights are 4, 4 and 2, then 10.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Two whole blocks and a genuinely half-width block are visible with a four-tickets-per-block key. Their visible weights are 4, 4 and 2, then 10.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D35",
+      "job_id": "4a58023f1ee65ae509e83ee9e71ad129",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.047,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.4800000000000004,
+      "download_sha256": "23bbd6e9bd39f95d85c5d118d90692fdb582d695da7befe1d4c4cc6112b8f732",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The actual ordered values preserve the input set; the pointer is centered on 4 and the quantity remains minutes. The revised transcript says waited and time, not weight.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The actual ordered values preserve the input set; the pointer is centered on 4 and the quantity remains minutes. The revised transcript says waited and time, not weight.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D36",
+      "job_id": "f2abb27eab2d32085c5d3ff44bfac25b",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 28.048,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.0,
+      "download_sha256": "a0000f220b257b5adeff7e0f8a2481289af3344dd931900bc95b447db9d08f13",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Three labeled snapshots establish the original blue state, its new location and orange recoloring. Undo restores blue in the third snapshot at the same right-hand position.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Three labeled snapshots establish the original blue state, its new location and orange recoloring. Undo restores blue in the third snapshot at the same right-hand position.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D37",
+      "job_id": "d51fb29000945c81968d16bea540a859",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.051,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3066666666666666,
+      "download_sha256": "ece1d627aceb5a15929222be1ce412c3b2461ca97fb470122783b2a884fc72b2",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Opening shows paid $10 and cost $6.50. Visible arrow path is +50¢ to $7, then +$3 to $10, with $3.50 final. Independent ASR corroborates exact amounts.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Opening shows paid $10 and cost $6.50. Visible arrow path is +50¢ to $7, then +$3 to $10, with $3.50 final. Independent ASR corroborates exact amounts.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D38",
+      "job_id": "da0d79d7d68f74c62154040a954eafd2",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.05,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.466666666666667,
+      "download_sha256": "23f5729bf8f6f295e19673c8e8b249e6e071114a2d7e0eee319c9890725adf1d",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The display visibly holds 03:00 while paused, then shows 02:59 only at the running beat. Posted lesson shows a state transition and does not imply the timer had already been counting.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The display visibly holds 03:00 while paused, then shows 02:59 only at the running beat. Posted lesson shows a state transition and does not imply the timer had already been counting.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D39",
+      "job_id": "d762176c3a6cf41db6dc7184b37b486c",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 38.062,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.4266666666666659,
+      "download_sha256": "e4013e4b892ebdbf65d7f260b35c80e2199523d52c6d95be60caabd9394e4104",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "A distinct front and back retain the same vertical dot position while the depicted hinge side swaps. The diagram demonstrates not flipping upside down.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "A distinct front and back retain the same vertical dot position while the depicted hinge side swaps. The diagram demonstrates not flipping upside down.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D40",
+      "job_id": "f7a46958a97353164f985632d48020f3",
+      "judgment": "safe_refusal",
+      "service_state": "needs_review",
+      "seconds": 22.044,
+      "download_sha256": null,
+      "inspection": null
+    },
+    {
+      "id": "D41",
+      "job_id": "57b378992c48cbb644a52a18b20377ed",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 78.106,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.8533333333333335,
+      "download_sha256": "9cb131bbfecbb6ccbd4ebdaf437cf0429389f0fd4d71707edf11d5072db3fe9b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "The same forward-facing character lifts her anatomical left hand on the viewer's right. The illustration changes, not merely the side labels.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "The same forward-facing character lifts her anatomical left hand on the viewer's right. The illustration changes, not merely the side labels.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D42",
+      "job_id": "13dff3617da2adf1a29d08ce190e8f02",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 48.071,
+      "first_candidate": false,
+      "errors": [
+        "The two prices do not attach to distinguishable tickets; the arrow points through the traveler to a label."
+      ],
+      "hold_seconds": 2.0133333333333336,
+      "download_sha256": "eb1615660543bfbf023381a61b1521cd1f029ba822841fc64c40b7843cf8c005",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The two prices do not attach to distinguishable tickets; the arrow points through the traveler to a label."
+        ]
+      }
+    },
+    {
+      "id": "D43",
+      "job_id": "112f06462717aa92a959117959c4004e",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 44.063,
+      "first_candidate": false,
+      "errors": [
+        "The same books remain in the same places. A floating 4 appears under the shelf without a visible insertion of a book."
+      ],
+      "hold_seconds": 2.2266666666666666,
+      "download_sha256": "d8bfe1c8ea33e2e13791e8804a74a49aab100ee714b5959a8c49724be17547df",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The same books remain in the same places. A floating 4 appears under the shelf without a visible insertion of a book."
+        ]
+      }
+    },
+    {
+      "id": "D44",
+      "job_id": "c476be980784573dfd6f705be2154070",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 44.06,
+      "first_candidate": false,
+      "errors": [
+        "The diagram lines overlap the character above the cloth and do not show the declared two-unit hem allowance clearly."
+      ],
+      "hold_seconds": 2.493333333333334,
+      "download_sha256": "7ad75ae0a69a864b3c2283ff1a3df21abae9904c7388817cca701cb01a4805d5",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The diagram lines overlap the character above the cloth and do not show the declared two-unit hem allowance clearly."
+        ]
+      }
+    },
+    {
+      "id": "D45",
+      "job_id": "6a956d0fe2dcb77aae7aa096e423e875",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 56.085,
+      "first_candidate": false,
+      "errors": [
+        "The final amounts are correct but the depicted contrast of one versus three plates is absent from the table."
+      ],
+      "hold_seconds": 1.3466666666666667,
+      "download_sha256": "de37a5096284ef85b4387eb1c218cbfef5b0499abfd676b6c106d39c783f3c73",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The final amounts are correct but the depicted contrast of one versus three plates is absent from the table."
+        ]
+      }
+    },
+    {
+      "id": "D46",
+      "job_id": "67c33169e8c72e419708478bbde4eb65",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 42.065,
+      "first_candidate": false,
+      "errors": [
+        "The tile divides into unrelated circular tokens without retaining the original square feature or scale. No visible reference copy ties the 3×5 diagram to the tile under the rug."
+      ],
+      "hold_seconds": 2.246666666666666,
+      "download_sha256": "c61741f8869953eea4eeba46d7d4d76d8669fa1eb29cbc2c30ef7c042ae01e6d",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The tile divides into unrelated circular tokens without retaining the original square feature or scale. No visible reference copy ties the 3×5 diagram to the tile under the rug."
+        ]
+      }
+    },
+    {
+      "id": "D47",
+      "job_id": "a7dfece0ead51a682984a8acb4cb449c",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 56.079,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 1.8466666666666676,
+      "download_sha256": "5ce14dd480d714c6ef422861f8076a3bfeb8f7ed823b9becbf3e58f42e69e912",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Two equally long timing intervals meet at the labeled 11:00. The endpoints 10:50 and 11:10 and two ten-minute labels remain readable against the art, and the final 20 minutes agrees.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Two equally long timing intervals meet at the labeled 11:00. The endpoints 10:50 and 11:10 and two ten-minute labels remain readable against the art, and the final 20 minutes agrees.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D48",
+      "job_id": "32b1ecbbc5c7dd06412c1a25670c43ee",
+      "judgment": "false_accept",
+      "service_state": "succeeded",
+      "seconds": 26.046,
+      "first_candidate": false,
+      "errors": [
+        "The illustrated shelf never appears, so the promised transition linking its physical joints to a geometric triangle is absent."
+      ],
+      "hold_seconds": 1.92,
+      "download_sha256": "bd673515f8fd1c01647dcb5f903849b8da938ff10c2c7adc41203edd99e6dc92",
+      "inspection": {
+        "judgment": "false_accept",
+        "reasons": [
+          "The illustrated shelf never appears, so the promised transition linking its physical joints to a geometric triangle is absent."
+        ]
+      }
+    },
+    {
+      "id": "D49",
+      "job_id": "2fbc711fc5942be81f03444c28c6347a",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 48.067,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.2333333333333325,
+      "download_sha256": "6aadc65317b059e1a18201dd92a0409dae7c6cb02d13be36ac52294b1138022e",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Flour and water each have their own textual heading and vertically separated row. Shapes preserve measurement scale with 2:1 in the opening and 4:2 after doubling.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Flour and water each have their own textual heading and vertically separated row. Shapes preserve measurement scale with 2:1 in the opening and 4:2 after doubling.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    },
+    {
+      "id": "D50",
+      "job_id": "3219cc9369abf5b51e6996d1a0f3dd6e",
+      "judgment": "verified_pass",
+      "service_state": "succeeded",
+      "seconds": 26.049,
+      "first_candidate": true,
+      "errors": [],
+      "hold_seconds": 2.3999999999999995,
+      "download_sha256": "f6e98cb81ff41d211bfa4932c4e621bbed58b6af855d00f928e630521201770b",
+      "inspection": {
+        "judgment": "verified_pass",
+        "visible_facts": "Two equal-width curtains and three equal marked window spans are visible before the question. After the cut the same outer thirds are covered without overlap and the middle stays open.",
+        "association": "Independently inspected the relevant decoded positions and labels.",
+        "disclosure": "Checked decoded opening and the frames before and at the declared change.",
+        "mechanism": "Two equal-width curtains and three equal marked window spans are visible before the question. After the cut the same outer thirds are covered without overlap and the middle stays open.",
+        "phone": "Checked the phone-size decoded frames.",
+        "voice_content": "Independent ASR preserved the lesson's relevant words, values, units and sequence; listening remains pending."
+      }
+    }
+  ]
+}
