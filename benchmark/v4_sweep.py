@@ -35,8 +35,8 @@ def main(a):
 def sweep(a):
     loc=Path(__file__).parent
     if a.sealed:
-        if a.id:
-            raise SystemExit("sealed evaluation must include every case")
+        if a.id or a.controlled_parts:
+            raise SystemExit("sealed evaluation must use every original case, unmodified")
         specs={p.name:((p/"request.json").read_bytes(),json.loads((p/"oracle.json").read_text())) for p in a.sealed.glob("H[0-9][0-9]")}
         if len(specs)!=10:
             raise SystemExit("ten sealed cases required")
@@ -50,9 +50,11 @@ def sweep(a):
         for k,v in rows.items():
             req,oracle=prepare(v)
             if a.controlled_parts:
-                from v4_geometry_details import DETAILS,diagram_request
+                from v4_geometry_details import DETAILS,diagram_request,shelf_request
                 if k in DETAILS:
                     req,oracle=diagram_request(k,req,oracle)
+                elif k=="D43":
+                    req,oracle=shelf_request(req,oracle)
             specs[k]=(json.dumps(req,sort_keys=True,ensure_ascii=False).encode(),oracle)
         seal=None
     ids=a.id or sorted(specs)
