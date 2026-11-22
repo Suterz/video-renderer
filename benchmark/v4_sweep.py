@@ -33,7 +33,7 @@ def main(a):
         seal=git(a.sealed)
     else:
         rows=read_cases(loc/"v3/first.tsv",loc/"v3/development.tsv")
-        for extra in ("v4-author-revisions.tsv","v4-clarity.tsv","v4-latest.tsv"):
+        for extra in ("v4-author-revisions.tsv","v4-clarity.tsv","v4-latest.tsv","v4-state-repairs.tsv"):
             if (loc/extra).is_file():
                 rows.update(read_cases(loc/extra))
         specs={}
