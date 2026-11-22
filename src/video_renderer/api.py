@@ -25,7 +25,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .media import FFMPEG, FFPROBE, encode
 from .timeline import TimingReview, bind, corroborate_cue, cue_sample, end_frame, sample, speech_terms, start_frame, tokens
-from .instructional import InstructionalReview,exposure,decode,encoded_match
+from .instructional import InstructionalReview,exposure,decode,encoded_match,spoken_disclosures
 
 ROOT = Path(os.environ.get("VIDEO_STORE", Path.home() / "Videos/video-renderer/jobs"))
 LEGACY = Path.home() / "Videos/storyboard-renderer/jobs"
@@ -77,6 +77,7 @@ class Instructional(Strict):
     minimum_ms: int = Field(default=1200,ge=250,le=10000)
     region: tuple[float,float,float,float]
     required_facts: list[str] = Field(min_length=1,max_length=24)
+    spoken_answer_phrases: list[str] = Field(default_factory=list,max_length=6)
 
     @model_validator(mode="after")
     def bounds(self):
@@ -366,13 +367,15 @@ def run(p):
             raise InstructionalReview("no measured question speech")
         question=start_frame(sample(spans[0]["start"]),f)
         question_end=start_frame(sample(spans[-1]["end"]),f)
-        answer=next(starts[i] for i,b in enumerate(req.beats) if b.id==rule.answer_beat)
+        answer_idx=next(i for i,b in enumerate(req.beats) if b.id==rule.answer_beat)
+        answer=starts[answer_idx]
         if (answer-question_end)*1000 < rule.minimum_ms*f:
             raise InstructionalReview("insufficient prediction hold after the spoken question")
         for i,start in enumerate(starts):
             if start<answer and (i==len(starts)-1 or starts[i+1]>question):
                 required_by_beat[req.beats[i].id]=rule.required_facts
         teaching={"question_frame":question,"question_end_frame":question_end,"answer_frame":answer,"required_facts":rule.required_facts}
+        teaching["spoken_answer_evidence"]=spoken_disclosures(bound,rule.spoken_answer_phrases,starts_samples[answer_idx])
     manifest = frames(p, req, required_by_beat) if required_by_beat else frames(p, req)
     save(p / "panels.json", manifest)
     if teaching:

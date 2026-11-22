@@ -40,3 +40,28 @@ def encoded_match(decoded, intended, rect, max_error=12):
     if error>max_error:
         raise InstructionalReview(f"encoded frame disagrees with checked visual region (mean error {error:.1f})")
     return round(error,3)
+
+
+def spoken_disclosures(bound,phrases,answer_sample):
+    """Check explicitly declared answer phrases against forced original timing.
+
+    This is a literal semantic guard, not a paraphrase detector. It never
+    chooses a different answer or retimes the caller's footage.
+    """
+    from .timeline import sample,tokens
+    findings=[]
+    for phrase in phrases:
+        sought=tokens(phrase)
+        if len(sought)<2:
+            raise InstructionalReview("answer embargo requires at least two spoken tokens")
+        hits=[]
+        for id_,(words,spans) in bound.items():
+            for i in range(len(words)-len(sought)+1):
+                if words[i:i+len(sought)]==sought:
+                    hits.append({"utterance":id_,"start_sample":sample(spans[i]["start"])})
+        if not hits:
+            raise InstructionalReview(f"declared spoken answer phrase {phrase!r} does not occur")
+        if any(h["start_sample"]<answer_sample for h in hits):
+            raise InstructionalReview(f"spoken answer {phrase!r} occurs before its declared reveal")
+        findings.append({"phrase":phrase,"matches":hits})
+    return findings

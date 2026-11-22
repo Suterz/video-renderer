@@ -85,3 +85,12 @@ def test_a_caption_covering_a_fact_does_not_match_verified_art():
     ImageDraw.Draw(masked).rectangle((115,549,240,579),fill="#122036")
     with pytest.raises(InstructionalReview,match="checked visual region"):
         encoded_match(masked,mark,(.34,.86,.61,.90))
+
+
+def test_spoken_answer_is_not_allowed_before_viewer_has_seen_reveal():
+    from video_renderer.instructional import spoken_disclosures
+    b={"setup":(["choose","the","left","chute"],[{"start":.1},{"start":.2},{"start":.3},{"start":.45}]),
+       "answer":(["the","left","chute"],[{"start":3},{"start":3.2},{"start":3.3}])}
+    assert spoken_disclosures({"answer":b["answer"]},["the left chute"],144000)
+    with pytest.raises(InstructionalReview,match="before"):
+        spoken_disclosures(b,["the left chute"],144000)
