@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+root="${1:?usage: install-locked /absolute/install/root [environment ...]}"
+shift
+uv="${UV_BIN:-$HOME/.local/bin/uv}"
+python="${REPRO_PYTHON:-/usr/bin/python3}"
+test "$("$python" -c 'import platform; print(platform.python_version())')" = "3.12.3"
+if [[ "$#" = 0 ]]; then
+    for lock in locks/*.txt; do
+        name="${lock##*/}"
+        [[ "$name" == media-linux-64.txt ]] || set -- "$@" "${name%.txt}"
+    done
+fi
+export UV_CACHE_DIR="$root/uv-cache"
+for name in "$@"; do
+    [[ "$name" =~ ^[a-z0-9-]+$ ]]
+    test -f "locks/$name.txt"
+    env="$root/venvs/$name"
+    test -x "$env/bin/python" || "$uv" venv --python "$python" "$env"
+    if grep -q '+cu130' "locks/$name.txt"; then
+        "$uv" pip sync --python "$env/bin/python" \
+            --index https://download.pytorch.org/whl/cu130/ --index-strategy unsafe-best-match "locks/$name.txt"
+    else
+        "$uv" pip sync --python "$env/bin/python" "locks/$name.txt"
+    fi
+    "$uv" pip check --python "$env/bin/python"
+done
