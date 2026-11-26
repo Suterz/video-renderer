@@ -22,3 +22,5 @@ The local `bin/cutover-workstation` wrapper is an explicit port migration,
 not part of installation. It checks both services, refuses while jobs are
 queued/running and verifies the pinned v1 demo after routing `:8787` to v2.
 Keep the `~/git/storyboard-renderer` detached v1 worktree for rollback.
+
+For the pinned local installation and GPU rehearsal, see [Rehearsal](docs/REHEARSAL.md).
