@@ -27,7 +27,15 @@ python3 -B "$frames/bin/model-assets.py" "$frames/locks/models.json" "$root/mode
 python3 -B bin/model-assets.py locks/models.json "$root/speech/models"
 if [[ ! -x "$VIDEO_SPEECH_ROOT/espeak/usr/bin/espeak-ng" ]]; then
     mkdir -p "$VIDEO_SPEECH_ROOT/espeak"
-    (cd "$VIDEO_SPEECH_ROOT/espeak"; apt download espeak-ng; dpkg-deb -x ./espeak-ng_*.deb .)
+    version="1.51+dfsg-12build1"
+    package="espeak-ng_${version}_amd64.deb"
+    (
+        cd "$VIDEO_SPEECH_ROOT/espeak"
+        test -f "$package" || apt download "espeak-ng=$version"
+        printf '%s  %s\n' ffeac730f1f43b5cdbca708a8215d6b7310bf3bd40d7dcf0affd6a62f86aa6df "$package" |
+            sha256sum --check
+        dpkg-deb -x "$package" .
+    )
 fi
 test -r "${PHONEMIZER_ESPEAK_LIBRARY:-/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1}"
 start() {
