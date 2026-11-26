@@ -9,6 +9,8 @@
 
 ## Decisions, newest first
 
+- **Contraction timing (staged):** author script `you’ll` previously failed forced binding at `youll`; independent ASR heard “you’ll”. `1d0664d` accepts only unambiguous single-word apostrophe drops, preserving the exact aligned span, and rejects `well` for “we’ll”. Same 829,200 PCM samples now reach frame review; separate “They’ll put” stacking control verifies frame 46. This is timing evidence, not a writer-quality or deployment change. Gallery: `v4/v4.7 - Communication storyteller/REVIEW.md`.
+
 - **Consolidation:** take the reproducible runtime line once; keep adjudications on evidence refs and the gallery. The public CLI accepts an explicit archived legacy WAV while the rollback smoke retains its original fixture. Gallery: `Historical renderer examples/INDEX.md`.
 - **Rehearsed install and ASR:** pinned the working environment and recovered the exact saved circuit/rectangle WAVs. Later tests also passed with old versions; the earlier speech fault was intermittent, not isolated to a package. `tested/fresh-install-2026-11-26`; gallery `v4/v4.5 - Saved rounds and rehearsal/REVIEW.md`.
 - **V4 prepared-story checks:** matched encoded clue regions against unobscured art and refused literal early answers. The circuit/trail controls reject visibly broken paths; the R6 return-fare error shows a literal speech check cannot prevent all early visual disclosures.
