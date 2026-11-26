@@ -23,8 +23,9 @@ def label(text, x, y, fact=None):
             **({"fact": fact} if fact else {})}
 
 
-def disc(x,y):
-    return {"type":"shape","shape":"disc","at":[x,y],"extent":[.022,.0124],"ink":"ink"}
+def disc(x,y,fact=None):
+    return {"type":"shape","shape":"disc","at":[x,y],"extent":[.034,.0191],"ink":"ink",
+            **({"fact":fact} if fact else {})}
 
 
 def circuit(root):
@@ -36,7 +37,8 @@ def circuit(root):
         # Distinct contact dots and lever, instead of unlabeled dangling stubs.
         stubs = (([.25,.42],[.25,.37]),([.39,.42],[.39,.37]),([.76,.41],[.77,.37]))
         overlays[:] = [o for o in overlays if (o.get("from"),o.get("to")) not in stubs]
-        overlays.extend(disc(x,.37) for x in (.25,.39,.61,.77))
+        facts = {0.25:"opening-5",0.39:"opening-6",0.77:"opening-10"} if i==0 else {}
+        overlays.extend(disc(x,.37,facts.get(x)) for x in (.25,.39,.61,.77))
         p["path_claims"] = [claim(.20,.50,.37,True,ink),claim(.48,.82,.37,i>0,ink)]
     negative = deepcopy(req)
     negative["beats"][1]["panel"]["overlays"] = [
@@ -82,6 +84,7 @@ def main():
     p.add_argument("root", type=Path)
     p.add_argument("out", type=Path)
     a = p.parse_args()
+    mismatches = []
     with httpx.Client(base_url=a.url,timeout=30) as client:
         for name, pair in (("circuit",circuit(a.root)),("trail",trail())):
             for correct, req in zip((True,False),pair,strict=True):
@@ -95,10 +98,11 @@ def main():
                         response.raise_for_status()
                         (folder/filename).write_bytes(response.content)
                 print(folder.name,status["state"],status.get("error"),flush=True)
-                if correct:
-                    assert status["state"]=="succeeded",status
-                else:
-                    assert status["state"]=="needs_review" and "phone-size path is broken" in status["error"],status
+                expected = (status["state"]=="succeeded" if correct else
+                            status["state"]=="needs_review" and "phone-size path is broken" in status["error"])
+                if not expected:
+                    mismatches.append(folder.name)
+    assert not mismatches, mismatches
 
 
 if __name__ == "__main__":
