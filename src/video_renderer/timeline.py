@@ -52,6 +52,14 @@ def possessive_form(word):
     return word[:-2]+"s" if word.endswith("'s") else word
 
 
+def aligned_word_matches(spoken, aligned):
+    if possessive_form(spoken) == possessive_form(aligned):
+        return True
+    # The forced aligner can drop an internal apostrophe on these words.
+    # Do not conflate real different words such as we'll/well or I'll/ill.
+    return spoken in {"you'll", "they'll", "it'll"} and aligned == spoken.replace("'", "")
+
+
 def clock_fusion(a,b):
     return (a in {"twenty","thirty","forty","fifty","oh"} and
             b in {"one","two","three","four","five","six","seven","eight","nine"})
@@ -78,7 +86,8 @@ def bind(script, aligned):
                 parts.append(groups[i+1]); i+=1
             i+=1
             words.extend(parts)
-            if [possessive_form(t) for t in word_tokens[pos:pos+len(parts)]]==[possessive_form(t) for t in parts]:
+            observed = word_tokens[pos:pos+len(parts)]
+            if len(observed) == len(parts) and all(aligned_word_matches(a, b) for a, b in zip(parts, observed)):
                 spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
                 pos+=len(parts)
             elif len(parts)>1 and word_tokens[pos:pos+1]==["".join(parts)]:
