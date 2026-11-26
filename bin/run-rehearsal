@@ -7,13 +7,15 @@ logs="$root/logs"
 mkdir -p "$logs"
 export HF_HOME="$root/hf-cache" HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 export RENDER_GPU_LEASE="${RENDER_GPU_LEASE:-$HOME/ai/storyboard-build/v2/gpu.lock}"
-export STORY_COMFY_URL=http://127.0.0.1:8193 STORY_PROFILE=flux
+comfy_port="${REPRO_COMFY_PORT:-8193}"
+prefix="${REPRO_SESSION_PREFIX:-repro}"
+export STORY_COMFY_URL="http://127.0.0.1:$comfy_port" STORY_PROFILE=flux
 export STORY_VISION_PYTHON="$root/venvs/storyboard-vision/bin/python"
 export STORY_VISION_MODEL="$root/models/vision/qwen3-vl-8b"
-export FRAME_STORE="$root/frame-store" FRAME_PORT=8892 FRAME_PYTHON="$root/venvs/frames-renderer/bin/python"
+export FRAME_STORE="$root/frame-store" FRAME_PORT="${REPRO_FRAME_PORT:-8892}" FRAME_PYTHON="$root/venvs/frames-renderer/bin/python"
 export STORY_FFMPEG="$root/media/bin/ffmpeg" STORY_FFPROBE="$root/media/bin/ffprobe"
 export VIDEO_SPEECH_ROOT="$root/speech" VIDEO_SPEECH_VENVS="$root/venvs"
-export VIDEO_STORE="$root/video-store" VIDEO_PORT=8893 VIDEO_PYTHON="$root/venvs/video-renderer/bin/python"
+export VIDEO_STORE="$root/video-store" VIDEO_PORT="${REPRO_VIDEO_PORT:-8893}" VIDEO_PYTHON="$root/venvs/video-renderer/bin/python"
 export VIDEO_FRAME_URL="http://127.0.0.1:$FRAME_PORT"
 test -x "$VIDEO_PYTHON"
 test -x "$FRAME_PYTHON"
@@ -48,13 +50,13 @@ start() {
         tmux new-session -d -s "$name" "$cmd >>$(printf %q "$logs/$name.log") 2>&1"
     fi
 }
-start repro-comfy env HF_HOME="$HF_HOME" "$frames/bin/start-rehearsal-comfy" "$root"
+start "$prefix-comfy" env HF_HOME="$HF_HOME" REPRO_COMFY_PORT="$comfy_port" "$frames/bin/start-rehearsal-comfy" "$root"
 curl -fsS --retry 10 --retry-connrefused "$STORY_COMFY_URL/system_stats" > "$logs/comfy-ready.json"
-start repro-frames env HF_HOME="$HF_HOME" RENDER_GPU_LEASE="$RENDER_GPU_LEASE" \
+start "$prefix-frames" env HF_HOME="$HF_HOME" RENDER_GPU_LEASE="$RENDER_GPU_LEASE" \
     STORY_COMFY_URL="$STORY_COMFY_URL" STORY_PROFILE="$STORY_PROFILE" STORY_VISION_PYTHON="$STORY_VISION_PYTHON" \
     STORY_VISION_MODEL="$STORY_VISION_MODEL" FRAME_STORE="$FRAME_STORE" FRAME_PORT="$FRAME_PORT" \
     FRAME_PYTHON="$FRAME_PYTHON" "$frames/bin/start-frame-renderer"
-start repro-video env HF_HOME="$HF_HOME" RENDER_GPU_LEASE="$RENDER_GPU_LEASE" STORY_FFMPEG="$STORY_FFMPEG" \
+start "$prefix-video" env HF_HOME="$HF_HOME" RENDER_GPU_LEASE="$RENDER_GPU_LEASE" STORY_FFMPEG="$STORY_FFMPEG" \
     STORY_FFPROBE="$STORY_FFPROBE" VIDEO_SPEECH_ROOT="$VIDEO_SPEECH_ROOT" VIDEO_SPEECH_VENVS="$VIDEO_SPEECH_VENVS" \
     VIDEO_PORT="$VIDEO_PORT" VIDEO_STORE="$VIDEO_STORE" VIDEO_PYTHON="$VIDEO_PYTHON" VIDEO_FRAME_URL="$VIDEO_FRAME_URL" \
     "$PWD/bin/start-video-renderer"

@@ -16,7 +16,10 @@ if len(sys.argv) > 2:
     data["reuse_from"] = sys.argv[2]
 if len(sys.argv) > 3:
     story["end_ms"] += int(sys.argv[3])
-with (path / "narration.wav").open("rb") as audio:
+audio_path = Path(os.environ["NARRATION_WAV"]) if "NARRATION_WAV" in os.environ else path / "narration.wav"
+if not audio_path.is_file():
+    raise SystemExit(f"Missing narration: {audio_path}. Set NARRATION_WAV to a recorded or archived WAV.")
+with audio_path.open("rb") as audio:
     r = httpx.post(base + "/renders", data={**data, "story": json.dumps(story)}, files={"audio": audio}, timeout=30)
 r.raise_for_status()
 print(r.json()["id"])
