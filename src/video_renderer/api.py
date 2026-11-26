@@ -31,7 +31,7 @@ ROOT = Path(os.environ.get("VIDEO_STORE", Path.home() / "Videos/video-renderer/j
 LEGACY = Path.home() / "Videos/storyboard-renderer/jobs"
 SPEECH = Path(os.environ.get("VIDEO_SPEECH_ROOT", Path.home() / "ai/storyboard-build/v2"))
 FRAMES = os.environ.get("VIDEO_FRAME_URL", "http://127.0.0.1:8788")
-FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+FONT = os.environ.get("VIDEO_CAPTION_FONT", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")
 tasks = queue.Queue()
 
 
@@ -154,8 +154,10 @@ def state(p, **changes):
 def speech(mode, wav, text):
     env = {**os.environ, "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
            "PATH": f"{SPEECH}/espeak/usr/bin:{os.environ['PATH']}",
-           "PHONEMIZER_ESPEAK_LIBRARY": "/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1"}
-    command = [str(Path.home() / f"venvs/v2-{mode}/bin/python"), str(Path(__file__).with_name("speech_worker.py")),
+           "PHONEMIZER_ESPEAK_LIBRARY": os.environ.get(
+               "PHONEMIZER_ESPEAK_LIBRARY", "/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1")}
+    venvs = Path(os.environ.get("VIDEO_SPEECH_VENVS", Path.home() / "venvs"))
+    command = [str(venvs / f"v2-{mode}/bin/python"), str(Path(__file__).with_name("speech_worker.py")),
                mode, str(SPEECH), str(wav)]
     process = subprocess.run(command, input=json.dumps({"text": text}), text=True, capture_output=True, env=env, timeout=400)
     if process.returncode:

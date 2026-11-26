@@ -1,5 +1,6 @@
 """Run speech dependencies in their own process; emit JSON on the last line."""
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -18,7 +19,7 @@ elif mode == "asr":
     import subprocess
     from faster_whisper import WhisperModel
     model = WhisperModel(str(root / "models/asr"), device="cpu", compute_type="int8", cpu_threads=5)
-    ff = Path.home() / "ai/tools/media/bin/ffmpeg"
+    ff = os.environ.get("STORY_FFMPEG", str(Path.home() / "ai/tools/media/bin/ffmpeg"))
     audio = subprocess.check_output([str(ff), "-v", "error", "-i", wav, "-ac", "1", "-ar", "16000", "-f", "f32le", "-"])
     segments, _ = model.transcribe(np.frombuffer(audio, dtype="<f4"), language="en", beam_size=5,
                                    condition_on_previous_text=False, word_timestamps=True)
@@ -28,7 +29,8 @@ else:
     import fcntl
     import soundfile as sf
     from voice_profiles import synthesize
-    with (root / "gpu.lock").open("a") as lock:
+    lease = Path(os.environ.get("RENDER_GPU_LEASE", root / "gpu.lock"))
+    with lease.open("a") as lock:
         if mode in ("ryan", "laura"):
             fcntl.flock(lock, fcntl.LOCK_EX)
         audio, rate = synthesize(mode, root / "models" / mode, [request["text"]])
