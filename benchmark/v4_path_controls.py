@@ -38,7 +38,7 @@ def circuit(root):
         stubs = (([.25,.42],[.25,.37]),([.39,.42],[.39,.37]),([.76,.41],[.77,.37]))
         overlays[:] = [o for o in overlays if (o.get("from"),o.get("to")) not in stubs]
         facts = {0.25:"opening-5",0.39:"opening-6",0.77:"opening-10"} if i==0 else {}
-        overlays.extend(disc(x,.37,facts.get(x)) for x in (.25,.39,.61,.77))
+        overlays[:0] = [disc(x,.37,facts.get(x)) for x in (.25,.39,.61,.77)]
         p["path_claims"] = [claim(.20,.50,.37,True,ink),claim(.48,.82,.37,i>0,ink)]
     negative = deepcopy(req)
     negative["beats"][1]["panel"]["overlays"] = [
