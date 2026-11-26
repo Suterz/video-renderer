@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+root="${1:?usage: run-rehearsal /absolute/install/root /path/to/frames-renderer}"
+frames="${2:?specify frames-renderer checkout}"
+logs="$root/logs"
+mkdir -p "$logs"
+export HF_HOME="$root/hf-cache" HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+export RENDER_GPU_LEASE="${RENDER_GPU_LEASE:-$HOME/ai/storyboard-build/v2/gpu.lock}"
+export STORY_COMFY_URL=http://127.0.0.1:8193 STORY_PROFILE=flux
+export STORY_VISION_PYTHON="$root/venvs/storyboard-vision/bin/python"
+export STORY_VISION_MODEL="$root/models/vision/qwen3-vl-8b"
+export FRAME_STORE="$root/frame-store" FRAME_PORT=8892 FRAME_PYTHON="$root/venvs/frames-renderer/bin/python"
+export STORY_FFMPEG="$root/media/bin/ffmpeg" STORY_FFPROBE="$root/media/bin/ffprobe"
+export VIDEO_SPEECH_ROOT="$root/speech" VIDEO_SPEECH_VENVS="$root/venvs"
+export VIDEO_STORE="$root/video-store" VIDEO_PORT=8893 VIDEO_PYTHON="$root/venvs/video-renderer/bin/python"
+export VIDEO_FRAME_URL="http://127.0.0.1:$FRAME_PORT"
+test -x "$VIDEO_PYTHON"
+test -x "$FRAME_PYTHON"
+test -x "$STORY_FFMPEG"
+test -x "$STORY_FFPROBE"
+for env in comfy-storyboard storyboard-vision v2-ryan v2-heart v2-asr v2-align; do
+    test -x "$root/venvs/$env/bin/python"
+    "${UV_BIN:-$HOME/.local/bin/uv}" pip check --python "$root/venvs/$env/bin/python"
+done
+python3 -B "$frames/bin/model-assets.py" "$frames/locks/models.json" "$root/models" vision
+python3 -B bin/model-assets.py locks/models.json "$root/speech/models"
+if [[ ! -x "$VIDEO_SPEECH_ROOT/espeak/usr/bin/espeak-ng" ]]; then
+    mkdir -p "$VIDEO_SPEECH_ROOT/espeak"
+    (cd "$VIDEO_SPEECH_ROOT/espeak"; apt download espeak-ng; dpkg-deb -x ./espeak-ng_*.deb .)
+fi
+test -r "${PHONEMIZER_ESPEAK_LIBRARY:-/usr/lib/x86_64-linux-gnu/libespeak-ng.so.1}"
+start() {
+    local name="$1"; shift
+    if ! tmux has-session -t "$name" 2>/dev/null; then
+        # The shell command inherits the explicit service configuration even
+        # when the tmux server was started before these variables existed.
+        local cmd
+        printf -v cmd '%q ' "$@"
+        tmux new-session -d -s "$name" "$cmd >>$(printf %q "$logs/$name.log") 2>&1"
+    fi
+}
+start repro-comfy env HF_HOME="$HF_HOME" "$frames/bin/start-rehearsal-comfy" "$root"
+curl -fsS --retry 10 --retry-connrefused "$STORY_COMFY_URL/system_stats" > "$logs/comfy-ready.json"
+start repro-frames env HF_HOME="$HF_HOME" RENDER_GPU_LEASE="$RENDER_GPU_LEASE" \
+    STORY_COMFY_URL="$STORY_COMFY_URL" STORY_PROFILE="$STORY_PROFILE" STORY_VISION_PYTHON="$STORY_VISION_PYTHON" \
+    STORY_VISION_MODEL="$STORY_VISION_MODEL" FRAME_STORE="$FRAME_STORE" FRAME_PORT="$FRAME_PORT" \
+    FRAME_PYTHON="$FRAME_PYTHON" "$frames/bin/start-frame-renderer"
+start repro-video env HF_HOME="$HF_HOME" RENDER_GPU_LEASE="$RENDER_GPU_LEASE" STORY_FFMPEG="$STORY_FFMPEG" \
+    STORY_FFPROBE="$STORY_FFPROBE" VIDEO_SPEECH_ROOT="$VIDEO_SPEECH_ROOT" VIDEO_SPEECH_VENVS="$VIDEO_SPEECH_VENVS" \
+    VIDEO_PORT="$VIDEO_PORT" VIDEO_STORE="$VIDEO_STORE" VIDEO_PYTHON="$VIDEO_PYTHON" VIDEO_FRAME_URL="$VIDEO_FRAME_URL" \
+    "$PWD/bin/start-video-renderer"
+url="http://127.0.0.1:$VIDEO_PORT"
+curl -fsS --retry 10 --retry-connrefused "$url/ready" > "$logs/video-ready.json"
+curl -fsS "$url/openapi.json" > "$logs/video-openapi.json"
+curl -fsS "$VIDEO_FRAME_URL/openapi.json" > "$logs/frame-openapi.json"
+git rev-parse HEAD > "$logs/video.commit"
+git -C "$frames" rev-parse HEAD > "$logs/frames.commit"
+"$VIDEO_PYTHON" -B benchmark/rehearsal.py "$url" "$root/rehearsal-results" --jobs "$VIDEO_STORE"
