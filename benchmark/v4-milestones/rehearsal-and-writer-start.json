@@ -1,0 +1,148 @@
+{
+  "path_controls": {
+    "circuit-correct": {
+      "state": "succeeded",
+      "id": "bd98aaaa21e8419fbdc2815f4f3d361e",
+      "phase": "complete",
+      "sha256": "4894e9b63c9866716ea56a27ffdd8212ac8de413fbaf1255c1caa299bf179426"
+    },
+    "circuit-wrong": {
+      "state": "needs_review",
+      "id": "b4b6575b0add49dd91bffbb1c1df6d10",
+      "phase": "frame:demonstrate",
+      "diagnostic": "phone-size path is broken, expected connected"
+    },
+    "trail-correct": {
+      "state": "succeeded",
+      "id": "ca429faec85448818a0712ebddd6477e",
+      "phase": "complete",
+      "sha256": "09530277a1c4e62703b1ad973628551966abb23309fc69b07168419ad23a8e41"
+    },
+    "trail-wrong": {
+      "state": "needs_review",
+      "id": "3b1ce01800f640af8aad9604a030f2ba",
+      "phase": "frame:answer",
+      "diagnostic": "phone-size path is broken, expected connected"
+    }
+  },
+  "first_writer_sweep": {
+    "planned": 20,
+    "counts": {
+      "writer_refusal": 19,
+      "operational_failure": 1
+    },
+    "cases": [
+      {
+        "case": "B01",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B02",
+        "outcome": "operational_failure"
+      },
+      {
+        "case": "B03",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B04",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B05",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B06",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B07",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B08",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B09",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B10",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B11",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B12",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B13",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B14",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B15",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B16",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B17",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B18",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B19",
+        "outcome": "writer_refusal"
+      },
+      {
+        "case": "B20",
+        "outcome": "writer_refusal"
+      }
+    ],
+    "freeze": {
+      "writer": "a0c847905514197e6ccd07f1b07bbd1ca8af1945",
+      "frames": "23ea0927e99b31509e2ebfdf5e45ced6c9cea51f",
+      "video": "cc8035375589ef96e10050e29c1467a982c5ee68",
+      "dataset_sha256": "134cc96e0d287ee49ad93aa69618bb80769b6d8fbd89475668ab8af2cee53d93",
+      "model": "qwen",
+      "case_ids": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "B14",
+        "B15",
+        "B16",
+        "B17",
+        "B18",
+        "B19",
+        "B20"
+      ],
+      "mode": "run",
+      "video_url": "http://127.0.0.1:8893"
+    }
+  }
+}
