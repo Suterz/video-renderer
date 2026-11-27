@@ -5,7 +5,7 @@ from decimal import Decimal, ROUND_HALF_UP
 
 def normalize_written_terms(text):
     text = text.replace("’", "'").lower()
-    text = re.sub(r"(?<![\w,])\d{1,3}(?:,\d{3})+(?![\d,])", lambda m: m[0].replace(",", ""), text)
+    text = re.sub(r"(?<![\w,])\d{1,3}(?:,\d{3})+(?!\d|,\d)", lambda m: m[0].replace(",", ""), text)
     return re.sub(r"\bgpt[- ](\d)(?:[.-](\d))?\b", lambda m: "gpt" + m[1] + (m[2] or ""), text)
 
 
@@ -16,6 +16,42 @@ def tokens(text):
 def speech_terms(words):
     """Normalize equivalent ASR spellings without merging different values."""
     return [term for term,_ in normalized_terms(words)]
+
+
+def whole_amount(words, i, aliases, tens):
+    """Recognize the unambiguous hundreds/thousands forms used for prices."""
+    def small(at):
+        if at >= len(words):
+            return None, at
+        word = words[at]
+        if word in tens:
+            tail = aliases.get(words[at+1]) if at+1 < len(words) else None
+            if tail and 0 < int(tail) < 10:
+                return tens[word]+int(tail), at+2
+            return tens[word], at+1
+        if word in aliases and aliases[word].isdigit():
+            return int(aliases[word]), at+1
+        return None, at
+
+    value, j = small(i)
+    if value is None or j >= len(words) or words[j] not in {"hundred", "thousand"}:
+        return None, i
+    if words[j] == "hundred":
+        if not 1 <= value <= 9:
+            return None, i
+        value *= 100
+        j += 1
+        after_and = j + (words[j:j+1] == ["and"])
+        rest, end = small(after_and)
+        if rest is not None:
+            value += rest
+            j = end
+    if words[j:j+1] == ["thousand"]:
+        value *= 1000
+        j += 1
+    if words[j:j+1] in (["hundred"], ["thousand"], ["million"]):
+        return None, i
+    return value, j
 
 
 def normalized_terms(words):
@@ -29,6 +65,15 @@ def normalized_terms(words):
     i=0
     while i<len(words):
         t=words[i]
+        amount, end = whole_amount(words, i, aliases, tens)
+        if amount is not None:
+            yield str(amount), i
+            i = end + (words[end:end+1] in (["dollar"], ["dollars"]))
+            continue
+        if t.isdecimal() and words[i+1:i+2] in (["dollar"], ["dollars"]):
+            yield t, i
+            i += 2
+            continue
         if t == "gpt" and i + 1 < len(words) and words[i + 1] in ("four", "three"):
             version = aliases[words[i + 1]]
             size = 2

@@ -1,6 +1,6 @@
 import pytest
 
-from video_renderer.timeline import TimingReview, bind, corroborate_cue, cue_sample, tokens
+from video_renderer.timeline import TimingReview, bind, corroborate_cue, cue_sample, speech_terms, tokens
 
 
 def spans(*terms):
@@ -49,6 +49,15 @@ def test_youd_binds_without_discarding_the_contraction():
     assert bind(line, spans("Youd", "need", "twenty", "dollars"))["s"][0][0] == "you'd"
     with pytest.raises(TimingReview):
         bind(line, spans("You", "need", "twenty", "dollars"))
+
+
+def test_price_and_payroll_asr_formats_preserve_the_amount():
+    terms = lambda text: speech_terms(tokens(text))
+    assert terms("one hundred dollars") == terms("$100")
+    assert terms("one hundred eighty thousand dollars") == terms("$180,000")
+    assert terms("forty thousand, sixty thousand, and eighty thousand dollars") == terms("$40,000, $60,000, and $80,000")
+    assert terms("one hundred dollars") != terms("$1,000")
+    assert terms("one hundred dollars") != terms("one hundred years")
 
 
 def test_spoken_model_name_matches_only_the_same_rendered_version():
