@@ -6,7 +6,7 @@ from decimal import Decimal, ROUND_HALF_UP
 def normalize_written_terms(text):
     text = text.replace("’", "'").lower()
     text = re.sub(r"(?<![\w,])\d{1,3}(?:,\d{3})+(?![\d,])", lambda m: m[0].replace(",", ""), text)
-    return re.sub(r"\bgpt[- ](\d)(?:\.(\d))?\b", lambda m: "gpt" + m[1] + (m[2] or ""), text)
+    return re.sub(r"\bgpt[- ](\d)(?:[.-](\d))?\b", lambda m: "gpt" + m[1] + (m[2] or ""), text)
 
 
 def tokens(text):
@@ -58,12 +58,20 @@ def possessive_form(word):
     return word[:-2]+"s" if word.endswith("'s") else word
 
 
+APOSTROPHE_DROPS = {"you'll", "they'll", "it'll", "didn't", "doesn't", "isn't", "aren't", "wasn't",
+                    "hasn't", "won't", "they've", "you've", "we've", "you're", "they're"}
+
+
+def fused_form(word):
+    return word.replace("'", "") if word in APOSTROPHE_DROPS else possessive_form(word)
+
+
 def aligned_word_matches(spoken, aligned):
     if possessive_form(spoken) == possessive_form(aligned):
         return True
     # The forced aligner can drop an internal apostrophe on these words.
     # Do not conflate real different words such as we'll/well or I'll/ill.
-    return spoken in {"you'll", "they'll", "it'll", "didn't", "doesn't", "isn't", "aren't", "wasn't", "hasn't"} and aligned == spoken.replace("'", "")
+    return spoken in APOSTROPHE_DROPS and aligned == fused_form(spoken)
 
 
 def clock_fusion(a,b):
@@ -97,7 +105,7 @@ def bind(script, aligned):
                 spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
                 pos+=len(parts)
             elif len(parts)>1 and word_tokens[pos:pos+1] in (
-                    ["".join(parts)], ["".join(possessive_form(p) for p in parts)]):
+                    ["".join(parts)], ["".join(fused_form(p) for p in parts)]):
                 outer=aligned[indexes[pos]]
                 spans.extend({**outer,"internal_start":i>0,"internal_end":i<len(parts)-1}
                              for i in range(len(parts)))

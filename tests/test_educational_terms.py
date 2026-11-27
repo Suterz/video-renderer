@@ -23,3 +23,5 @@ def test_fused_dash_does_not_expose_unknown_internal_timing():
     assert cue_sample({"utterance_id": "s", "phrase": "The loan"}, bound) == 0
     with pytest.raises(TimingReview):
         cue_sample({"utterance_id": "s", "phrase": "it's still"}, bound)
+    assert bind([{"id":"s","text":"Reserves—they've dropped."}],
+                spans("reservestheyve", "dropped"))["s"][0] == ["reserves", "they've", "dropped"]
