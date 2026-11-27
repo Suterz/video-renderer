@@ -363,6 +363,8 @@ def frames(p, req, required_by_beat=None):
                            "filename": name, "status_url": panel["status_url"],
                            "verified_facts":panel["summary"].get("verified_facts",{}),
                            "accepted_attempt":panel["summary"].get("accepted_attempt")})
+            if "daily_visual" in panel["summary"]:
+                result[-1]["daily_visual"] = panel["summary"]["daily_visual"]
             save(p / "panels.partial.json", {"fingerprint": fingerprint, "session_id": sid, "panels": result})
     return {"fingerprint": fingerprint, "session_id": sid, "panels": result, "reused": False}
 
