@@ -455,8 +455,10 @@ def run(p):
         raise Review("uploaded audio runs past the authored video end")
     f = req.fps
     end = end_frame(total_samples, f)
-    if (end * 1000 > f * req.max_ms or (not is_episode and end >= 45 * f)
-            or (is_episode and end * 1000 < f * req.min_ms)):
+    if is_episode and end * 1000 < f * req.min_ms:
+        state(p, phase="duration")
+        raise Review(f"episode too short: speech {n/48000:.3f}s, encoded {end/f:.3f}s, minimum {req.min_ms/1000:.3f}s")
+    if end * 1000 > f * req.max_ms or (not is_episode and end >= 45 * f):
         raise Review(f"speech plus closing hold exceeds budget: speech {n/48000:.3f}s, encoded {end/f:.3f}s, budget {req.max_ms/1000:.3f}s")
     script = [u.model_dump() for u in req.script]
     text = " ".join(u["text"] for u in script)

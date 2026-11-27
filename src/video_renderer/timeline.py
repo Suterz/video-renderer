@@ -9,6 +9,16 @@ def normalize_written_terms(text):
     return re.sub(r"\bgpt[- ](\d)(?:[.-](\d))?\b", lambda m: "gpt" + m[1] + (m[2] or ""), text)
 
 
+def evidence_tokens(text):
+    """Expand energy units for corroboration, retaining the original ASR span."""
+    text = normalize_written_terms(text)
+    # Keep fractional values distinct from nearby integer spellings.
+    text = re.sub(r"\b(\d+)\.(\d+)\s*(?=kwh\b)", r"\1point\2 ", text)
+    text = re.sub(r"\b(\d+)kwh\b", r"\1 kwh", text, flags=re.I)
+    text = re.sub(r"\bkilowatt[ -]?hours?\b", "kwh", text, flags=re.I)
+    return tokens(text)
+
+
 def tokens(text):
     return re.findall(r"[a-z0-9]+(?:'[a-z]+)?", normalize_written_terms(text))
 
@@ -65,6 +75,10 @@ def normalized_terms(words):
     i=0
     while i<len(words):
         t=words[i]
+        if t == "kilowatt" and words[i+1:i+2] in (["hour"], ["hours"]):
+            yield "kwh", i
+            i += 2
+            continue
         amount, end = whole_amount(words, i, aliases, tens)
         if amount is not None:
             yield str(amount), i
@@ -234,16 +248,16 @@ def corroborate_cue(cue, bound, asr, tolerance=.65):
     """Independent lexical check near each forced onset, not a confidence score."""
     raw = {**cue, "edge": "start", "offset_ms": 0}
     onset = cue_sample(raw, bound) / 48000
-    phrase = speech_terms([possessive_form(t) for t in tokens(cue["phrase"])])
+    phrase = speech_terms([possessive_form(t) for t in evidence_tokens(cue["phrase"])])
     asr = list(coalesce_model_spans(asr))
-    raw_words=[(possessive_form(t),w) for w in asr for t in tokens(w["word"])]
+    raw_words=[(possessive_form(t),w) for w in asr for t in evidence_tokens(w["word"])]
     spoken=[(t,raw_words[i][1]) for t,i in normalized_terms([v for v,_ in raw_words])]
     # Independent ASR can write “8×10” as one word span.
     # This alternative is limited to x between exact numeric values.
     written=[]
     for w in asr:
         raw_text=re.sub(r"(?<=\d)\s*[×x]\s*(?=\d)"," by ",w["word"],flags=re.I)
-        written.extend((possessive_form(t),w) for t in tokens(raw_text))
+        written.extend((possessive_form(t),w) for t in evidence_tokens(raw_text))
     graphic=[(t,written[i][1]) for t,i in normalized_terms([v for v,_ in written])]
     # ASR sometimes assigns the initial word the outgoing silence as well.
     # Require the *same phrase*, but allow the forced onset anywhere inside
