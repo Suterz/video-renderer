@@ -123,6 +123,27 @@ class Video(Strict):
         return self
 
 
+class EpisodeVideo(Video):
+    """Opt-in long form. Keep the short and legacy request models intact."""
+    chapter_starts: list[str] = Field(min_length=2, max_length=16)
+    script: list[Utterance] = Field(min_length=2, max_length=180)
+    beats: list[Beat] = Field(min_length=2, max_length=180)
+    min_ms: int = Field(default=120000, ge=120000, le=300000)
+    max_ms: int = Field(default=300000, ge=120000, le=300000)
+
+    @model_validator(mode="after")
+    def chapter_contract(self):
+        ids = [u.id for u in self.script]
+        if (self.chapter_starts[0] != ids[0] or set(self.chapter_starts) - set(ids)
+                or self.chapter_starts != [key for key in ids if key in self.chapter_starts]):
+            raise ValueError("chapter_starts must be distinct script IDs in timeline order, beginning at zero")
+        if self.min_ms > self.max_ms or any(isinstance(b.cue, Milliseconds) for b in self.beats[1:]):
+            raise ValueError("use an ordered episode duration range and phrase cues after the opening")
+        if self.reuse_recording_from:
+            raise ValueError("reuse episode recordings by verified chapter checkpoints")
+        return self
+
+
 def read(path):
     return json.loads(path.read_text())
 
@@ -208,6 +229,72 @@ def canonical(p, req):
         return wav, f.getnframes()
 
 
+def episode_speech(p, req):
+    """Transcribe bounded sound groups independently, then rebase onto one PCM clock."""
+    groups = []
+    group = []
+    for utterance in req.script:
+        if group and utterance.id in req.chapter_starts:
+            groups.append(group)
+            group = []
+        group.append(utterance)
+        if utterance.pause_after_ms:
+            groups.append(group)
+            group = []
+    if group:
+        groups.append(group)
+    aligned, asr, parts = [], [], []
+    offset = 0
+    for i, group in enumerate(groups):
+        state(p, phase=f"speech:{group[0].id}")
+        raw = p / f"group-{i}.raw.wav"
+        pcm = p / f"group-{i}.pcm.wav"
+        record = p / f"group-{i}.json"
+        script = [u.model_dump() for u in group]
+        identity = hash_bytes(json.dumps([req.voice_profile, script], sort_keys=True).encode())
+        text = " ".join(u.text for u in group)
+        if record.is_file():
+            evidence = read(record)
+            if evidence["request_sha256"] != identity or hash_bytes(pcm.read_bytes()) != evidence["wav_sha256"]:
+                raise RuntimeError(f"invalid audio checkpoint for {group[0].id}")
+        else:
+            speech(req.voice_profile, raw, text)
+            subprocess.run([FFMPEG, "-v", "error", "-y", "-i", str(raw), "-ac", "1", "-ar", "48000",
+                            "-c:a", "pcm_s16le", str(pcm)], check=True, timeout=100)
+            measured = speech("align", pcm, text)
+            observed = speech("asr", pcm, text)
+            agreement = SequenceMatcher(None, speech_terms(tokens(text)),
+                                        speech_terms(tokens(" ".join(w["word"] for w in observed))),
+                                        autojunk=False).ratio()
+            if agreement < .70:
+                raise Review(f"{group[0].id}: independent chapter ASR divergence ({agreement:.2f})")
+            bind(script, measured)
+            evidence = {"request_sha256": identity, "wav_sha256": hash_bytes(pcm.read_bytes()),
+                        "alignment": measured, "asr": observed}
+            save(record, evidence)
+        with wave.open(str(pcm), "rb") as audio:
+            size = audio.getnframes()
+        if any(not 0 <= word["start"] <= word["end"] <= size / 48000 + .05 for word in evidence["alignment"]):
+            raise Review(f"{group[0].id}: aligner produced nonphysical local spans")
+        for key, timeline in (("alignment", aligned), ("asr", asr)):
+            timeline.extend({**word, "start": word["start"] + offset / 48000,
+                             "end": word["end"] + offset / 48000} for word in evidence[key])
+        pause = group[-1].pause_after_ms * 48
+        parts.append({"first_utterance": group[0].id, "start_sample": offset, "samples": size,
+                      "pause_samples": pause, "wav_sha256": evidence["wav_sha256"]})
+        offset += size + pause
+    tmp = p / "narration.partial.wav"
+    with wave.open(str(tmp), "wb") as output:
+        output.setparams((1, 2, 48000, 0, "NONE", "not compressed"))
+        for i, part in enumerate(parts):
+            with wave.open(str(p / f"group-{i}.pcm.wav"), "rb") as audio:
+                output.writeframes(audio.readframes(part["samples"]))
+            output.writeframes(bytes(2 * part["pause_samples"]))
+    wav = p / "narration.wav"
+    tmp.replace(wav)
+    return wav, offset, aligned, asr, parts
+
+
 def frames(p, req, required_by_beat=None):
     spec = {"visual": req.visual, "panels": [(b.id, b.parent, b.panel) for b in req.beats]}
     fingerprint = hash_bytes(json.dumps(spec, sort_keys=True).encode())
@@ -224,11 +311,23 @@ def frames(p, req, required_by_beat=None):
         return {**manifest, "reused": True}
     result, by_key = [], {}
     with httpx.Client(base_url=FRAMES, timeout=30) as client:
-        r = client.post("/v2/sessions", json=req.visual)
-        if r.is_error:
-            raise Review(f"frame session rejected: {r.text}")
-        sid = r.json()["session_id"]
-        for b in req.beats:
+        checkpoint = p / "panels.partial.json"
+        if isinstance(req, EpisodeVideo) and checkpoint.exists():
+            cached = read(checkpoint)
+            if cached["fingerprint"] != fingerprint:
+                raise RuntimeError("frame checkpoint fingerprint changed")
+            sid, result = cached["session_id"], cached["panels"]
+            for beat, entry in zip(req.beats, result):
+                if beat.id != entry["id"] or hash_bytes((p / entry["filename"]).read_bytes()) != entry["sha256"]:
+                    raise RuntimeError("accepted frame checkpoint changed")
+                by_key[beat.id] = entry["panel_id"]
+        else:
+            r = client.post("/v2/sessions", json=req.visual)
+            if r.is_error:
+                raise Review(f"frame session rejected: {r.text}")
+            sid = r.json()["session_id"]
+            save(checkpoint, {"fingerprint": fingerprint, "session_id": sid, "panels": []})
+        for b in req.beats[len(result):]:
             state(p, phase=f"frame:{b.id}")
             payload = {**b.panel, "key": b.id, "parent_panel_id": by_key.get(b.parent)}
             if required_by_beat and b.id in required_by_beat:
@@ -238,6 +337,10 @@ def frames(p, req, required_by_beat=None):
                 raise Review(f"frame beat {b.id}: {r.text}")
             panel = r.json()
             deadline = time.monotonic() + 900
+            if panel["state"] == "accepted" and "artifacts" not in panel:
+                r = client.get(panel["status_url"])
+                r.raise_for_status()
+                panel = r.json()
             while panel["state"] in ("queued", "running") and time.monotonic() < deadline:
                 time.sleep(1)
                 r = client.get(panel["status_url"])
@@ -301,17 +404,24 @@ def guard_captions(script, bound, beat_frames, fps):
 
 
 def run(p):
-    req = Video.model_validate(read(p / "request.json"))
+    payload = read(p / "request.json")
+    is_episode = "chapter_starts" in payload
+    req = (EpisodeVideo if is_episode else Video).model_validate(payload)
     legacy = read(p / "legacy.json") if (p / "legacy.json").is_file() else None
     started = time.monotonic()
     state(p, phase="speech")
-    wav, n = canonical(p, req)
+    parts = None
+    if is_episode:
+        wav, n, aligned, asr, parts = episode_speech(p, req)
+    else:
+        wav, n = canonical(p, req)
     total_samples = legacy["end_ms"] * 48 if legacy else n + req.closing_hold_ms * 48
     if n > total_samples:
         raise Review("uploaded audio runs past the authored video end")
     f = req.fps
     end = end_frame(total_samples, f)
-    if end * 1000 > f * req.max_ms or end >= 45 * f:
+    if (end * 1000 > f * req.max_ms or (not is_episode and end >= 45 * f)
+            or (is_episode and end * 1000 < f * req.min_ms)):
         raise Review(f"speech plus closing hold exceeds budget: speech {n/48000:.3f}s, encoded {end/f:.3f}s, budget {req.max_ms/1000:.3f}s")
     script = [u.model_dump() for u in req.script]
     text = " ".join(u["text"] for u in script)
@@ -321,7 +431,9 @@ def run(p):
         bound = {}
     else:
         state(p, phase="alignment")
-        if req.reuse_recording_from:
+        if is_episode:
+            pass  # Group evidence has already been rebased onto this recording.
+        elif req.reuse_recording_from:
             evidence = read(p / "audio-evidence.json")
             aligned, asr = evidence["word_alignment"], evidence["independent_asr"]
         else:
@@ -398,7 +510,7 @@ def run(p):
     size = tuple(req.visual.get("canvas", (1080, 1920)))
     state(p, phase="encoding")
     candidate = p / "video.partial.mp4"
-    verification = encode(paths, segments, size, f, end, wav, candidate)
+    verification = encode(paths, segments, size, f, end, wav, candidate, episode=is_episode)
     if verification["expected_video_frames"] != end:
         raise RuntimeError("encoder disagrees with exact timeline")
     if teaching:
@@ -430,7 +542,8 @@ def run(p):
           "instructional_evidence":teaching,
          "beats": [{"id": b.id, "cue": b.cue.model_dump(), "sample": a, "frame": c, "validation": e}
                    for b, a, c, e in zip(req.beats, starts_samples, starts, cue_evidence)],
-         "verification": verification, "seconds": time.monotonic() - started})
+         "verification": verification, "seconds": time.monotonic() - started,
+         **({"speech_groups": parts, "chapter_starts": req.chapter_starts} if is_episode else {})})
     candidate.replace(p / "video.mp4")
 
 
@@ -456,7 +569,11 @@ async def lifespan(_):
         if read(s)["state"] == "queued":
             tasks.put(s.parent)
         elif read(s)["state"] == "running":
-            state(s.parent, state="interrupted", error="server restart")
+            if "chapter_starts" in read(s.parent / "request.json"):
+                state(s.parent, state="queued", phase="recovering")
+                tasks.put(s.parent)
+            else:
+                state(s.parent, state="interrupted", error="server restart")
     threading.Thread(target=work, daemon=True).start()
     yield
 
@@ -519,6 +636,11 @@ def ready():
 @app.post("/v2/renders", status_code=202)
 def synth(req: Video, idempotency_key: str | None = Header(default=None)):
     return submit(req,key=idempotency_key)
+
+
+@app.post("/v2/episodes", status_code=202)
+def episode(req: EpisodeVideo, idempotency_key: str | None = Header(default=None)):
+    return submit(req, key=idempotency_key)
 
 
 @app.get("/v2/submissions/{key}")
