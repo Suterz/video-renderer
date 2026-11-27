@@ -96,6 +96,19 @@ def corroborated_spelling(wanted, measured, span, asr):
     return any(wanted in tokens(word["word"]) and abs(word["start"] - span["start"]) <= .40 for word in asr)
 
 
+def corroborated_fusion(parts, observed, span, asr):
+    if observed in ("".join(parts), "".join(fused_form(p) for p in parts)):
+        return True
+    # Ambiguous contractions may fuse to a different real word (we'll/well).
+    # Accept only the entire intended phrase independently in this interval.
+    ambiguous = {"we're", "we'll", "can't", "i'll"}
+    if not asr or not ambiguous.intersection(parts) or observed != "".join(p.replace("'", "") for p in parts):
+        return False
+    terms = [t for word in asr if word["end"] >= span["start"] - .65 and word["start"] <= span["end"] + .65
+             for t in tokens(word["word"])]
+    return any(terms[i:i + len(parts)] == parts for i in range(len(terms)))
+
+
 def bind(script, aligned, asr=None):
     """Map ordered engine words to approved utterances, retaining exact ranges."""
     word_tokens, indexes = [], []
@@ -123,8 +136,8 @@ def bind(script, aligned, asr=None):
                     for j, (a, b) in enumerate(zip(parts, observed))):
                 spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
                 pos+=len(parts)
-            elif len(parts)>1 and word_tokens[pos:pos+1] in (
-                    ["".join(parts)], ["".join(fused_form(p) for p in parts)]):
+            elif len(parts)>1 and observed and corroborated_fusion(
+                    parts, observed[0], aligned[indexes[pos]], asr):
                 outer=aligned[indexes[pos]]
                 spans.extend({**outer,"internal_start":i>0,"internal_end":i<len(parts)-1}
                              for i in range(len(parts)))

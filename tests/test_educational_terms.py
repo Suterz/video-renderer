@@ -33,6 +33,15 @@ def test_ambiguous_contraction_requires_local_independent_corroboration():
     assert bind(script, aligned, spans("We’re", "looking"))["a"][0] == ["we're", "looking"]
     with pytest.raises(TimingReview):
         bind(script, aligned, spans("Were", "looking"))
+    script = [{"id": "a", "text": "Here—we’ll compare."}]
+    fused = [{"word": "herewell", "start": 0, "end": .8},
+             {"word": "compare", "start": .8, "end": 1.2}]
+    speech = [{"word": "Here", "start": 0, "end": .35},
+              {"word": "We'll", "start": .4, "end": .8},
+              {"word": "compare", "start": .8, "end": 1.2}]
+    assert bind(script, fused, speech)["a"][1][1]["internal_start"]
+    with pytest.raises(TimingReview):
+        bind(script, fused, [{**word, "word": "Well"} if i == 1 else word for i, word in enumerate(speech)])
 
 
 def test_spoken_model_name_matches_only_the_same_rendered_version():
