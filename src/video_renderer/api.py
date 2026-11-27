@@ -269,10 +269,13 @@ def episode_speech(p, req):
         record = p / f"group-{i}.json"
         script = [u.model_dump() for u in group]
         voice_identity = req.voice_profile
+        legacy_identity = None
         if req.voice_profile and req.voice_profile.startswith("drama3-"):
-            from .drama3 import profile
+            from .drama3 import checkpoint_profile, profile
 
-            voice_identity = profile(req.voice_profile[-1])
+            pin = profile(req.voice_profile[-1])
+            legacy_identity = hash_bytes(json.dumps([pin, script], sort_keys=True).encode())
+            voice_identity = checkpoint_profile(pin)
         identity = hash_bytes(json.dumps([voice_identity, script], sort_keys=True).encode())
         text = " ".join(u.text for u in group)
         cache = ROOT / ".opening-pcm" / identity if isinstance(req, OpeningVideo) else None
@@ -284,7 +287,9 @@ def episode_speech(p, req):
             save(record, cached)
         if record.is_file():
             evidence = read(record)
-            if evidence["request_sha256"] != identity or hash_bytes(pcm.read_bytes()) != evidence["wav_sha256"]:
+            valid_identities = {identity} if legacy_identity is None else {identity, legacy_identity}
+            if (evidence["request_sha256"] not in valid_identities
+                    or hash_bytes(pcm.read_bytes()) != evidence["wav_sha256"]):
                 raise RuntimeError(f"invalid audio checkpoint for {group[0].id}")
         else:
             speech(req.voice_profile, raw, text)

@@ -25,6 +25,11 @@ def profile(label):
                          "split_long_text": True, "shorten_long_pauses": False}}
 
 
+def checkpoint_profile(pin):
+    """Only synthesis inputs bind a speech checkpoint; paths are locations."""
+    return {key: value for key, value in pin.items() if key != "path"}
+
+
 def request(path, payload=None):
     data = None if payload is None else json.dumps(payload).encode()
     headers = {"Content-Type": "application/json"}
