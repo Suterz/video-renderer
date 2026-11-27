@@ -42,3 +42,17 @@ def test_rebase_repeated_phrase_and_resume_existing_pcm(monkeypatch, tmp_path):
     monkeypatch.setattr(api, "speech", unexpected_speech)
     _, count2, measured2, observed2, parts2 = api.episode_speech(tmp_path, req)
     assert (count2, measured2, observed2, parts2) == (count, measured, observed, parts)
+
+
+def test_oversized_verbatim_caption_pages_at_measured_words():
+    utterance = "Look at these two clocks. Both worked perfectly, yet one shows less time. How can"
+    payload = {**request(), "chapter_starts": ["a-line", "b-line"]}
+    payload["script"][0] = {"id": "a-line", "text": utterance, "caption": utterance}
+    req = api.EpisodeVideo.model_validate(payload)
+    from video_renderer.timeline import tokens
+    text = tokens(utterance)
+    boundaries = api.episode_captions(req, {"a-line": (text, [{"start": i / 4} for i in range(len(text))]),
+                                             "b-line": ([], [])})
+    assert len(boundaries) == 3
+    assert " ".join(page for _, page in boundaries[1:]) == utterance
+    assert boundaries[2][0] == len(tokens(boundaries[1][1])) * 12000

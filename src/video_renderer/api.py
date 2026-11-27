@@ -367,6 +367,45 @@ def frames(p, req, required_by_beat=None):
     return {"fingerprint": fingerprint, "session_id": sid, "panels": result, "reused": False}
 
 
+def caption_lines(text, font, width):
+    lines = [""]
+    for word in text.split():
+        trial = (lines[-1] + " " + word).strip()
+        if font.getlength(trial) > width * .85 and lines[-1]:
+            lines.append(word)
+        else:
+            lines[-1] = trial
+    return lines
+
+
+def episode_captions(req, bound):
+    """Repage verbatim captions at measured word starts using the export font."""
+    width = req.visual.get("canvas", (1080, 1920))[0]
+    font = ImageFont.truetype(FONT, max(12, round(req.subtitle_font_size * width / 1080)))
+    boundaries = [(0, "")]
+    for u in req.script:
+        words = bound[u.id][1]
+        if not words or u.caption is None:
+            continue
+        lines = caption_lines(u.caption, font, width)
+        if any(font.getlength(line) > width * .85 for line in lines):
+            raise Review(f"{u.id}: one caption word exceeds the safe width")
+        if len(lines) <= 2:
+            boundaries.append((sample(words[0]["start"]), u.caption))
+            continue
+        if " ".join(u.caption.split()) != " ".join(u.text.split()):
+            raise Review(f"{u.id}: oversized nonverbatim caption cannot be timed from speech")
+        prefix = ""
+        for i in range(0, len(lines), 2):
+            start = len(tokens(prefix))
+            if start >= len(words) or words[start].get("internal_start"):
+                raise Review(f"{u.id}: caption page starts inside an unmeasured word boundary")
+            page = " ".join(lines[i:i+2])
+            boundaries.append((sample(words[start]["start"]), page))
+            prefix = (prefix + " " + page).strip()
+    return boundaries
+
+
 def caption(source, output, text, size):
     with Image.open(source) as f:
         image = f.convert("RGB")
@@ -374,13 +413,7 @@ def caption(source, output, text, size):
         draw = ImageDraw.Draw(image)
         w, h = image.size
         font = ImageFont.truetype(FONT, max(12, round(size * w / 1080)))
-        lines = [""]
-        for word in text.split():
-            trial = (lines[-1] + " " + word).strip()
-            if draw.textlength(trial, font=font) > w * .85 and lines[-1]:
-                lines.append(word)
-            else:
-                lines[-1] = trial
+        lines = caption_lines(text, font, w)
         if len(lines) > 2 or max(draw.textlength(x, font=font) for x in lines) > w * .85:
             raise Review(f"caption exceeds safe region: {text!r}")
         line_height = round(size * w / 1080 * 1.27)
@@ -449,7 +482,7 @@ def run(p):
         agreement = SequenceMatcher(None, speech_terms(tokens(text)), speech_terms(observed), autojunk=False).ratio()
         if agreement < .70:
             raise Review(f"independent ASR divergence ({agreement:.2f}): {' '.join(observed)}")
-        boundaries = [(0, "")]
+        boundaries = episode_captions(req, bound) if is_episode else [(0, "")]
         for u in req.script:
             _, words = bound[u.id]
             if words and u.critical_spoken:
@@ -459,7 +492,7 @@ def run(p):
                     forms = [tokens(form) for form in alternatives]
                     if not any(form and any(nearby[i:i+len(form)] == form for i in range(len(nearby))) for form in forms):
                         raise Review(f"{u.id}: critical speech not corroborated: {alternatives!r}; heard {' '.join(nearby)!r}")
-            if words and u.caption is not None:
+            if not is_episode and words and u.caption is not None:
                 boundaries.append((sample(words[0]["start"]), u.caption))
     cues = [b.cue.model_dump(exclude_none=True) for b in req.beats]
     starts_samples = [cue_sample(c, bound) for c in cues]
@@ -498,6 +531,7 @@ def run(p):
             exposure(mark,question,answer,facts,starts,f,rule.minimum_ms)
     c = {start_frame(s, f): t for s, t in boundaries if 0 <= start_frame(s, f) < end}
     cuts = sorted({0, end, *starts, *c})
+    state(p, phase="captioning")
     paths, segments, caption_trace = [], [], []
     for j, (start, stop) in enumerate(zip(cuts, cuts[1:])):
         idx = max(i for i, s in enumerate(starts) if s <= start)
