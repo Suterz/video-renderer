@@ -51,6 +51,13 @@ def test_youd_binds_without_discarding_the_contraction():
         bind(line, spans("You", "need", "twenty", "dollars"))
 
 
+def test_havent_binds_without_losing_negation():
+    line = [{"id": "s", "text": "They haven’t changed."}]
+    assert bind(line, spans("They", "havent", "changed"))["s"][0] == ["they", "haven't", "changed"]
+    with pytest.raises(TimingReview):
+        bind(line, spans("They", "have", "changed"))
+
+
 def test_price_and_payroll_asr_formats_preserve_the_amount():
     terms = lambda text: speech_terms(tokens(text))
     assert terms("one hundred dollars") == terms("$100")
