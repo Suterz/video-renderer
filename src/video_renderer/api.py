@@ -92,7 +92,7 @@ class Video(Strict):
     visual: dict
     script: list[Utterance] = Field(min_length=1, max_length=40)
     beats: list[Beat] = Field(min_length=1, max_length=40)
-    voice_profile: Literal["ryan", "heart", "chatter", "laura", "jasper"] | None = None
+    voice_profile: Literal["ryan", "heart", "chatter", "laura", "jasper", "drama3-A", "drama3-E", "drama3-F"] | None = None
     fps: Literal[24, 25, 30] = 30
     max_ms: int = Field(default=29999, ge=1000, lt=45000)
     closing_hold_ms: int = Field(default=900, ge=0, le=5000)
@@ -144,6 +144,18 @@ class EpisodeVideo(Video):
         return self
 
 
+class OpeningVideo(EpisodeVideo):
+    """A complete 10–20 second experiment on the episode media path."""
+    opening_preview: Literal[True]
+    chapter_starts: list[str] = Field(min_length=1, max_length=1)
+    min_ms: Literal[10000] = 10000
+    max_ms: Literal[20000] = 20000
+
+
+def episode_model(payload):
+    return OpeningVideo if payload.get("opening_preview") is True else EpisodeVideo
+
+
 def read(path):
     return json.loads(path.read_text())
 
@@ -173,6 +185,11 @@ def state(p, **changes):
 
 
 def speech(mode, wav, text):
+    if mode and mode.startswith("drama3-"):
+        from .drama3 import synthesize
+
+        synthesize(mode[-1], wav, text, FFMPEG)
+        return {}
     env = {**os.environ, "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
            "PATH": f"{SPEECH}/espeak/usr/bin:{os.environ['PATH']}",
            "PHONEMIZER_ESPEAK_LIBRARY": os.environ.get(
@@ -251,7 +268,12 @@ def episode_speech(p, req):
         pcm = p / f"group-{i}.pcm.wav"
         record = p / f"group-{i}.json"
         script = [u.model_dump() for u in group]
-        identity = hash_bytes(json.dumps([req.voice_profile, script], sort_keys=True).encode())
+        voice_identity = req.voice_profile
+        if req.voice_profile and req.voice_profile.startswith("drama3-"):
+            from .drama3 import profile
+
+            voice_identity = profile(req.voice_profile[-1])
+        identity = hash_bytes(json.dumps([voice_identity, script], sort_keys=True).encode())
         text = " ".join(u.text for u in group)
         if record.is_file():
             evidence = read(record)
@@ -441,7 +463,7 @@ def guard_captions(script, bound, beat_frames, fps):
 def run(p):
     payload = read(p / "request.json")
     is_episode = "chapter_starts" in payload
-    req = (EpisodeVideo if is_episode else Video).model_validate(payload)
+    req = (episode_model(payload) if is_episode else Video).model_validate(payload)
     legacy = read(p / "legacy.json") if (p / "legacy.json").is_file() else None
     started = time.monotonic()
     state(p, phase="speech")
@@ -678,6 +700,11 @@ def synth(req: Video, idempotency_key: str | None = Header(default=None)):
 
 @app.post("/v2/episodes", status_code=202)
 def episode(req: EpisodeVideo, idempotency_key: str | None = Header(default=None)):
+    return submit(req, key=idempotency_key)
+
+
+@app.post("/v2/openings", status_code=202)
+def opening(req: OpeningVideo, idempotency_key: str | None = Header(default=None)):
     return submit(req, key=idempotency_key)
 
 
