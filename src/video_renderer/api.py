@@ -275,6 +275,13 @@ def episode_speech(p, req):
             voice_identity = profile(req.voice_profile[-1])
         identity = hash_bytes(json.dumps([voice_identity, script], sort_keys=True).encode())
         text = " ".join(u.text for u in group)
+        cache = ROOT / ".opening-pcm" / identity if isinstance(req, OpeningVideo) else None
+        if cache and not record.exists() and (cache / "evidence.json").is_file():
+            cached = read(cache / "evidence.json")
+            if cached["request_sha256"] != identity or hash_bytes((cache / "speech.wav").read_bytes()) != cached["wav_sha256"]:
+                raise RuntimeError("opening speech cache evidence changed")
+            shutil.copyfile(cache / "speech.wav", pcm)
+            save(record, cached)
         if record.is_file():
             evidence = read(record)
             if evidence["request_sha256"] != identity or hash_bytes(pcm.read_bytes()) != evidence["wav_sha256"]:
@@ -294,6 +301,12 @@ def episode_speech(p, req):
             evidence = {"request_sha256": identity, "wav_sha256": hash_bytes(pcm.read_bytes()),
                         "alignment": measured, "asr": observed}
             save(record, evidence)
+            if cache:
+                cache.mkdir(parents=True, exist_ok=True)
+                cached_pcm = cache / "speech.partial.wav"
+                shutil.copyfile(pcm, cached_pcm)
+                cached_pcm.replace(cache / "speech.wav")
+                save(cache / "evidence.json", evidence)
         with wave.open(str(pcm), "rb") as audio:
             size = audio.getnframes()
         if any(not 0 <= word["start"] <= word["end"] <= size / 48000 + .05 for word in evidence["alignment"]):
