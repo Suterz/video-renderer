@@ -79,7 +79,15 @@ def clock_fusion(a,b):
             b in {"one","two","three","four","five","six","seven","eight","nine"})
 
 
-def bind(script, aligned):
+def corroborated_spelling(wanted, measured, span, asr):
+    if aligned_word_matches(wanted, measured):
+        return True
+    if not asr or wanted not in {"we're", "we'll", "can't", "i'll"} or measured != wanted.replace("'", ""):
+        return False
+    return any(wanted in tokens(word["word"]) and abs(word["start"] - span["start"]) <= .40 for word in asr)
+
+
+def bind(script, aligned, asr=None):
     """Map ordered engine words to approved utterances, retaining exact ranges."""
     word_tokens, indexes = [], []
     for i, entry in enumerate(aligned):
@@ -101,7 +109,9 @@ def bind(script, aligned):
             i+=1
             words.extend(parts)
             observed = word_tokens[pos:pos+len(parts)]
-            if len(observed) == len(parts) and all(aligned_word_matches(a, b) for a, b in zip(parts, observed)):
+            if len(observed) == len(parts) and all(
+                    corroborated_spelling(a, b, aligned[indexes[pos+j]], asr)
+                    for j, (a, b) in enumerate(zip(parts, observed))):
                 spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
                 pos+=len(parts)
             elif len(parts)>1 and word_tokens[pos:pos+1] in (

@@ -268,7 +268,7 @@ def episode_speech(p, req):
                                         autojunk=False).ratio()
             if agreement < .70:
                 raise Review(f"{group[0].id}: independent chapter ASR divergence ({agreement:.2f})")
-            bind(script, measured)
+            bind(script, measured, observed)
             evidence = {"request_sha256": identity, "wav_sha256": hash_bytes(pcm.read_bytes()),
                         "alignment": measured, "asr": observed}
             save(record, evidence)
@@ -442,7 +442,7 @@ def run(p):
             save(p / "audio-evidence.json", {"word_alignment": aligned, "independent_asr": asr, "wav_sha256": hash_bytes(wav.read_bytes())})
         if not aligned or any(not 0 <= a["start"] <= a["end"] <= n / 48000 + .05 for a in aligned):
             raise Review("aligner produced nonphysical word spans")
-        bound = bind(script, aligned)
+        bound = bind(script, aligned, asr if is_episode else None)
         observed = tokens(" ".join(w["word"] for w in asr))
         # ASR may write numeric phrases as digits. Preserve raw observations and
         # compare near each cue separately rather than treating them as ground truth.

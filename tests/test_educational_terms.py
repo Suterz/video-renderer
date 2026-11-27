@@ -25,3 +25,11 @@ def test_fused_dash_does_not_expose_unknown_internal_timing():
         cue_sample({"utterance_id": "s", "phrase": "it's still"}, bound)
     assert bind([{"id":"s","text":"Reserves—they've dropped."}],
                 spans("reservestheyve", "dropped"))["s"][0] == ["reserves", "they've", "dropped"]
+
+
+def test_ambiguous_contraction_requires_local_independent_corroboration():
+    script = [{"id": "a", "text": "We’re looking."}]
+    aligned = spans("Were", "looking")
+    assert bind(script, aligned, spans("We’re", "looking"))["a"][0] == ["we're", "looking"]
+    with pytest.raises(TimingReview):
+        bind(script, aligned, spans("Were", "looking"))
