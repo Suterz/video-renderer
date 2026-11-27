@@ -1,0 +1,72 @@
+{
+  "selected_model": "Fish Audio Drama 3",
+  "upstream_checkpoint": "fishaudio/drama-3@78e5ab79e49aa9a25abe8799eff2c4d73a1c3216",
+  "repack": "PedroMarinhoDev/Drama-3-ComfyUI@28eee7f3ef71d7104de710ef956ecbaf793819f6",
+  "runtime": {
+    "ComfyUI": "a277b5bf213e8a44fa34817b7770b54f86ef4cea",
+    "ComfyUI-Drama3": "cb44d7cbbe80f51611153579df58da69ee9dc01f",
+    "hardware": "RTX 4090; RAM-resident FP8 experts / BF16; 8 GiB GPU expert cache"
+  },
+  "artifact_sha256": {
+    "provenance/LICENSE": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e",
+    "drama3_fp8experts_bf16.safetensors": "e7c4b4fa46b8d8887d84a02507ea11ff61fabdc046b0849d4ec7442e6280991a",
+    "drama3_codec.safetensors": "4fecf102907a48414230da9a74d72d07c3a92368eab53fab655797837bddf5ae"
+  },
+  "license": "https://huggingface.co/fishaudio/drama-3/blob/78e5ab79e49aa9a25abe8799eff2c4d73a1c3216/LICENSE",
+  "narrators": {
+    "A": {
+      "name": "Explanation B",
+      "file": "A.safetensors",
+      "sha256": "465e14823a14e73cacf2aa5ce0d85723df8fc9897288cc1f646f23e354e5ce07",
+      "seed": 437,
+      "direction": "Warm, relaxed and curious. Explain to one adult; make the question genuine.",
+      "reference": {
+        "source_sha256": "daebaaac85ae290138421459b20e499bcb04b42d61bea12c206868427c7eb5f2",
+        "reference_sha256": "8f1b25505494d646287d34b79a39c81251edafea70abe39e7e19fefaea016170",
+        "start": 0,
+        "end": 20.15,
+        "transcript": "You can't tell from the energy returned alone. Look at what went in. The first battery took in 100 kilowatt hours and gave back 75. That's three out of every four. The second took in 60 and returned 48. That's four out of every five."
+      },
+      "audition_audio_sha256": {
+        "hook": "9b6fca610c159cabe474c3bdb38b4f7599422ff75513fc199697488ce73ffb98",
+        "explanation": "df0f36553dcca5a358e2daee6ce7e482fc376a67c0f2b6ffc23a040371423d13"
+      }
+    },
+    "E": {
+      "name": "Direct educator",
+      "file": "E.safetensors",
+      "sha256": "f4b0c2af9a449acb4db4af534093fd9a2478fcb216de09a07a85f570e72148a3",
+      "seed": 5168,
+      "direction": "Clear direct educator with a grounded lower register. Speak with quiet confidence and a little energy; give each unit and comparison its own space.",
+      "reference": {
+        "source_sha256": "d1fd02081fa6ac55ec507eb91f7cd0adf9ba7eb8d581413b470fc32052d124d8",
+        "reference_sha256": "a1a42ee33b29120b202c677c4bbf51f95767870c179a84efcd8100f4a99bddc8",
+        "start": 0,
+        "end": 20.17,
+        "transcript": "You can't tell from the energy returned alone. Look at what went in. The first battery took in 100 kilowatt hours and gave back 75. That's three out of every four. The second took in 60 and returned 48. That's four out of every five."
+      },
+      "audition_audio_sha256": {
+        "hook": "062cfb2efe87c8c50130e255255431176cc63a89fba992c23b5eda2af6791b94",
+        "explanation": "d1fd02081fa6ac55ec507eb91f7cd0adf9ba7eb8d581413b470fc32052d124d8"
+      }
+    },
+    "F": {
+      "name": "Warm documentary",
+      "file": "F.safetensors",
+      "sha256": "28c9ec004c882667e15f7e0072a74441144e1ea207d860c5e2e94c5f2f0fce83",
+      "seed": 61029,
+      "direction": "An adult woman narrator with a warm, low register, rounded tone and understated documentary delivery. Explain clearly to one listener; keep the curiosity quiet and the numbers distinct.",
+      "reference": {
+        "source_sha256": "2f502514c89ee7460ed395ebf609f17d81aa35e551a8a8ea7f20fab08fe77f19",
+        "reference_sha256": "eb0c38749a508b9980970e58fdfc261e690bfb77514b1967d08d39ae49ca9d04",
+        "start": 0,
+        "end": 21.23,
+        "transcript": "You can't tell from the energy returned alone. Look at what went in. The first battery took in 100 kilowatt hours and gave back 75. That's three out of every four. The second took in 60 and returned 48. That's four out of every five."
+      },
+      "audition_audio_sha256": {
+        "hook": "8ce0df78c16d6dc5a8481acd2b04212ec71bc1650567d624c5dc3aae4465f31d",
+        "explanation": "2f502514c89ee7460ed395ebf609f17d81aa35e551a8a8ea7f20fab08fe77f19"
+      }
+    }
+  }
+}
