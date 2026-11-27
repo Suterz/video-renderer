@@ -42,3 +42,11 @@ def test_spoken_model_name_matches_only_the_same_rendered_version():
     assert corroborate_cue(cue, bound, spans("GPT-4", "citations"))["forced_onset"] == 0
     with pytest.raises(TimingReview):
         corroborate_cue(cue, bound, spans("GPT-3.5", "citations"))
+    late = bind(script, [
+        {"word": "GPTfour", "start": .8, "end": 1.04},
+        {"word": "citations", "start": 1.04, "end": 1.84},
+    ])
+    separate = [{"word": " GPT", "start": 0, "end": .74},
+                {"word": "-4", "start": .74, "end": 1.02},
+                {"word": " citations", "start": 1.02, "end": 1.56}]
+    assert corroborate_cue(cue, late, separate)["forced_onset"] == .8

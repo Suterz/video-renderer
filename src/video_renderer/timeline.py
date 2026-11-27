@@ -156,11 +156,28 @@ def cue_sample(cue, bound):
     return sample(alignment[idx][edge]) + cue.get("offset_ms", 0) * 48
 
 
+def coalesce_model_spans(asr):
+    """Keep a version split by ASR intact, including its end timestamp."""
+    i = 0
+    while i < len(asr):
+        word = asr[i]
+        if i + 1 < len(asr) and word["word"].strip().casefold() == "gpt":
+            suffix = asr[i + 1]
+            version = suffix["word"].strip().lstrip("-")
+            if re.fullmatch(r"\d(?:[.-]\d)?", version) and suffix["start"] - word["end"] <= .15:
+                yield {**word, "word": f"GPT-{version}", "end": suffix["end"]}
+                i += 2
+                continue
+        yield word
+        i += 1
+
+
 def corroborate_cue(cue, bound, asr, tolerance=.65):
     """Independent lexical check near each forced onset, not a confidence score."""
     raw = {**cue, "edge": "start", "offset_ms": 0}
     onset = cue_sample(raw, bound) / 48000
     phrase = speech_terms([possessive_form(t) for t in tokens(cue["phrase"])])
+    asr = list(coalesce_model_spans(asr))
     raw_words=[(possessive_form(t),w) for w in asr for t in tokens(w["word"])]
     spoken=[(t,raw_words[i][1]) for t,i in normalized_terms([v for v,_ in raw_words])]
     # Independent ASR can write “8×10” as one word span.
