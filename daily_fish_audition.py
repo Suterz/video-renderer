@@ -15,7 +15,8 @@ from daily_audition import EXPLANATION, HOOK
 def request(base, path, data=None):
     payload = json.dumps(data).encode() if data is not None else None
     with urlopen(Request(base + path, data=payload, headers={"Content-Type": "application/json"}), timeout=30) as response:
-        return json.load(response)
+        body = response.read()
+        return json.loads(body) if body else None
 
 
 def graph(name, text):
