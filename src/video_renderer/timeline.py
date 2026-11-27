@@ -3,8 +3,14 @@ import re
 from decimal import Decimal, ROUND_HALF_UP
 
 
+def normalize_written_terms(text):
+    text = text.replace("’", "'").lower()
+    text = re.sub(r"(?<![\w,])\d{1,3}(?:,\d{3})+(?![\d,])", lambda m: m[0].replace(",", ""), text)
+    return re.sub(r"\bgpt[- ](\d)(?:\.(\d))?\b", lambda m: "gpt" + m[1] + (m[2] or ""), text)
+
+
 def tokens(text):
-    return re.findall(r"[a-z0-9]+(?:'[a-z]+)?", text.replace("’", "'").lower())
+    return re.findall(r"[a-z0-9]+(?:'[a-z]+)?", normalize_written_terms(text))
 
 
 def speech_terms(words):
@@ -57,7 +63,7 @@ def aligned_word_matches(spoken, aligned):
         return True
     # The forced aligner can drop an internal apostrophe on these words.
     # Do not conflate real different words such as we'll/well or I'll/ill.
-    return spoken in {"you'll", "they'll", "it'll"} and aligned == spoken.replace("'", "")
+    return spoken in {"you'll", "they'll", "it'll", "didn't", "doesn't", "isn't", "aren't", "wasn't", "hasn't"} and aligned == spoken.replace("'", "")
 
 
 def clock_fusion(a,b):
@@ -76,8 +82,8 @@ def bind(script, aligned):
     pos = 0
     for u in script:
         words, spans = [], []
-        groups=re.findall(r"[a-z0-9]+(?:'[a-z]+)?(?:[-‐‑][a-z0-9]+(?:'[a-z]+)?)*",
-                          u["text"].replace("’","'").lower())
+        groups=re.findall(r"[a-z0-9]+(?:'[a-z]+)?(?:[-‐‑—–][a-z0-9]+(?:'[a-z]+)?)*",
+                          normalize_written_terms(u["text"]))
         i=0
         while i<len(groups):
             parts=tokens(groups[i])
@@ -90,7 +96,8 @@ def bind(script, aligned):
             if len(observed) == len(parts) and all(aligned_word_matches(a, b) for a, b in zip(parts, observed)):
                 spans.extend(aligned[indexes[j]] for j in range(pos,pos+len(parts)))
                 pos+=len(parts)
-            elif len(parts)>1 and word_tokens[pos:pos+1]==["".join(parts)]:
+            elif len(parts)>1 and word_tokens[pos:pos+1] in (
+                    ["".join(parts)], ["".join(possessive_form(p) for p in parts)]):
                 outer=aligned[indexes[pos]]
                 spans.extend({**outer,"internal_start":i>0,"internal_end":i<len(parts)-1}
                              for i in range(len(parts)))
