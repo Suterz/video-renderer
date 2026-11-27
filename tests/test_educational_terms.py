@@ -1,6 +1,6 @@
 import pytest
 
-from video_renderer.timeline import TimingReview, bind, cue_sample, tokens
+from video_renderer.timeline import TimingReview, bind, corroborate_cue, cue_sample, tokens
 
 
 def spans(*terms):
@@ -33,3 +33,12 @@ def test_ambiguous_contraction_requires_local_independent_corroboration():
     assert bind(script, aligned, spans("We’re", "looking"))["a"][0] == ["we're", "looking"]
     with pytest.raises(TimingReview):
         bind(script, aligned, spans("Were", "looking"))
+
+
+def test_spoken_model_name_matches_only_the_same_rendered_version():
+    script = [{"id": "a", "text": "GPT-four citations."}]
+    bound = bind(script, spans("GPT", "four", "citations"))
+    cue = {"utterance_id": "a", "phrase": "GPT-four citations"}
+    assert corroborate_cue(cue, bound, spans("GPT-4", "citations"))["forced_onset"] == 0
+    with pytest.raises(TimingReview):
+        corroborate_cue(cue, bound, spans("GPT-3.5", "citations"))

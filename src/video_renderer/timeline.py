@@ -29,7 +29,15 @@ def normalized_terms(words):
     i=0
     while i<len(words):
         t=words[i]
-        if t in tens and i+1<len(words) and words[i+1] in narrow:
+        if t == "gpt" and i + 1 < len(words) and words[i + 1] in ("four", "three"):
+            version = aliases[words[i + 1]]
+            size = 2
+            if words[i + 2:i + 4] == ["point", "five"]:
+                version += "5"
+                size = 4
+            yield "gpt" + version, i
+            i += size
+        elif t in tens and i+1<len(words) and words[i+1] in narrow:
             yield str(tens[t]+int(aliases[words[i+1]])),i
             i+=2
         else:
