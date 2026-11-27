@@ -44,6 +44,13 @@ def test_ambiguous_contraction_requires_local_independent_corroboration():
         bind(script, fused, [{**word, "word": "Well"} if i == 1 else word for i, word in enumerate(speech)])
 
 
+def test_youd_binds_without_discarding_the_contraction():
+    line = [{"id": "s", "text": "You’d need twenty dollars."}]
+    assert bind(line, spans("Youd", "need", "twenty", "dollars"))["s"][0][0] == "you'd"
+    with pytest.raises(TimingReview):
+        bind(line, spans("You", "need", "twenty", "dollars"))
+
+
 def test_spoken_model_name_matches_only_the_same_rendered_version():
     script = [{"id": "a", "text": "GPT-four citations."}]
     bound = bind(script, spans("GPT", "four", "citations"))

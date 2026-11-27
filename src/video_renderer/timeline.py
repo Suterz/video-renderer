@@ -68,7 +68,7 @@ def possessive_form(word):
 
 APOSTROPHE_DROPS = {"you'll", "they'll", "it'll", "didn't", "doesn't", "isn't", "aren't", "wasn't",
                     "hasn't", "won't", "they've", "you've", "we've", "you're", "they're",
-                    "don't", "couldn't", "wouldn't", "shouldn't", "hadn't", "weren't"}
+                    "don't", "couldn't", "wouldn't", "shouldn't", "hadn't", "weren't", "you'd"}
 
 
 def fused_form(word):
