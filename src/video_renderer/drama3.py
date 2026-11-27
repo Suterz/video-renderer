@@ -69,8 +69,12 @@ def synthesize(label, wav, text, ffmpeg):
             else:
                 raise TimeoutError("Drama 3 synthesis exceeded local deadline")
             wav.with_suffix(".history.json").write_text(json.dumps(history, indent=2))
-            if "6" not in history["outputs"]:
-                raise RuntimeError("Drama 3 worker returned no WAV")
+            if "6" not in history.get("outputs", {}):
+                detail = next((entry for kind, entry in history.get("status", {}).get("messages", [])
+                               if kind == "execution_error"), {})
+                message = " ".join(str(detail.get("exception_message", "")).split())
+                stage = detail.get("node_type", "worker")
+                raise RuntimeError(f"Drama 3 {stage} produced no audio" + (f": {message[:320]}" if message else ""))
             item = next(v[0] for v in history["outputs"]["6"].values() if isinstance(v, list))
             raw = (output / item["subfolder"] / item["filename"]).resolve()
             if not raw.is_relative_to(output):
