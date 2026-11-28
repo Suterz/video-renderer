@@ -18,6 +18,8 @@ def evidence_tokens(text):
     text = re.sub(r"\bkilowatt[ -]?hours?\b", "kwh", text, flags=re.I)
     text = re.sub(r"\b(\d+)\.(\d+)\s*%", r"\1point\2 percent", text)
     text = re.sub(r"\b(\d+)\s*%", r"\1 percent", text)
+    if re.fullmatch(r"\s*%[.!?,]?\s*", text):
+        return ["percent"]
     return tokens(text)
 
 
