@@ -152,8 +152,17 @@ class OpeningVideo(EpisodeVideo):
     max_ms: Literal[20000] = 20000
 
 
+class LessonVideo(EpisodeVideo):
+    """A complete single-concept lesson, with an explicit delivery range."""
+    lesson_contract: Literal["daily/3"]
+    min_ms: int = Field(ge=20000, le=300000)
+    max_ms: int = Field(ge=20000, le=300000)
+
+
 def episode_model(payload):
-    return OpeningVideo if payload.get("opening_preview") is True else EpisodeVideo
+    if payload.get("opening_preview") is True:
+        return OpeningVideo
+    return LessonVideo if payload.get("lesson_contract") == "daily/3" else EpisodeVideo
 
 
 def read(path):
@@ -725,6 +734,10 @@ def episode(req: EpisodeVideo, idempotency_key: str | None = Header(default=None
 def opening(req: OpeningVideo, idempotency_key: str | None = Header(default=None)):
     return submit(req, key=idempotency_key)
 
+
+@app.post("/v2/lessons", status_code=202)
+def lesson(req: LessonVideo, idempotency_key: str | None = Header(default=None)):
+    return submit(req, key=idempotency_key)
 
 @app.get("/v2/submissions/{key}")
 def submitted(key:str):
