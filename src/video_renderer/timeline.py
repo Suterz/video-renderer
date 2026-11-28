@@ -10,12 +10,14 @@ def normalize_written_terms(text):
 
 
 def evidence_tokens(text):
-    """Expand energy units for corroboration, retaining the original ASR span."""
+    """Expand unambiguous ASR notation, retaining the original ASR span."""
     text = normalize_written_terms(text)
     # Keep fractional values distinct from nearby integer spellings.
     text = re.sub(r"\b(\d+)\.(\d+)\s*(?=kwh\b)", r"\1point\2 ", text)
     text = re.sub(r"\b(\d+)kwh\b", r"\1 kwh", text, flags=re.I)
     text = re.sub(r"\bkilowatt[ -]?hours?\b", "kwh", text, flags=re.I)
+    text = re.sub(r"\b(\d+)\.(\d+)\s*%", r"\1point\2 percent", text)
+    text = re.sub(r"\b(\d+)\s*%", r"\1 percent", text)
     return tokens(text)
 
 
