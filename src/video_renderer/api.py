@@ -600,6 +600,19 @@ def run(p):
     verification = encode(paths, segments, size, f, end, wav, candidate, episode=is_episode)
     if verification["expected_video_frames"] != end:
         raise RuntimeError("encoder disagrees with exact timeline")
+    if isinstance(req, LessonVideo):
+        # Compare the delivered picture to the uncaptioned panel in a region
+        # reserved for evidence. Matching against captioned art would miss
+        # a subtitle that occluded the same evidence in both images.
+        state(p, phase="lesson_media_check")
+        samples = decode(FFMPEG, candidate, starts)
+        checks = []
+        for index, sample_frame in enumerate(starts):
+            panel = manifest["panels"][index]
+            with Image.open(p / panel["filename"]) as expected:
+                difference = encoded_match(samples[sample_frame], expected, (0.03, 0.17, 0.97, 0.79))
+            checks.append({"beat": panel["id"], "frame": sample_frame, "pixel_error": difference})
+        verification["decoded_lesson_panel_checks"] = checks
     if teaching:
         state(p,phase="instructional_media_check")
         region=req.instructional.region
